@@ -145,24 +145,6 @@ export const useStatusStore = defineStore('status', {
                     logError("statusStore.ping()", err)
                     this.connected = false
                 })
-        },
-        setSleepMode(val, callback) {
-            logInfo("statusStore.setSleepMode()", "Fetching /api/config/sleepmode")
-            fetch(global.baseURL + 'api/config/sleepmode', {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "Authorization": global.token },
-                body: JSON.stringify({ sleep_mode: val }),
-                signal: AbortSignal.timeout(global.fetchTimout),
-            })
-                .then(res => res.json())
-                .then(json => {
-                    logInfo("statusStore.setSleepMode()", "Fetching /api/config/sleepmode completed")
-                    callback(true)
-                })
-                .catch(err => {
-                    logError("statusStore.setSleepMode()", err)
-                    callback(false)
-                })
         }
     }
 })
