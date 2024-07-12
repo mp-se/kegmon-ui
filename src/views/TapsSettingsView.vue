@@ -16,12 +16,12 @@
                 </div>
 
                 <div class="col-md-6">
-                    <BsSelect v-model="config.glass_volume1" width="8" :options="glassOptions" label="Tap 1 - Glass size"
-                        :disabled="global.disabled" />
+                    <BsSelect v-model="config.glass_volume1" width="8" :options="glassOptions"
+                        label="Tap 1 - Glass size" :disabled="global.disabled" />
                 </div>
                 <div class="col-md-6">
-                    <BsSelect v-model="config.glass_volume2" width="8" :options="glassOptions" label="Tap 2 - Glass size"
-                        :disabled="global.disabled" />
+                    <BsSelect v-model="config.glass_volume2" width="8" :options="glassOptions"
+                        label="Tap 2 - Glass size" :disabled="global.disabled" />
                 </div>
 
                 <div class="col-md-6">
@@ -29,7 +29,7 @@
                         :disabled="global.disabled" />
                 </div>
                 <div class="col-md-6">
-                    <BsSelect v-model="config.keg_volume1" width="8" :options="kegptions" label="Tap 2 - Keg volume"
+                    <BsSelect v-model="config.keg_volume1" width="8" :options="kegOptions" label="Tap 2 - Keg volume"
                         :disabled="global.disabled" />
                 </div>
 
@@ -72,7 +72,9 @@ const glassOptions = ref([
 ])
 
 const kegOptions = ref([
+    { label: 'Oxebar 4l', value: 4 },
     { label: 'Mini 5l / 1.32gal / 169oz', value: 5 },
+    { label: 'Oxebar 8l', value: 8 },
     { label: 'Cornelious 9l', value: 9 },
     { label: 'Mini 10l', value: 10 },
     { label: 'Cornelius 18l', value: 18 },
