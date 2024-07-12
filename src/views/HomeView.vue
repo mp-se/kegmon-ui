@@ -5,6 +5,30 @@
     <div v-if="status" class="container overflow-hidden text-center">
 
       <div class="row gy-4">
+        <div class="col-md-6">
+          <BsCard header="Measurement" color="info" :title="config.beer_name1">
+            <p class="text-center">
+              Volume: {{ status.beer_volume1 }} {{ config.volume_unit }} Weight: {{ status.beer_weight1 }} {{ config.weight_unit }} Last pour: {{ status.last_pour_volume1 }} {{ config.volume_unit }}
+            </p>
+            <p class="text-center">
+              ABV: {{ config.beer_abv1 }}% EBC: {{ config.beer_ebc1 }} IBU: {{ config.beer_ibu1 }}
+            </p>
+          </BsCard>
+        </div>
+        <div class="col-md-6">
+          <BsCard header="Measurement" color="info" :title="config.beer_name2">
+            <p class="text-center">
+              Volume: {{ status.beer_volume2 }} {{ config.volume_unit }} Weight: {{ status.beer_weight2 }} {{ config.weight_unit }} Last pour: {{ status.last_pour_volume2 }} {{ config.volume_unit }}
+            </p>
+            <p class="text-center">
+              ABV: {{ config.beer_abv2 }}% EBC: {{ config.beer_ebc2 }} IBU: {{ config.beer_ibu2 }}
+            </p>
+          </BsCard>
+        </div>
+        <p></p>
+      </div>
+
+      <div class="row gy-4">
 
         <div class="col-md-4" v-if="status.temp !== 'NaN'">
           <BsCard header="Measurement" color="info" title="Temperature">
@@ -69,18 +93,16 @@
 
 <script setup>
 import { ref, watch, onMounted, onBeforeMount, onBeforeUnmount } from 'vue'
-import { status, global } from "@/modules/pinia"
+import { status, global, config } from "@/modules/pinia"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
 // TODO: Add humidity from temp sensor
+// TODO: Add progress bar to taps
 
 const polling = ref(null)
 
 function refresh() {
   status.load((success) => {
-    if (success) {
-      // TODO: Add values to display on main page
-    }
   })
 }
 
@@ -93,5 +115,3 @@ onBeforeUnmount(() => {
   clearInterval(polling.value)
 })
 </script>
-
-<style></style>
