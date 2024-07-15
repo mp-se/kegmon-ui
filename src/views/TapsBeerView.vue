@@ -110,10 +110,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { ref } from "vue";
 import { validateCurrentForm } from "@/modules/utils"
-import { global, config, status } from "@/modules/pinia"
-import { storeToRefs } from 'pinia'
+import { global, config } from "@/modules/pinia"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
 const beerOptions = ref([])

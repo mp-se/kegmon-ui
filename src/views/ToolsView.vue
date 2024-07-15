@@ -98,9 +98,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { router } from '@/modules/router'
-import { global, config, status, saveConfigState } from "@/modules/pinia"
+import { ref } from 'vue'
+import { global, config } from "@/modules/pinia"
 import { isValidJson, isValidFormData, isValidMqttData } from "@/modules/utils"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 

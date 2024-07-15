@@ -120,9 +120,9 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, computed } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { weightKgToLbs } from "@/modules/utils"
-import { global, config, status } from "@/modules/pinia"
+import { global, config } from "@/modules/pinia"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
 const state = ref(1)
