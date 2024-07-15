@@ -8,7 +8,7 @@
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name1">
             <p class="text-center">
-              Volume: {{ status.beer_volume1 }} {{ config.volume_unit }} Weight: {{ status.beer_weight1 }} {{ config.weight_unit }} Last pour: {{ status.last_pour_volume1 }} {{ config.volume_unit }}
+              Volume: {{ status.beer_volume1 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight1 }} {{ config.getWeightUnit }} Last pour: {{ status.last_pour_volume1 }} {{ config.getVolumeUnit }}
             </p>
             <p class="text-center">
               ABV: {{ config.beer_abv1 }}% EBC: {{ config.beer_ebc1 }} IBU: {{ config.beer_ibu1 }}
@@ -18,7 +18,7 @@
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name2">
             <p class="text-center">
-              Volume: {{ status.beer_volume2 }} {{ config.volume_unit }} Weight: {{ status.beer_weight2 }} {{ config.weight_unit }} Last pour: {{ status.last_pour_volume2 }} {{ config.volume_unit }}
+              Volume: {{ status.beer_volume2 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight2 }} {{ config.getWeightUnit }} Last pour: {{ status.last_pour_volume2 }} {{ config.getVolumeUnit }}
             </p>
             <p class="text-center">
               ABV: {{ config.beer_abv2 }}% EBC: {{ config.beer_ebc2 }} IBU: {{ config.beer_ibu2 }}
@@ -33,7 +33,7 @@
         <div class="col-md-4" v-if="status.temp !== 'NaN'">
           <BsCard header="Measurement" color="info" title="Temperature">
             <p class="text-center">
-              {{ status.temp }} °{{ status.temp_format }}
+              {{ status.temp }} {{ status.getTempFormat }}
             </p>
           </BsCard>
         </div>

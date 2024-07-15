@@ -44,7 +44,7 @@ export const useConfigStore = defineStore('config', {
             wifi_pass: "",
             wifi_pass2: "",
             // Push - Generic
-            push_timeout: 10,  
+            push_timeout: 10,
             brewfather_apikey: "",
             brewfather_userkey: "",
             brewspy_token1: "",
@@ -96,6 +96,17 @@ export const useConfigStore = defineStore('config', {
             beer_ebc2: 0,
             beer_ibu2: 0,
         }
+    },
+    getters: {
+        getVolumeUnit() {
+            return this.volume_unit == "cl" ? "cl" : "fl. oz"
+        },
+        getWeightUnit() {
+            return this.weight_unit == "kg" ? "kg" : "lbs"
+        },
+        getTempUnit() {
+            return this.temp_format == "C" ? "°C" : "°F"
+        },
     },
     actions: {
         toJson() {
