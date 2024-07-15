@@ -1,14 +1,10 @@
 <template>
   <div class="container">
     <p></p>
-    <p class="h3">About - Gravitymon</p>
+    <p class="h3">About - KegMon</p>
     <hr>
 
-    <!-- TODO: Update about text with kegmon -->
-
-    <p class="fw-normal">This is a piece of software for the iSpindle hardware and
-      will work in a similar way. No part of this software is copied
-      from the iSpindle project.</p>
+    <p class="fw-normal">This is a piece of software to measure how many pints are left in a keg based on the weight.</p>
 
     <p class="h4">MIT License</p>
 
