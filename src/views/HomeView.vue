@@ -8,6 +8,9 @@
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name1">
             <p class="text-center">
+              <BsProgress :progress="tapProgress1"></BsProgress>
+            </p>
+            <p class="text-center">
               Volume: {{ status.beer_volume1 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight1 }} {{ config.getWeightUnit }} Last pour: {{ status.last_pour_volume1 }} {{ config.getVolumeUnit }}
             </p>
             <p class="text-center">
@@ -17,6 +20,9 @@
         </div>
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name2">
+            <p class="text-center">
+              <BsProgress :progress="tapProgress2"></BsProgress>
+            </p>
             <p class="text-center">
               Volume: {{ status.beer_volume2 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight2 }} {{ config.getWeightUnit }} Last pour: {{ status.last_pour_volume2 }} {{ config.getVolumeUnit }}
             </p>
@@ -92,14 +98,21 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeMount, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, computed, onBeforeMount, onBeforeUnmount } from 'vue'
 import { status, global, config } from "@/modules/pinia"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
 // TODO: Add humidity from temp sensor
-// TODO: Add progress bar to taps
 
 const polling = ref(null)
+
+const tapProgress1 = computed(() => {
+  return Math.round( (status.beer_volume1 / status.keg_volume1) * 100)
+})
+
+const tapProgress2 = computed(() => {
+  return Math.round( (status.beer_volume2 / status.keg_volume2) * 100)
+})
 
 function refresh() {
   status.load((success) => {
