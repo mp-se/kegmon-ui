@@ -53,8 +53,6 @@ import { global, status, config, saveConfigState } from "@/modules/pinia"
 import { storeToRefs } from 'pinia'
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
-// TODO: Add scale calibration wizard
-
 const props = defineProps(['App'])
 const polling = ref(null)
 

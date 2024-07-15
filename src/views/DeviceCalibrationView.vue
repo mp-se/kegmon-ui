@@ -102,8 +102,6 @@
                 <p></p>
             </div>
 
-            <!-- TODO: Change colors when darkmode is enabled -->
-
             <div :class="getClass()">
                 Offset: {{ scaleStatus.offset }}
             </div>
