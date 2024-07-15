@@ -81,7 +81,7 @@
                 <p class="h3">Step 4 - Validate</p>
             </div>
             <div class="col-md-12">
-                <p>The entered weight was {{ new Number(weight).toFixed(2) }} and the measured weight after calibration was {{ new Number(scaleStatus.weight).toFixed(2) }} (Deviation: {{ new Number((scaleStatus.weight-weight)/weight*100).toFixed(0) }} %), if you want to change then use the back button.</p>
+                <p>The entered weight was <b>{{ new Number(weight).toFixed(2) }}</b> and the measured weight after calibration was <b>{{ new Number(scaleStatus.weight).toFixed(2) }}</b> (Deviation: <b>{{ new Number((scaleStatus.weight-weight)/weight*100).toFixed(0) }}</b> %), if you want to change then use the back button.</p>
             </div>
             <div class="row gy-2">
                 <div class="col-md-2">
