@@ -71,6 +71,7 @@ function backup() {
 
 function restore() {
   const fileElement = document.getElementById('upload');
+  logDebug("BackupView.restore()")
 
   if (fileElement.files.length === 0) {
     global.messageFailed = "You need to select one file to restore configuration from"
@@ -108,6 +109,8 @@ function download(content, mimeType, filename) {
 }
 
 function doRestore1(json) {
+  logDebug("BackupView.doRestore1()")
+
   for(var k in json) {
       config[k] = json[k]
   }
@@ -117,6 +120,8 @@ function doRestore1(json) {
 }
 
 function doRestore(json) {
+  logDebug("BackupView.doRestore()")
+
   for(var k in json) {
 
     var k2 = k.replaceAll("-", "_");
