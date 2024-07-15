@@ -19,11 +19,11 @@ export function deviceMdnsBadge() {
 }
 
 export function deviceHardwareBadge() {
-  return 0 // TODO: Check if scales are calibrated
+  return 0
 }
 
 export function deviceCalibrationBadge() {
-  return 0 // TODO: Detect if scales are not calibrated
+  return status.scale_factor1 == 0 && status.scale_factor2 == 0 ? 1 : 0 
 }
 
 export function deviceWifiBadge() {
