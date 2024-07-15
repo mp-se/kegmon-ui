@@ -43,12 +43,12 @@
                 </div>
 
                 <div class="col-md-6">
-                    <BsInputNumber v-model="config.beer_abv1" label="Beer 1 - ABV" min="0" max="20" step="0.1"
-                        unit="%" width="5" :disabled="global.disabled" />
+                    <BsInputNumber v-model="config.beer_abv1" label="Beer 1 - ABV" min="0" max="20" step="0.1" unit="%"
+                        width="5" :disabled="global.disabled" />
                 </div>
                 <div class="col-md-6">
-                    <BsInputNumber v-model="config.beer_abv2" label="Beer 2 - ABV" min="0" max="20" step="0.1"
-                        unit="%" width="5" :disabled="global.disabled" />
+                    <BsInputNumber v-model="config.beer_abv2" label="Beer 2 - ABV" min="0" max="20" step="0.1" unit="%"
+                        width="5" :disabled="global.disabled" />
                 </div>
             </div>
 
@@ -63,7 +63,8 @@
                             :hidden="!global.disabled"></span>
                         &nbsp;Fetch from Brewfather
                     </button>&nbsp;
-                    <button @click="fetchBrewspy(2)" type="button" class="btn btn-secondary w-2" :disabled="global.disabled">
+                    <button @click="fetchBrewspy(1)" type="button" class="btn btn-secondary w-2"
+                        :disabled="global.disabled">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                             :hidden="!global.disabled"></span>
                         &nbsp;Fetch from Brewspy
@@ -77,7 +78,8 @@
                             :hidden="!global.disabled"></span>
                         &nbsp;Fetch from Brewfather
                     </button>&nbsp;
-                    <button @click="fetchBrewspy(2)" type="button" class="btn btn-secondary w-2" :disabled="global.disabled">
+                    <button @click="fetchBrewspy(2)" type="button" class="btn btn-secondary w-2"
+                        :disabled="global.disabled">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                             :hidden="!global.disabled"></span>
                         &nbsp;Fetch from Brewspy
@@ -194,27 +196,17 @@ const fetchBrewfather = (tap) => {
 const fetchBrewspy = (tap) => {
     logInfo("TapsBeerView.fetchBrewspy()", tap)
 
-    global.messageError = "Not yet implemented"
-
-    // TODO: This needs to be proxied via the device (due to CORS)
-
-    /*
     global.disabled = true
-    var url = 'https://brewspy.app/api/json/taplist/'
-
-    config.brewspy_token1 = ''
-
-    if (tap == 1)
-        url += config.brewspy_token1
-    if (tap == 2)
-        url += config.brewspy_token2
-
-    fetch(url, {
-        method: "GET",
+    fetch(global.baseURL + 'api/brewspy/tap', {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": global.token },
+        body: JSON.stringify({ token: tap == 1 ? config.brewspy_token1 : config.brewspy_token2 }),
         signal: AbortSignal.timeout(global.fetchTimout),
     })
         .then(res => res.json())
         .then(json => {
+            logDebug("configStore.sendBrewspyRequest()", json)
+
             if (tap == 1) {
                 config.beer_abv1 = json.abv
                 config.beer_ebc1 = 0
@@ -233,10 +225,10 @@ const fetchBrewspy = (tap) => {
             global.disabled = false
         })
         .catch(err => {
-            logError("TapsBeerView.fetchBrewspy()", err)
+            logError("configStore.sendBrewspyRequest()", err)
             global.messageError = "Failed to fetch data from brewspy"
             global.disabled = false
-        })*/
+        })
 }
 
 const save = () => {

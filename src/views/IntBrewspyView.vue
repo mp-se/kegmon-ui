@@ -34,8 +34,6 @@ import { validateCurrentForm } from "@/modules/utils"
 import { global, config } from "@/modules/pinia"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
-// TODO: Fix this
-
 const save = () => {
     if (!validateCurrentForm()) return
 
