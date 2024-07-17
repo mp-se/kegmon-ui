@@ -12,6 +12,7 @@ import DeviceCalibrationView from '@/views/DeviceCalibrationView.vue'
 import DeviceWifiView from '@/views/DeviceWifiView.vue'
 import TapsSettingsView from '@/views/TapsSettingsView.vue'
 import TapsBeerView from '@/views/TapsBeerView.vue'
+import TapsHistoryView from '@/views/TapsHistoryView.vue'
 import IntHassView from '@/views/IntHassView.vue'
 import IntBrewfatherView from '@/views/IntBrewfatherView.vue'
 import IntBrewspyView from '@/views/IntBrewspyView.vue'
@@ -22,6 +23,8 @@ import SupportView from '@/views/SupportView.vue'
 import SerialView from '@/views/SerialView.vue'
 import ToolsView from '@/views/ToolsView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
+
+// TODO: Add view for level change and pour data
 
 const routes = [
   {
@@ -68,6 +71,16 @@ const routes = [
     path: '/taps/beer',
     name: 'taps-beer',
     component: TapsBeerView
+  },
+  {
+    path: '/taps/history',
+    name: 'taps-history',
+    component: TapsHistoryView
+  },
+  {
+    path: '/taps/history',
+    name: 'taps-history',
+    component: TapsHistoryView
   },
   {
     path: '/integration/homeassistant',
@@ -174,6 +187,10 @@ const items = ref([
       {
         label: 'Beers',
         path: '/taps/beer',
+      },
+      {
+        label: 'History',
+        path: '/taps/history',
       },
     ]
   },
