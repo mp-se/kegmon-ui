@@ -92,6 +92,14 @@
           </BsCard>
         </div>
 
+        <div class="col-md-4">
+          <BsCard header="Device" title="Uptime">
+            <p class="text-center">
+              {{ status.uptime_days }} days {{ status.uptime_hours }} hours {{ status.uptime_minutes }} minutes {{ status.uptime_seconds }} seconds
+            </p>
+          </BsCard>
+        </div>
+
       </div>
     </div>
   </div>
@@ -103,6 +111,8 @@ import { status, global, config } from "@/modules/pinia"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
 // TODO: Add humidity from temp sensor
+// TODO: Show # glasses left for taps
+// TODO: Show last pour per tap
 
 const polling = ref(null)
 
