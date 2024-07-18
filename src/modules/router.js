@@ -7,6 +7,7 @@ import { logDebug, logError, logInfo } from '@/modules/logger'
 
 import HomeView from '@/views/HomeView.vue'
 import DeviceSettingsView from '@/views/DeviceSettingsView.vue'
+import DeviceStabilityView from '@/views/DeviceStabilityView.vue'
 import DeviceHardwareView from '@/views/DeviceHardwareView.vue'
 import DeviceCalibrationView from '@/views/DeviceCalibrationView.vue'
 import DeviceWifiView from '@/views/DeviceWifiView.vue'
@@ -23,8 +24,6 @@ import SupportView from '@/views/SupportView.vue'
 import SerialView from '@/views/SerialView.vue'
 import ToolsView from '@/views/ToolsView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
-
-// TODO: Add view for level change and pour data
 
 const routes = [
   {
@@ -46,6 +45,11 @@ const routes = [
     path: '/device/calibration',
     name: 'device-calibration',
     component: DeviceCalibrationView
+  },
+  {
+    path: '/device/stability',
+    name: 'device-stability',
+    component: DeviceStabilityView
   },
   {
     path: '/device/wifi',
@@ -167,6 +171,10 @@ const items = ref([
         label: 'Calibration',
         badge: badge.deviceCalibrationBadge,
         path: '/device/calibration',
+      },
+      {
+        label: 'Stability',
+        path: '/device/stability',
       },
       {
         label: 'Wifi',

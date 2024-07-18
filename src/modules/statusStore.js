@@ -23,6 +23,11 @@ export const useStatusStore = defineStore('status', {
             wifi_setup: false,
             connected: true,
             scale_busy: false,
+            uptime_seconds: 0,
+            uptime_minutes: 0,
+            uptime_hours: 0,
+            uptime_days: 0,
+
             // Keg 1
             glass1: 0,
             keg_volume1: 0,
@@ -35,6 +40,7 @@ export const useStatusStore = defineStore('status', {
             scale_stable_weight1: 0,
             last_pour_weight1: 0,
             last_pour_volume1: 0,
+
             // Keg 2
             glass2: 0,
             keg_volume2: 0,
@@ -77,6 +83,11 @@ export const useStatusStore = defineStore('status', {
                     this.free_heap = (Math.round(json.free_heap / 1024)).toFixed(0)
                     this.wifi_setup = json.wifi_setup
                     this.scale_busy = json.scale_busy
+                    this.uptime_seconds = json.uptime_seconds
+                    this.uptime_minutes = json.uptime_minutes
+                    this.uptime_hours = json.uptime_hours
+                    this.uptime_days = json.uptime_days
+
                     // Keg 1
                     this.glass1 = new Number(json.glass1).toFixed(0)
                     this.keg_volume1 = new Number(json.keg_volume1).toFixed(2)
