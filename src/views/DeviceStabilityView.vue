@@ -55,6 +55,12 @@
             </div>
         </div>
 
+        <div class="row" v-else="loaded">
+            <div class="col-md-6">
+                <p>Unable to load stability data</p>
+            </div>
+        </div>
+
         <div class="row gy-2">
             <div class="col-md-12">
                 <hr>
