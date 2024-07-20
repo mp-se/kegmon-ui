@@ -27,6 +27,14 @@ export function weightKgToLbs(w) {
   return w * 2.2046226218
 }
 
+export function volumeCLtoUSOZ(v) { 
+  return v * 0.34
+}
+
+export function volumeCLtoUKOZ(v) { 
+  return v == 0.0 ? 0.0 : v / 2.84
+}
+
 export function isValidJson(s) {
   try {
     JSON.stringify(JSON.parse(s))
