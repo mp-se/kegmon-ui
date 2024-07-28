@@ -15,7 +15,9 @@ export const useStatusStore = defineStore('status', {
             weight_unit: "",
             volume_unit: "",
             temp_format: "",
-            temp: 0,
+            temperature: 0,
+            humidity: 0,
+            pressure: 0,
             total_heap: 0,
             free_heap: 0,
             ip: "",
@@ -75,8 +77,9 @@ export const useStatusStore = defineStore('status', {
                     this.weight_unit = json.weight_unit
                     this.volume_unit = json.volume_unit
                     this.temp_format = json.temp_format
-                    this.temp = (Math.round(json.temp * 100) / 100).toFixed(2) // C or F
-                    console.log(this.temp)
+                    this.temperature = (Math.round(json.temperature * 100) / 100).toFixed(2) // C or F
+                    this.humidity = this.humidity
+                    this.pressure = this.pressure
                     this.rssi = json.rssi
                     this.ip = json.ip
                     this.total_heap = (Math.round(json.total_heap / 1024)).toFixed(0)

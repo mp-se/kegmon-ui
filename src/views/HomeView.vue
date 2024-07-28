@@ -11,7 +11,7 @@
               <BsProgress :progress="tapProgress1"></BsProgress>
             </p>
             <p class="text-center">
-              Volume: {{ status.beer_volume1 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight1 }} {{ config.getWeightUnit }} Last pour: {{ status.last_pour_volume1 }} {{ config.getVolumeUnit }}
+              Volume: {{ status.beer_volume1 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight1 }} {{ config.getWeightUnit }} 
             </p>
             <p class="text-center">
               ABV: {{ config.beer_abv1 }}% EBC: {{ config.beer_ebc1 }} IBU: {{ config.beer_ibu1 }}
@@ -24,7 +24,7 @@
               <BsProgress :progress="tapProgress2"></BsProgress>
             </p>
             <p class="text-center">
-              Volume: {{ status.beer_volume2 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight2 }} {{ config.getWeightUnit }} Last pour: {{ status.last_pour_volume2 }} {{ config.getVolumeUnit }}
+              Volume: {{ status.beer_volume2 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight2 }} {{ config.getWeightUnit }}
             </p>
             <p class="text-center">
               ABV: {{ config.beer_abv2 }}% EBC: {{ config.beer_ebc2 }} IBU: {{ config.beer_ibu2 }}
@@ -35,19 +35,36 @@
       </div>
 
       <div class="row gy-4">
-
-        <div class="col-md-4" v-if="status.temp !== 'NaN'">
-          <BsCard header="Measurement" color="info" title="Temperature">
+        <div class="col-md-6">
+          <BsCard header="Measurement" color="info" :title="config.beer_name1">
             <p class="text-center">
-              {{ status.temp }} {{ status.getTempFormat }}
+              Glasses left: {{ status.glass1 }}
+            </p>
+            <p class="text-center" v-if="status.last_pour_volume1 != 'NaN'">
+              Last pour: {{ status.last_pour_volume1 }} {{ config.getVolumeUnit }}
             </p>
           </BsCard>
         </div>
 
-        <div class="col-md-4" v-if="status.temp === 'NaN'">
-          <BsCard header="Measurement" title="Error" :iserr="true" icon="bi-x-circle">
+        <div class="col-md-6">
+          <BsCard header="Measurement" color="info" :title="config.beer_name2">
             <p class="text-center">
-              No temperature sensor detected
+              Glasses left: {{ status.glass2 }}
+            </p>
+            <p class="text-center" v-if="status.last_pour_volume2 != 'NaN'">
+              Last pour: {{ status.last_pour_volume2 }} {{ config.getVolumeUnit }}
+            </p>
+          </BsCard>
+        </div>
+        <p></p>
+      </div>
+
+      <div class="row gy-4">
+
+        <div class="col-md-4" v-if="status.temperature !== 'NaN'">
+          <BsCard header="Measurement" color="info" title="Temperature">
+            <p class="text-center">
+              {{ status.temperature }} {{ config.getTempUnit }}
             </p>
           </BsCard>
         </div>
@@ -110,7 +127,7 @@ import { ref, watch, onMounted, computed, onBeforeMount, onBeforeUnmount } from 
 import { status, global, config } from "@/modules/pinia"
 import { logDebug, logError, logInfo } from '@/modules/logger'
 
-// TODO: Add humidity from temp sensor
+// TODO: Add humidity and pressure 
 // TODO: Show # glasses left for taps
 // TODO: Show last pour per tap
 
