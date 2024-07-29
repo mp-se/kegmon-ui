@@ -14,6 +14,7 @@ import DeviceWifiView from '@/views/DeviceWifiView.vue'
 import TapsSettingsView from '@/views/TapsSettingsView.vue'
 import TapsBeerView from '@/views/TapsBeerView.vue'
 import TapsHistoryView from '@/views/TapsHistoryView.vue'
+import IntInfluxdbView from '@/views/IntInfluxdbView.vue'
 import IntHassView from '@/views/IntHassView.vue'
 import IntBrewfatherView from '@/views/IntBrewfatherView.vue'
 import IntBrewspyView from '@/views/IntBrewspyView.vue'
@@ -85,6 +86,11 @@ const routes = [
     path: '/taps/history',
     name: 'taps-history',
     component: TapsHistoryView
+  },
+  {
+    path: '/integration/influxdb',
+    name: 'integration-influxdb',
+    component: IntInfluxdbView
   },
   {
     path: '/integration/homeassistant',
@@ -218,6 +224,10 @@ const items = ref([
       {
         label: 'Brewspy',
         path: '/integration/brewspy',
+      },
+      {
+        label: 'Influx Db',
+        path: '/integration/influxdb',
       },
     ]
   },
