@@ -2,6 +2,10 @@
     <div class="container">
         <p></p>
         <p class="h3">Influxdb v2 - Send scale data</p>
+        <p>
+            This integration will send scale data every cycle to an influx database for capturing raw data for debugging.
+        </p>
+        
         <hr>
 
         <form @submit.prevent="save" class="needs-validation" novalidate>
