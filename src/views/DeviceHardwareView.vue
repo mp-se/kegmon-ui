@@ -67,45 +67,45 @@
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_display_data"
                         :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                        label="Display/I2C - Data" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                        label="Display/I2C - Data" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_display_clock"
                     :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                    label="Display/I2C - Clock" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                    label="Display/I2C - Clock" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
 
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_temp_data"
                     :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                    label="Temperature - Data" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                    label="Temperature - Data" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_temp_power"
                     :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                    label="Temperature - Power" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                    label="Temperature - Power" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
 
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_scale1_data"
                     :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                    label="Scale 1 - Data" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                    label="Scale 1 - Data" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_scale1_clock"
                     :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                    label="Scale 1 - Clock" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                    label="Scale 1 - Clock" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
 
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_scale2_data"
                     :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                    label="Scale 2 - Data" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                    label="Scale 2 - Data" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
                 <div class="col-md-3">
                     <BsSelect v-model="config.pin_scale2_clock"
                     :options="status.platform == 'esp8266' ? pinEsp8266Options : status.platform == 'esp32s3' ? pinEsp32s3Options : pinEsp32s2Options"
-                    label="Scale 2 - Clock" width="3" :disabled="global.disabled || !enablePin"></BsSelect>
+                    label="Scale 2 - Clock" width="4" :disabled="global.disabled || !enablePin"></BsSelect>
                 </div>
 
                 <div class="col-md-12">
