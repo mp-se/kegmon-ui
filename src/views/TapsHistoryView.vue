@@ -64,6 +64,7 @@
 </template>
 
 <script setup>
+/*
 import { onMounted, ref } from 'vue'
 import { Chart as ChartJS, Legend, LinearScale, TimeScale, LineController, PointElement, LineElement } from 'chart.js'
 import 'date-fns'
@@ -106,26 +107,7 @@ const scaleOptions = ref({
         time: {
             unit: 'day',
         }
-        /*time: {
-            unit: 'hour',
-            displayFormats: {
-                hour: 'E HH:mm',
-                day: 'HH:mm',
-                week: 'E HH:mm',
-                month: 'd HH:mm',
-            }
-        },
-        min: 0,
-        max: 0,*/
     },
-    /*y: {
-        type: 'linear',
-        position: 'left',
-        title: {
-            display: true,
-            text: 'Volume',
-        },
-    }*/
 })
 
 const chartOptions = ref({
@@ -173,7 +155,11 @@ class Level {
 onMounted(() => {
     logInfo("TapsHistoryView.onMounted()")
 
-    ChartJS.register(Legend, LinearScale, TimeScale, PointElement, LineController, LineElement)
+    try {
+        ChartJS.register(Legend, LinearScale, TimeScale, PointElement, LineController, LineElement)
+    } catch (err) {
+        logError("TapsHistoryView.onMounted()", err)
+    }
 
     fetch(global.baseURL + 'levels', {
         method: "GET",
@@ -239,4 +225,5 @@ onMounted(() => {
             logError("TapsHistoryView.onMounted()", err)
         })
 })
+*/
 </script>
