@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-4">
                 <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                    href="https://github.com/mp-se/gravitymon" target="_blank">Report issues on
+                    href="https://github.com/mp-se/kegmon" target="_blank">Report issues on
                     github.com</a>
             </div>
             <div class="col-md-4">
@@ -23,11 +23,13 @@
                     href="https://www.homebrewtalk.com/" target="_blank">Discuss on
                     homebrewtalk.com</a>
             </div>
+            <!--
             <div class="col-md-4">
                 <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
                     href="https://www.gravitymon.com/" target="_blank">Read docs on
                     gravitymon.com</a>
             </div>
+            -->
         </div>
 
         <hr>
