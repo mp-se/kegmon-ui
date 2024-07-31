@@ -64,7 +64,6 @@
 </template>
 
 <script setup>
-/*
 import { onMounted, ref } from 'vue'
 import { Chart as ChartJS, Legend, LinearScale, TimeScale, LineController, PointElement, LineElement } from 'chart.js'
 import 'date-fns'
@@ -225,5 +224,4 @@ onMounted(() => {
             logError("TapsHistoryView.onMounted()", err)
         })
 })
-*/
 </script>
