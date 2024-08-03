@@ -17,7 +17,7 @@
     <BsMessage message="Initalizing KegMon Web interface" class="h2" :dismissable="false" alert="info"></BsMessage>
   </div>
 
-  <Menubar v-if="global.initialized" :disabled="global.disabled" />
+  <Menubar v-if="global.initialized" :disabled="global.disabled" brand="KegMon" />
 
   <div class="container">
     <div>
