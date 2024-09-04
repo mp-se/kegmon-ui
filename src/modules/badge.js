@@ -1,9 +1,8 @@
 import { config, status } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@/modules/logger'
 
 /**
  * Used in menybar to show the total amount of items that require user action.
- * 
+ *
  * @returns number of items that needs attention
  */
 export function deviceBadge() {
@@ -15,7 +14,7 @@ export function deviceSettingBadge() {
 }
 
 export function deviceMdnsBadge() {
-  return config.mdns === "" ? 1 : 0
+  return config.mdns === '' ? 1 : 0
 }
 
 export function deviceHardwareBadge() {
@@ -23,7 +22,7 @@ export function deviceHardwareBadge() {
 }
 
 export function deviceCalibrationBadge() {
-  return status.scale_factor1 == 0 && status.scale_factor2 == 0 ? 1 : 0 
+  return status.scale_factor1 == 0 && status.scale_factor2 == 0 ? 1 : 0
 }
 
 export function deviceWifiBadge() {
@@ -31,13 +30,11 @@ export function deviceWifiBadge() {
 }
 
 export function deviceWifi1Badge() {
-  if (config.wifi_ssid === '')
-      return 1
+  if (config.wifi_ssid === '') return 1
   return 0
 }
 
 export function deviceWifi2Badge() {
-  if (config.wifi_ssid2 === '' && config.wifi_ssid === '')
-      return 1
+  if (config.wifi_ssid2 === '' && config.wifi_ssid === '') return 1
   return 0
 }

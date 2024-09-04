@@ -1,9 +1,8 @@
 import { ref } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { validateCurrentForm } from "@/modules/utils"
+import { validateCurrentForm } from '@/modules/utils'
 import * as badge from '@/modules/badge'
 import { global } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@/modules/logger'
 
 import HomeView from '@/views/HomeView.vue'
 import DeviceSettingsView from '@/views/DeviceSettingsView.vue'
@@ -123,23 +122,23 @@ const routes = [
     component: AboutView
   },
   {
-    path: "/:catchAll(.*)",
-    name: "404",
+    path: '/:catchAll(.*)',
+    name: '404',
     component: NotFoundView
   }
 ]
 
-export const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: routes
 })
 
-router.beforeEach((to, from) => {
-  if (global.disabled)
-    return false
+export default router
 
-  if (!validateCurrentForm()) 
-    return false;
+router.beforeEach(() => {
+  if (global.disabled) return false
+
+  if (!validateCurrentForm()) return false
 
   global.clearMessages()
   return true
@@ -148,115 +147,115 @@ router.beforeEach((to, from) => {
 const items = ref([
   {
     label: 'Home',
-    icon: 'bi-home',
+    icon: 'IconHome',
     path: '/',
     subs: []
   },
   {
     label: 'Device',
-    icon: 'bi-cpu',
+    icon: 'IconCpu',
     path: '/device',
     badge: badge.deviceBadge,
     subs: [
       {
         label: 'Settings',
         badge: badge.deviceSettingBadge,
-        path: '/device/settings',
+        path: '/device/settings'
       },
       {
         label: 'Hardware',
         badge: badge.deviceHardwareBadge,
-        path: '/device/hardware',
+        path: '/device/hardware'
       },
       {
         label: 'Calibration',
         badge: badge.deviceCalibrationBadge,
-        path: '/device/calibration',
+        path: '/device/calibration'
       },
       {
         label: 'Stability',
-        path: '/device/stability',
+        path: '/device/stability'
       },
       {
         label: 'Wifi',
         badge: badge.deviceWifiBadge,
-        path: '/device/wifi',
-      },
+        path: '/device/wifi'
+      }
     ]
   },
   {
     label: 'Taps',
-    icon: 'bi-justify',
+    icon: 'IconJustify',
     path: '/taps',
     subs: [
       {
         label: 'Settings',
-        path: '/taps/settings',
+        path: '/taps/settings'
       },
       {
         label: 'Beers',
-        path: '/taps/beer',
+        path: '/taps/beer'
       },
       {
         label: 'History',
-        path: '/taps/history',
-      },
+        path: '/taps/history'
+      }
     ]
   },
   {
     label: 'Integrations',
-    icon: 'bi-cloud-up-arrow',
+    icon: 'IconCloudUpArrow',
     path: '/integration',
     subs: [
       {
         label: 'Home Assistant',
-        path: '/integration/homeassistant',
+        path: '/integration/homeassistant'
       },
       {
         label: 'Brewfather',
-        path: '/integration/brewfather',
+        path: '/integration/brewfather'
       },
       {
         label: 'Brewspy',
-        path: '/integration/brewspy',
+        path: '/integration/brewspy'
       },
       {
         label: 'Influx Db',
-        path: '/integration/influxdb',
-      },
+        path: '/integration/influxdb'
+      }
     ]
   },
   {
     label: 'Other',
-    icon: 'bi-tools',
+    icon: 'IconTools',
     path: '/other',
     subs: [
       {
         label: 'Serial console',
-        path: '/other/serial',
+        path: '/other/serial'
       },
       {
         label: 'Backup & Restore',
-        path: '/other/backup',
+        path: '/other/backup'
       },
       {
         label: 'Firmware update',
-        path: '/other/firmware',
+        path: '/other/firmware'
       },
       {
         label: 'Support',
-        path: '/other/support',
+        path: '/other/support'
       },
       {
         label: 'Tools',
-        path: '/other/tools',
+        path: '/other/tools'
       },
       {
         label: 'About',
-        path: '/other/about',
-      },
+        path: '/other/about'
+      }
     ]
-  },
+  }
 ])
 
 export { items }

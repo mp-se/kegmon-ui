@@ -1,42 +1,61 @@
 <template>
-    <div class="container">
-        <p></p>
-        <p class="h3">Integration - Brewfather</p>
-        <hr>
+  <div class="container">
+    <p></p>
+    <p class="h3">Integration - Brewfather</p>
+    <hr />
 
-        <form @submit.prevent="save" class="needs-validation" novalidate>
-            <div class="row">
-                <div class="col-md-12">
-                    <BsInputText v-model="config.brewfather_apikey" type="password" maxlength="120" label="API Key":disabled="global.disabled" />
-                </div>
-                <div class="col-md-12">
-                    <BsInputText v-model="config.brewfather_userkey" type="password" maxlength="120" label="API Key":disabled="global.disabled" />
-                </div>
-            </div>
-            <div class="row gy-2">
-                <div class="col-md-12">
-                    <hr>
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary w-2" :disabled="global.disabled || !global.configChanged">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                            :hidden="!global.disabled"></span>
-                        &nbsp;Save
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+    <form @submit.prevent="save" class="needs-validation" novalidate>
+      <div class="row">
+        <div class="col-md-12">
+          <BsInputText
+            v-model="config.brewfather_apikey"
+            type="password"
+            maxlength="120"
+            label="API Key"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-12">
+          <BsInputText
+            v-model="config.brewfather_userkey"
+            type="password"
+            maxlength="120"
+            label="API Key"
+            :disabled="global.disabled"
+          />
+        </div>
+      </div>
+      <div class="row gy-2">
+        <div class="col-md-12">
+          <hr />
+        </div>
+        <div class="col-md-3">
+          <button
+            type="submit"
+            class="btn btn-primary w-2"
+            :disabled="global.disabled || !global.configChanged"
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+              :hidden="!global.disabled"
+            ></span>
+            &nbsp;Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script setup>
-import { validateCurrentForm } from "@/modules/utils"
-import { global, config } from "@/modules/pinia"
-import { logDebug, logError, logInfo } from '@/modules/logger'
+import { validateCurrentForm } from '@/modules/utils'
+import { global, config } from '@/modules/pinia'
 
 const save = () => {
-    if (!validateCurrentForm()) return
+  if (!validateCurrentForm()) return
 
-    config.saveAll()
+  config.saveAll()
 }
 </script>

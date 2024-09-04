@@ -3,7 +3,6 @@
     <p></p>
 
     <div v-if="status" class="container overflow-hidden text-center">
-
       <div class="row gy-4">
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name1">
@@ -11,7 +10,8 @@
               <BsProgress :progress="tapProgress1"></BsProgress>
             </p>
             <p class="text-center">
-              Volume: {{ status.beer_volume1 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight1 }} {{ config.getWeightUnit }} 
+              Volume: {{ status.beer_volume1 }} {{ config.getVolumeUnit }} Weight:
+              {{ status.beer_weight1 }} {{ config.getWeightUnit }}
             </p>
             <p class="text-center">
               ABV: {{ config.beer_abv1 }}% EBC: {{ config.beer_ebc1 }} IBU: {{ config.beer_ibu1 }}
@@ -24,7 +24,8 @@
               <BsProgress :progress="tapProgress2"></BsProgress>
             </p>
             <p class="text-center">
-              Volume: {{ status.beer_volume2 }} {{ config.getVolumeUnit }} Weight: {{ status.beer_weight2 }} {{ config.getWeightUnit }}
+              Volume: {{ status.beer_volume2 }} {{ config.getVolumeUnit }} Weight:
+              {{ status.beer_weight2 }} {{ config.getWeightUnit }}
             </p>
             <p class="text-center">
               ABV: {{ config.beer_abv2 }}% EBC: {{ config.beer_ebc2 }} IBU: {{ config.beer_ibu2 }}
@@ -37,9 +38,7 @@
       <div class="row gy-4">
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name1">
-            <p class="text-center">
-              Glasses left: {{ status.glass1 }}
-            </p>
+            <p class="text-center">Glasses left: {{ status.glass1 }}</p>
             <p class="text-center" v-if="status.last_pour_volume1 != 'NaN'">
               Last pour: {{ status.last_pour_volume1 }} {{ config.getVolumeUnit }}
             </p>
@@ -48,9 +47,7 @@
 
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name2">
-            <p class="text-center">
-              Glasses left: {{ status.glass2 }}
-            </p>
+            <p class="text-center">Glasses left: {{ status.glass2 }}</p>
             <p class="text-center" v-if="status.last_pour_volume2 != 'NaN'">
               Last pour: {{ status.last_pour_volume2 }} {{ config.getVolumeUnit }}
             </p>
@@ -60,20 +57,15 @@
       </div>
 
       <div class="row gy-4">
-
         <div class="col-md-4" v-if="status.temperature !== 'NaN'">
           <BsCard header="Measurement" color="info" title="Temperature">
-            <p class="text-center">
-              {{ status.temperature }} {{ config.getTempUnit }}
-            </p>
+            <p class="text-center">{{ status.temperature }} {{ config.getTempUnit }}</p>
           </BsCard>
         </div>
 
         <div class="col-md-4">
           <BsCard header="Device" title="WIFI">
-            <p class="text-center">
-              {{ status.rssi }} dBm - {{ status.wifi_ssid }}
-            </p>
+            <p class="text-center">{{ status.rssi }} dBm - {{ status.wifi_ssid }}</p>
           </BsCard>
         </div>
 
@@ -96,7 +88,9 @@
         <div class="col-md-4">
           <BsCard header="Device" title="Software version">
             <p class="text-center">
-              Firmware: {{ status.app_ver }} ({{ status.app_build }}) UI: {{ global.uiVersion }} ({{ global.uiBuild }})
+              Firmware: {{ status.app_ver }} ({{ status.app_build }}) UI: {{ global.uiVersion }} ({{
+                global.uiBuild
+              }})
             </p>
           </BsCard>
         </div>
@@ -112,42 +106,40 @@
         <div class="col-md-4">
           <BsCard header="Device" title="Uptime">
             <p class="text-center">
-              {{ status.uptime_days }} days {{ status.uptime_hours }} hours {{ status.uptime_minutes }} minutes {{ status.uptime_seconds }} seconds
+              {{ status.uptime_days }} days {{ status.uptime_hours }} hours
+              {{ status.uptime_minutes }} minutes {{ status.uptime_seconds }} seconds
             </p>
           </BsCard>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted, computed, onBeforeMount, onBeforeUnmount } from 'vue'
-import { status, global, config } from "@/modules/pinia"
-import { logDebug, logError, logInfo } from '@/modules/logger'
+import { ref, computed, onBeforeMount, onBeforeUnmount } from 'vue'
+import { status, global, config } from '@/modules/pinia'
 
-// TODO: Add humidity and pressure 
+// TODO: Add humidity and pressure
 // TODO: Show # glasses left for taps
 // TODO: Show last pour per tap
 
 const polling = ref(null)
 
 const tapProgress1 = computed(() => {
-  return Math.round( (status.beer_volume1 / status.keg_volume1) * 100)
+  return Math.round((status.beer_volume1 / status.keg_volume1) * 100)
 })
 
 const tapProgress2 = computed(() => {
-  return Math.round( (status.beer_volume2 / status.keg_volume2) * 100)
+  return Math.round((status.beer_volume2 / status.keg_volume2) * 100)
 })
 
 function refresh() {
-  status.load((success) => {
-  })
+  status.load(() => {})
 }
 
 onBeforeMount(() => {
-  refresh();
+  refresh()
   polling.value = setInterval(refresh, 4000)
 })
 
