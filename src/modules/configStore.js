@@ -47,6 +47,9 @@ export const useConfigStore = defineStore('config', {
       brewfather_userkey: '',
       brewspy_token1: '',
       brewspy_token2: '',
+      barhelper_apikey: '',
+      barhelper_monitor1: '',
+      barhelper_monitor2: '',
       // Push - Http Post 1
       http_post_target: '',
       http_post_header1: '',
@@ -173,6 +176,9 @@ export const useConfigStore = defineStore('config', {
           this.brewfather_userkey = json.brewfather_userkey
           this.brewspy_token1 = json.brewspy_token1
           this.brewspy_token2 = json.brewspy_token2
+          this.barhelper_apikey = json.barhelper_apikey
+          this.barhelper_monitor1 = json.barhelper_monitor1
+          this.barhelper_monitor2 = json.barhelper_monitor2
           // Push - Http Post 1
           this.http_post_target = json.http_post_target
           this.http_post_header1 = json.http_post_header1

@@ -46,7 +46,10 @@ export var configData = {
   brewfather_userkey: "Urz3aoQ5KJhaH8883DIXWZlUoHpG42",
   brewspy_token1: "",
   brewspy_token2: "",
-  // Push _ Http Post 1
+  barhelper_apikey: '',
+  barhelper_monitor1: 'Monitor 1',
+  barhelper_monitor2: 'Monitor 2',
+// Push _ Http Post 1
   http_post_target: "http://192.168.1.10:9090/api/v1/ZYfjlUNeiuyu9N/telemetry",
   http_post_header1: "Auth: Basic T7IF9DD9fF3RDddE=",
   http_post_header2: "Auth: Advanced T7IF9DD9fF3RDddE=",
