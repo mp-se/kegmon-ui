@@ -135,6 +135,27 @@ export var statusData = {
   free_heap: 500,
   ip: "192.0.0.1",
   wifi_setup: false,
+  ha: {
+     push_age: 288986,
+      push_status: false,
+      push_code: 0,
+      push_response: "",
+      push_used: false
+  },
+  barhelper: {
+      push_age: 288986,
+      push_status: false,
+      push_code: 0,
+      push_response: "",
+      push_used: false
+  },
+  brewspy: {
+      push_age: 288986,
+      push_status: false,
+      push_code: 0,
+      push_response: "",
+      push_used: false
+  },
 }
 
 // EOF

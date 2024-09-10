@@ -54,7 +54,12 @@ export const useStatusStore = defineStore('status', {
       beer_volume2: 0,
       scale_stable_weight2: 0,
       last_pour_weight2: 0,
-      last_pour_volume2: 0
+      last_pour_volume2: 0,
+
+      // Push status
+      ha: {},
+      brewspy: {},
+      barhelper: {}
     }
   },
   getters: {},
@@ -115,6 +120,12 @@ export const useStatusStore = defineStore('status', {
           this.scale_stable_weight2 = new Number(json.scale_stable_weight2).toFixed(2)
           this.last_pour_weight2 = new Number(json.last_pour_weight2).toFixed(2)
           this.last_pour_volume2 = new Number(json.last_pour_volume2).toFixed(2)
+
+          // Push status
+          if (Object.prototype.hasOwnProperty.call(json, 'ha')) this.ha = json.ha
+          if (Object.prototype.hasOwnProperty.call(json, 'brewspy')) this.brewspy = json.brewspy
+          if (Object.prototype.hasOwnProperty.call(json, 'barhelper'))
+            this.barhelper = json.barhelper
 
           logInfo('statusStore.load()', 'Fetching /api/status completed')
           callback(true)

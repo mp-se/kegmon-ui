@@ -18,6 +18,7 @@
             </p>
           </BsCard>
         </div>
+
         <div class="col-md-6">
           <BsCard header="Measurement" color="info" :title="config.beer_name2">
             <p class="text-center">
@@ -60,6 +61,24 @@
         <div class="col-md-4" v-if="status.temperature !== 'NaN'">
           <BsCard header="Measurement" color="info" title="Temperature">
             <p class="text-center">{{ status.temperature }} {{ config.getTempUnit }}</p>
+          </BsCard>
+        </div>
+
+        <div class="col-md-4" v-if="status.ha != {}">
+          <BsCard header="Push" color="secondary" title="Home Assistant">
+            <p class="text-center">{{ pushHomeAssistant }}</p>
+          </BsCard>
+        </div>
+
+        <div class="col-md-4" v-if="status.brewspy != {}">
+          <BsCard header="Push" color="secondary" title="Brewspy">
+            <p class="text-center">{{ pushBrewspy }}</p>
+          </BsCard>
+        </div>
+
+        <div class="col-md-4" v-if="status.barhelper != {}">
+          <BsCard header="Push" color="secondary" title="Barhelper">
+            <p class="text-center">{{ pushBarhelper }}</p>
           </BsCard>
         </div>
 
@@ -119,12 +138,71 @@
 <script setup>
 import { ref, computed, onBeforeMount, onBeforeUnmount } from 'vue'
 import { status, global, config } from '@/modules/pinia'
+import { logDebug, logError } from '@/modules/logger'
 
 // TODO: Add humidity and pressure
 // TODO: Show # glasses left for taps
 // TODO: Show last pour per tap
 
 const polling = ref(null)
+
+const pushHomeAssistant = computed(() => {
+  if (status.ha.push_used) {
+    return (
+      'Updated ' +
+      new Number(status.ha.push_age / 1000).toFixed(0) +
+      's ago, ' +
+      (status.ha.push_status ? 'Success' : 'Failed, error ' + status.ha.push_code)
+    )
+  }
+
+  return 'Not updated'
+})
+
+const pushBrewspy = computed(() => {
+  if (status.brewspy.push_used) {
+    return (
+      'Updated ' +
+      new Number(status.brewspy.push_age / 1000).toFixed(0) +
+      's ago, ' +
+      (status.brewspy.push_status ? 'Success' : 'Failed, error ' + status.brewspy.push_code)
+    )
+  }
+
+  return 'Not updated'
+})
+
+const pushBarhelper = computed(() => {
+  if (status.barhelper.push_used) {
+    var payload = status.barhelper.push_response
+    // Check for a faulty payload and fix it so we can parse it.
+    if (payload.search('"volume:') != -1) {
+      payload = payload.replace('volume:', 'volume":')
+      payload = payload.replace('"\n', ',\n')
+    }
+
+    var message = ''
+
+    try {
+      var json = JSON.parse(payload)
+      message = json.message
+      logDebug('HomeView.pushBarhelper()', json)
+    } catch (e) {
+      logError('HomeView.pushBarhelper()', e, payload)
+    }
+
+    return (
+      'Updated ' +
+      new Number(status.barhelper.push_age / 1000).toFixed(0) +
+      's ago, ' +
+      (status.barhelper.push_status ? 'Success' : 'Failed, error ' + status.barhelper.push_code) +
+      ', ' +
+      message
+    )
+  }
+
+  return 'Not updated'
+})
 
 const tapProgress1 = computed(() => {
   return Math.round((status.beer_volume1 / status.keg_volume1) * 100)
