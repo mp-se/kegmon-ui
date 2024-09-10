@@ -6658,7 +6658,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..96848a";
+      return "..685ca3";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -6725,7 +6725,11 @@ const useStatusStore = /* @__PURE__ */ defineStore("status", {
       beer_volume2: 0,
       scale_stable_weight2: 0,
       last_pour_weight2: 0,
-      last_pour_volume2: 0
+      last_pour_volume2: 0,
+      // Push status
+      ha: {},
+      brewspy: {},
+      barhelper: {}
     };
   },
   getters: {},
@@ -6779,6 +6783,10 @@ const useStatusStore = /* @__PURE__ */ defineStore("status", {
         this.scale_stable_weight2 = new Number(json.scale_stable_weight2).toFixed(2);
         this.last_pour_weight2 = new Number(json.last_pour_weight2).toFixed(2);
         this.last_pour_volume2 = new Number(json.last_pour_volume2).toFixed(2);
+        if (Object.prototype.hasOwnProperty.call(json, "ha")) this.ha = json.ha;
+        if (Object.prototype.hasOwnProperty.call(json, "brewspy")) this.brewspy = json.brewspy;
+        if (Object.prototype.hasOwnProperty.call(json, "barhelper"))
+          this.barhelper = json.barhelper;
         logInfo("statusStore.load()", "Fetching /api/status completed");
         callback2(true);
       }).catch((err) => {
@@ -9286,11 +9294,20 @@ const _hoisted_23$7 = {
   class: "col-md-4"
 };
 const _hoisted_24$6 = { class: "text-center" };
-const _hoisted_25$6 = { class: "col-md-4" };
+const _hoisted_25$6 = {
+  key: 1,
+  class: "col-md-4"
+};
 const _hoisted_26$6 = { class: "text-center" };
-const _hoisted_27$5 = { class: "col-md-4" };
+const _hoisted_27$5 = {
+  key: 2,
+  class: "col-md-4"
+};
 const _hoisted_28$5 = { class: "text-center" };
-const _hoisted_29$4 = { class: "col-md-4" };
+const _hoisted_29$4 = {
+  key: 3,
+  class: "col-md-4"
+};
 const _hoisted_30$4 = { class: "text-center" };
 const _hoisted_31$4 = { class: "col-md-4" };
 const _hoisted_32$4 = { class: "text-center" };
@@ -9298,10 +9315,47 @@ const _hoisted_33$3 = { class: "col-md-4" };
 const _hoisted_34$3 = { class: "text-center" };
 const _hoisted_35$3 = { class: "col-md-4" };
 const _hoisted_36$2 = { class: "text-center" };
+const _hoisted_37$1 = { class: "col-md-4" };
+const _hoisted_38$2 = { class: "text-center" };
+const _hoisted_39$1 = { class: "col-md-4" };
+const _hoisted_40$1 = { class: "text-center" };
+const _hoisted_41$1 = { class: "col-md-4" };
+const _hoisted_42$1 = { class: "text-center" };
 const _sfc_main$S = {
   __name: "HomeView",
   setup(__props) {
     const polling = ref(null);
+    const pushHomeAssistant = computed(() => {
+      if (status.ha.push_used) {
+        return "Updated " + new Number(status.ha.push_age / 1e3).toFixed(0) + "s ago, " + (status.ha.push_status ? "Success" : "Failed, error " + status.ha.push_code);
+      }
+      return "Not updated";
+    });
+    const pushBrewspy = computed(() => {
+      if (status.brewspy.push_used) {
+        return "Updated " + new Number(status.brewspy.push_age / 1e3).toFixed(0) + "s ago, " + (status.brewspy.push_status ? "Success" : "Failed, error " + status.brewspy.push_code);
+      }
+      return "Not updated";
+    });
+    const pushBarhelper = computed(() => {
+      if (status.barhelper.push_used) {
+        var payload = status.barhelper.push_response;
+        if (payload.search('"volume:') != -1) {
+          payload = payload.replace("volume:", 'volume":');
+          payload = payload.replace('"\n', ",\n");
+        }
+        var message2 = "";
+        try {
+          var json = JSON.parse(payload);
+          message2 = json.message;
+          logDebug("HomeView.pushBarhelper()", json);
+        } catch (e) {
+          logError("HomeView.pushBarhelper()", e, payload);
+        }
+        return "Updated " + new Number(status.barhelper.push_age / 1e3).toFixed(0) + "s ago, " + (status.barhelper.push_status ? "Success" : "Failed, error " + status.barhelper.push_code) + ", " + message2;
+      }
+      return "Not updated";
+    });
     const tapProgress1 = computed(() => {
       return Math.round(status.beer_volume1 / status.keg_volume1 * 100);
     });
@@ -9402,46 +9456,49 @@ const _sfc_main$S = {
                 _: 1
               })
             ])) : createCommentVNode("", true),
-            createBaseVNode("div", _hoisted_25$6, [
+            unref(status).ha != {} ? (openBlock(), createElementBlock("div", _hoisted_25$6, [
+              createVNode(_component_BsCard, {
+                header: "Push",
+                color: "secondary",
+                title: "Home Assistant"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_26$6, toDisplayString(pushHomeAssistant.value), 1)
+                ]),
+                _: 1
+              })
+            ])) : createCommentVNode("", true),
+            unref(status).brewspy != {} ? (openBlock(), createElementBlock("div", _hoisted_27$5, [
+              createVNode(_component_BsCard, {
+                header: "Push",
+                color: "secondary",
+                title: "Brewspy"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_28$5, toDisplayString(pushBrewspy.value), 1)
+                ]),
+                _: 1
+              })
+            ])) : createCommentVNode("", true),
+            unref(status).barhelper != {} ? (openBlock(), createElementBlock("div", _hoisted_29$4, [
+              createVNode(_component_BsCard, {
+                header: "Push",
+                color: "secondary",
+                title: "Barhelper"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_30$4, toDisplayString(pushBarhelper.value), 1)
+                ]),
+                _: 1
+              })
+            ])) : createCommentVNode("", true),
+            createBaseVNode("div", _hoisted_31$4, [
               createVNode(_component_BsCard, {
                 header: "Device",
                 title: "WIFI"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_26$6, toDisplayString(unref(status).rssi) + " dBm - " + toDisplayString(unref(status).wifi_ssid), 1)
-                ]),
-                _: 1
-              })
-            ]),
-            createBaseVNode("div", _hoisted_27$5, [
-              createVNode(_component_BsCard, {
-                header: "Device",
-                title: "IP Address"
-              }, {
-                default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_28$5, toDisplayString(unref(status).ip), 1)
-                ]),
-                _: 1
-              })
-            ]),
-            createBaseVNode("div", _hoisted_29$4, [
-              createVNode(_component_BsCard, {
-                header: "Device",
-                title: "Memory"
-              }, {
-                default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_30$4, " Free: " + toDisplayString(unref(status).free_heap) + " kb, Total: " + toDisplayString(unref(status).total_heap) + " kb ", 1)
-                ]),
-                _: 1
-              })
-            ]),
-            createBaseVNode("div", _hoisted_31$4, [
-              createVNode(_component_BsCard, {
-                header: "Device",
-                title: "Software version"
-              }, {
-                default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_32$4, " Firmware: " + toDisplayString(unref(status).app_ver) + " (" + toDisplayString(unref(status).app_build) + ") UI: " + toDisplayString(unref(global$1).uiVersion) + " (" + toDisplayString(unref(global$1).uiBuild) + ") ", 1)
+                  createBaseVNode("p", _hoisted_32$4, toDisplayString(unref(status).rssi) + " dBm - " + toDisplayString(unref(status).wifi_ssid), 1)
                 ]),
                 _: 1
               })
@@ -9449,10 +9506,10 @@ const _sfc_main$S = {
             createBaseVNode("div", _hoisted_33$3, [
               createVNode(_component_BsCard, {
                 header: "Device",
-                title: "Platform"
+                title: "IP Address"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_34$3, toDisplayString(unref(status).platform), 1)
+                  createBaseVNode("p", _hoisted_34$3, toDisplayString(unref(status).ip), 1)
                 ]),
                 _: 1
               })
@@ -9460,10 +9517,43 @@ const _sfc_main$S = {
             createBaseVNode("div", _hoisted_35$3, [
               createVNode(_component_BsCard, {
                 header: "Device",
+                title: "Memory"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_36$2, " Free: " + toDisplayString(unref(status).free_heap) + " kb, Total: " + toDisplayString(unref(status).total_heap) + " kb ", 1)
+                ]),
+                _: 1
+              })
+            ]),
+            createBaseVNode("div", _hoisted_37$1, [
+              createVNode(_component_BsCard, {
+                header: "Device",
+                title: "Software version"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_38$2, " Firmware: " + toDisplayString(unref(status).app_ver) + " (" + toDisplayString(unref(status).app_build) + ") UI: " + toDisplayString(unref(global$1).uiVersion) + " (" + toDisplayString(unref(global$1).uiBuild) + ") ", 1)
+                ]),
+                _: 1
+              })
+            ]),
+            createBaseVNode("div", _hoisted_39$1, [
+              createVNode(_component_BsCard, {
+                header: "Device",
+                title: "Platform"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_40$1, toDisplayString(unref(status).platform), 1)
+                ]),
+                _: 1
+              })
+            ]),
+            createBaseVNode("div", _hoisted_41$1, [
+              createVNode(_component_BsCard, {
+                header: "Device",
                 title: "Uptime"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_36$2, toDisplayString(unref(status).uptime_days) + " days " + toDisplayString(unref(status).uptime_hours) + " hours " + toDisplayString(unref(status).uptime_minutes) + " minutes " + toDisplayString(unref(status).uptime_seconds) + " seconds ", 1)
+                  createBaseVNode("p", _hoisted_42$1, toDisplayString(unref(status).uptime_days) + " days " + toDisplayString(unref(status).uptime_hours) + " hours " + toDisplayString(unref(status).uptime_minutes) + " minutes " + toDisplayString(unref(status).uptime_seconds) + " seconds ", 1)
                 ]),
                 _: 1
               })
