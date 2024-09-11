@@ -77,6 +77,7 @@ app.get('/api/push/status', (req, res) => {
   res.send(data)
 })
 
+
 app.get('/levels', (req, res) => {
   console.log('GET: /levels')
 
@@ -126,6 +127,37 @@ app.get('/levels', (req, res) => {
 2024-07-16 14:37:44;nan;15.156647;nan;0.458576\n\
 2024-07-16 14:37:45;nan;15.156647;nan;nan"
   res.send(levels)
+})
+
+app.get('/api/stability', (req, res) => {
+  console.log('GET: /api/stability')
+  /*
+   * Description:    Return stability data as json document.
+   * Authentication: Required
+   * Note:           -
+   * Return:         200 OK, 401 Access Denied
+   */
+  const statsData = {
+    stability_sum1: 0,
+    stability_min1: 0,
+    stability_max1: 0,
+    stability_ave1: 0,
+    stability_var1: 0,
+    stability_popdev1: 0,
+    stability_ubiasdev1: 0,
+    stability_count1: 0,    
+    stability_sum2: 0,
+    stability_min2: 0,
+    stability_max2: 0,
+    stability_ave2: 0,
+    stability_var2: 0,
+    stability_popdev2: 0,
+    stability_ubiasdev2: 0,
+    stability_count2: 0,    
+  }
+
+  res.type('application/json')
+  res.send(statsData)
 })
 
 app.listen(port, () => {
