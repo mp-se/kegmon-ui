@@ -6658,7 +6658,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..6c3909";
+      return "..8a9d9a";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -25364,7 +25364,7 @@ const _sfc_main$H = {
                 "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => unref(config).brewfather_userkey = $event),
                 type: "password",
                 maxlength: "120",
-                label: "API Key",
+                label: "User Key",
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "disabled"])
             ])
