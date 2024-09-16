@@ -20,7 +20,7 @@
             v-model="config.brewfather_userkey"
             type="password"
             maxlength="120"
-            label="API Key"
+            label="User Key"
             :disabled="global.disabled"
           />
         </div>
