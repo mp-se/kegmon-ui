@@ -6658,7 +6658,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..8a9d9a";
+      return "..f44a46";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -25615,9 +25615,10 @@ const _sfc_main$D = {
     const progress = ref(0);
     function backup() {
       var backup2 = {
-        meta: { version: "1.0.0", software: "KegMon" },
+        meta: { version: "1.0.0", software: "KegMon", created: "" },
         config: JSON.parse(config.toJson())
       };
+      backup2.meta.created = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
       var s = JSON.stringify(backup2, null, 2);
       var name = config.mdns + ".txt";
       download(s, "text/plain", name);
@@ -27853,11 +27854,11 @@ const _sfc_main$d = /* @__PURE__ */ Object.assign({
         badge: badge.value
       }, {
         default: withCtx(() => [
-          withDirectives(createBaseVNode("select", {
+          withDirectives(createBaseVNode("select", mergeProps({
             "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => model.value = $event),
             class: "form-select",
             disabled: disabled.value
-          }, [
+          }, _ctx.$attrs), [
             (openBlock(true), createElementBlock(Fragment, null, renderList(options.value, (o) => {
               return openBlock(), createElementBlock(Fragment, {
                 key: o.value
@@ -27875,7 +27876,7 @@ const _sfc_main$d = /* @__PURE__ */ Object.assign({
                 }, toDisplayString(o.label), 9, _hoisted_3$7))
               ], 64);
             }), 128))
-          ], 8, _hoisted_1$d), [
+          ], 16, _hoisted_1$d), [
             [vModelSelect, model.value]
           ])
         ]),
