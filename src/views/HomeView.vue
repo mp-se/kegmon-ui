@@ -64,19 +64,19 @@
           </BsCard>
         </div>
 
-        <div class="col-md-4" v-if="status.ha != {}">
+        <div class="col-md-4" v-if="status.ha != {} && config.mqtt_target != ''">
           <BsCard header="Push" color="secondary" title="Home Assistant">
             <p class="text-center">{{ pushHomeAssistant }}</p>
           </BsCard>
         </div>
 
-        <div class="col-md-4" v-if="status.brewspy != {}">
+        <div class="col-md-4" v-if="status.brewspy != {} && config.brewspy_token1 != '' && config.brewspy_token2 != ''">
           <BsCard header="Push" color="secondary" title="Brewspy">
             <p class="text-center">{{ pushBrewspy }}</p>
           </BsCard>
         </div>
 
-        <div class="col-md-4" v-if="status.barhelper != {}">
+        <div class="col-md-4" v-if="status.barhelper != {} && config.barhelper_apikey != ''">
           <BsCard header="Push" color="secondary" title="Barhelper">
             <p class="text-center">{{ pushBarhelper }}</p>
           </BsCard>
