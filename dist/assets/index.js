@@ -6658,7 +6658,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..f68813";
+      return "..c9a3bf";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -9456,7 +9456,7 @@ const _sfc_main$S = {
                 _: 1
               })
             ])) : createCommentVNode("", true),
-            unref(status).ha != {} ? (openBlock(), createElementBlock("div", _hoisted_25$6, [
+            unref(status).ha != {} && unref(config).mqtt_target != "" ? (openBlock(), createElementBlock("div", _hoisted_25$6, [
               createVNode(_component_BsCard, {
                 header: "Push",
                 color: "secondary",
@@ -9468,7 +9468,7 @@ const _sfc_main$S = {
                 _: 1
               })
             ])) : createCommentVNode("", true),
-            unref(status).brewspy != {} ? (openBlock(), createElementBlock("div", _hoisted_27$5, [
+            unref(status).brewspy != {} && unref(config).brewspy_token1 != "" && unref(config).brewspy_token2 != "" ? (openBlock(), createElementBlock("div", _hoisted_27$5, [
               createVNode(_component_BsCard, {
                 header: "Push",
                 color: "secondary",
@@ -9480,7 +9480,7 @@ const _sfc_main$S = {
                 _: 1
               })
             ])) : createCommentVNode("", true),
-            unref(status).barhelper != {} ? (openBlock(), createElementBlock("div", _hoisted_29$4, [
+            unref(status).barhelper != {} && unref(config).barhelper_apikey != "" ? (openBlock(), createElementBlock("div", _hoisted_29$4, [
               createVNode(_component_BsCard, {
                 header: "Push",
                 color: "secondary",
