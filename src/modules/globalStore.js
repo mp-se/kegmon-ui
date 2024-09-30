@@ -15,7 +15,8 @@ export const useGlobalStore = defineStore('global', {
       messageSuccess: '',
       messageInfo: '',
 
-      fetchTimout: 8000
+      fetchTimout: 8000,
+      url: undefined
     }
   },
   getters: {
@@ -35,12 +36,19 @@ export const useGlobalStore = defineStore('global', {
       return 'Bearer ' + this.id
     },
     baseURL() {
-      if (import.meta.env.VITE_APP_HOST === undefined) return window.location.href
+      if(this.url !== undefined)
+        return this.url
 
-      logInfo('globalStore.baseURL()', 'Using base URL from env', import.meta.env.VITE_APP_HOST)
-      return import.meta.env.VITE_APP_HOST
-    },
-    uiVersion() {
+      if (import.meta.env.VITE_APP_HOST === undefined) { 
+        logInfo('configStore:baseURL()', 'Using base URL from env', window.location.href)
+        this.url = window.location.href
+      } else {
+        logInfo('configStore:baseURL()', 'Using base URL from env', import.meta.env.VITE_APP_HOST)
+        this.url = import.meta.env.VITE_APP_HOST
+      }
+
+      return this.url
+    },    uiVersion() {
       return import.meta.env.VITE_APP_VERSION
     },
     uiBuild() {
