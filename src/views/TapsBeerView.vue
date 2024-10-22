@@ -123,65 +123,105 @@
           <p></p>
         </div>
         <div class="col-md-6">
-          <button
-            @click="fetchBrewfather(1)"
-            type="button"
-            class="btn btn-secondary w-2"
-            :disabled="global.disabled"
-          >
-            <span
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-              :hidden="!global.disabled"
-            ></span>
-            &nbsp;Fetch from Brewfather</button
-          >&nbsp;
-          <button
-            @click="fetchBrewspy(1)"
-            type="button"
-            class="btn btn-secondary w-2"
-            :disabled="global.disabled"
-          >
-            <span
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-              :hidden="!global.disabled"
-            ></span>
-            &nbsp;Fetch from Brewspy
-          </button>
+          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
+            <button
+              @click="fetchBrewfather(1)"
+              type="button"
+              class="btn btn-secondary w-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewfather</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewlogger_url != ''">
+            <button
+              @click="fetchBrewlogger(1)"
+              type="button"
+              class="btn btn-secondary w-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from BrewLogger</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewspy_token1 != ''">
+            <button
+              @click="fetchBrewspy(1)"
+              type="button"
+              class="btn btn-secondary w-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewspy
+            </button>
+          </template>
         </div>
 
         <div class="col-md-6">
-          <button
-            @click="fetchBrewfather(2)"
-            type="button"
-            class="btn btn-secondary w-2"
-            :disabled="global.disabled"
-          >
-            <span
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-              :hidden="!global.disabled"
-            ></span>
-            &nbsp;Fetch from Brewfather</button
-          >&nbsp;
-          <button
-            @click="fetchBrewspy(2)"
-            type="button"
-            class="btn btn-secondary w-2"
-            :disabled="global.disabled"
-          >
-            <span
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-              :hidden="!global.disabled"
-            ></span>
-            &nbsp;Fetch from Brewspy
-          </button>
+          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
+            <button
+              @click="fetchBrewfather(2)"
+              type="button"
+              class="btn btn-secondary w-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewfather</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewlogger_url != ''">
+            <button
+              @click="fetchBrewlogger(2)"
+              type="button"
+              class="btn btn-secondary w-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from BrewLogger</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewspy_token2 != ''">
+            <button
+              @click="fetchBrewspy(2)"
+              type="button"
+              class="btn btn-secondary w-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewspy
+            </button>
+          </template>
         </div>
       </div>
 
@@ -244,11 +284,14 @@ const confirmBeerCallback = (result, value) => {
             config.beer_ebc1 = Math.ceil(e.ebc)
             config.beer_ibu1 = e.ibu
             config.beer_name1 = e.label
+            config.beer_id1 = e.id 
+
           } else if (tapNo.value == 2) {
             config.beer_abv2 = e.abv
             config.beer_ebc2 = Math.ceil(e.ebc)
             config.beer_ibu2 = e.ibu
             config.beer_name2 = e.label
+            config.beer_id2 = e.id 
           } else {
             logError('TapsBeerView.confirmBeerCallback()', 'Invalid tapNo', tapNo.value)
           }
@@ -284,13 +327,6 @@ const fetchBrewfather = (tap) => {
       for (var i = 0; i < json.length; i++) {
         logInfo('TapsBeerView.fetchBrewfather()', json[i])
 
-        /* TODO Remove this when validated
-        var abv = json[i].hasOwnProperty('measuredAbv') ? json[i].measuredAbv : 0
-        var ibu = json[i].hasOwnProperty('estimatedIbu') ? json[i].estimatedIbu : 0
-        var ebc = json[i].hasOwnProperty('estimatedColor') ? json[i].estimatedColor : 0
-        var fg = json[i].hasOwnProperty('estimatedFg') ? json[i].estimatedFg : 1
-        */
-
         var abv = Object.prototype.hasOwnProperty.call(json[i], 'measuredAbv')
           ? json[i].measuredAbv
           : 0
@@ -310,7 +346,8 @@ const fetchBrewfather = (tap) => {
           abv: abv,
           ibu: ibu,
           ebc: ebc,
-          fg: fg
+          fg: fg,
+          id: '',
         }
         beerOptions.value.push(beer)
       }
@@ -322,6 +359,49 @@ const fetchBrewfather = (tap) => {
     .catch((err) => {
       logError('TapsBeerView.fetchBrewfather()', err)
       global.messageError = 'Failed to fetch data from brewfather'
+      global.disabled = false
+    })
+}
+
+const fetchBrewlogger = (tap) => {
+  logInfo('TapsBeerView.fetchBrewlogger()', tap)
+
+  global.disabled = true
+  beerOptions.value = []
+  beer.value = ''
+
+  fetch(
+    config.brewlogger_url + '/api/batch/',
+    {
+      method: 'GET',
+      signal: AbortSignal.timeout(global.fetchTimout)
+    }
+  )
+    .then((res) => res.json())
+    .then((json) => {
+
+      for (var i = 0; i < json.length; i++) {
+        logInfo('TapsBeerView.fetchBrewlogger()', json[i])
+
+        var beer = {
+          label: json[i].name + " (" + json[i].brewDate + ")",
+          value: json[i].id,
+          abv: json[i].abv,
+          ibu: json[i].ibu,
+          ebc: json[i].ebc,
+          id: String(json[i].id),
+          fg: 1, // TODO: Missing FG in brewlogger
+        }
+        beerOptions.value.push(beer)
+      }
+
+      logInfo('TapsBeerView.fetchBrewlogger()', beerOptions.value)
+      tapNo.value = tap
+      document.getElementById('beer').click()
+    })
+    .catch((err) => {
+      logError('TapsBeerView.fetchBrewlogger()', err)
+      global.messageError = 'Failed to fetch data from brewlogger'
       global.disabled = false
     })
 }

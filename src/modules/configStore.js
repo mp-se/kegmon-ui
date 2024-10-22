@@ -50,6 +50,7 @@ export const useConfigStore = defineStore('config', {
       barhelper_apikey: '',
       barhelper_monitor1: '',
       barhelper_monitor2: '',
+      brewlogger_url: '',
       // Push - Http Post 1
       http_post_target: '',
       http_post_header1: '',
@@ -80,6 +81,7 @@ export const useConfigStore = defineStore('config', {
       keg_volume1: 0,
       glass_volume1: 0,
       beer_name1: '',
+      beer_id1: '',
       beer_abv1: 0,
       beer_fg1: 0,
       beer_ebc1: 0,
@@ -92,6 +94,7 @@ export const useConfigStore = defineStore('config', {
       keg_volume2: 0,
       glass_volume2: 0,
       beer_name2: '',
+      beer_id2: '',
       beer_abv2: 0,
       beer_fg2: 0,
       beer_ebc2: 0,
@@ -179,6 +182,7 @@ export const useConfigStore = defineStore('config', {
           this.barhelper_apikey = json.barhelper_apikey
           this.barhelper_monitor1 = json.barhelper_monitor1
           this.barhelper_monitor2 = json.barhelper_monitor2
+          this.brewlogger_url = json.brewlogger_url
           // Push - Http Post 1
           this.http_post_target = json.http_post_target
           this.http_post_header1 = json.http_post_header1
