@@ -371,7 +371,7 @@ const fetchBrewlogger = (tap) => {
   beer.value = ''
 
   fetch(
-    config.brewlogger_url + '/api/batch/',
+    config.brewlogger_url + '/api/batch/taplist',
     {
       method: 'GET',
       signal: AbortSignal.timeout(global.fetchTimout)
