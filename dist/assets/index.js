@@ -6665,7 +6665,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..d37847";
+      return "..d341e3";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -11263,7 +11263,7 @@ const _sfc_main$M = {
       beerOptions.value = [];
       beer.value = "";
       fetch(
-        config.brewlogger_url + "/api/batch/",
+        config.brewlogger_url + "/api/batch/taplist",
         {
           method: "GET",
           signal: AbortSignal.timeout(global$1.fetchTimout)
