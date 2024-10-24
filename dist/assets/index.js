@@ -6653,8 +6653,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "Bearer " + this.id;
     },
     baseURL() {
-      if (this.url !== void 0)
-        return this.url;
+      if (this.url !== void 0) return this.url;
       {
         logInfo("configStore:baseURL()", "Using base URL from env", window.location.href);
         this.url = window.location.href;
@@ -6665,7 +6664,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..bd1703";
+      return "..9ecfd7";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -6736,6 +6735,7 @@ const useStatusStore = /* @__PURE__ */ defineStore("status", {
       // Push status
       ha: {},
       brewspy: {},
+      brewlogger: {},
       barhelper: {}
     };
   },
@@ -6794,6 +6794,7 @@ const useStatusStore = /* @__PURE__ */ defineStore("status", {
         if (Object.prototype.hasOwnProperty.call(json, "brewspy")) this.brewspy = json.brewspy;
         if (Object.prototype.hasOwnProperty.call(json, "barhelper"))
           this.barhelper = json.barhelper;
+        if (Object.prototype.hasOwnProperty.call(json, "brewlogger")) this.brewlogger = json.brewlogger;
         logInfo("statusStore.load()", "Fetching /api/status completed");
         callback2(true);
       }).catch((err) => {
@@ -9320,7 +9321,10 @@ const _hoisted_29$4 = {
   class: "col-md-4"
 };
 const _hoisted_30$4 = { class: "text-center" };
-const _hoisted_31$4 = { class: "col-md-4" };
+const _hoisted_31$4 = {
+  key: 4,
+  class: "col-md-4"
+};
 const _hoisted_32$4 = { class: "text-center" };
 const _hoisted_33$4 = { class: "col-md-4" };
 const _hoisted_34$4 = { class: "text-center" };
@@ -9332,6 +9336,8 @@ const _hoisted_39$1 = { class: "col-md-4" };
 const _hoisted_40$1 = { class: "text-center" };
 const _hoisted_41$1 = { class: "col-md-4" };
 const _hoisted_42$1 = { class: "text-center" };
+const _hoisted_43$1 = { class: "col-md-4" };
+const _hoisted_44 = { class: "text-center" };
 const _sfc_main$T = {
   __name: "HomeView",
   setup(__props) {
@@ -9345,6 +9351,12 @@ const _sfc_main$T = {
     const pushBrewspy = computed(() => {
       if (status.brewspy.push_used) {
         return "Updated " + new Number(status.brewspy.push_age / 1e3).toFixed(0) + "s ago, " + (status.brewspy.push_status ? "Success" : "Failed, error " + status.brewspy.push_code);
+      }
+      return "Not updated";
+    });
+    const pushBrewLogger = computed(() => {
+      if (status.brewlogger.push_used) {
+        return "Updated " + new Number(status.brewlogger.push_age / 1e3).toFixed(0) + "s ago, " + (status.brewlogger.push_status ? "Success" : "Failed, error " + status.brewlogger.push_code);
       }
       return "Not updated";
     });
@@ -9503,24 +9515,25 @@ const _sfc_main$T = {
                 _: 1
               })
             ])) : createCommentVNode("", true),
-            createBaseVNode("div", _hoisted_31$4, [
+            unref(status).brewlogger != {} && unref(config).brewlogger_url != "" ? (openBlock(), createElementBlock("div", _hoisted_31$4, [
+              createVNode(_component_BsCard, {
+                header: "Push",
+                color: "secondary",
+                title: "BrewLogger"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_32$4, toDisplayString(pushBrewLogger.value), 1)
+                ]),
+                _: 1
+              })
+            ])) : createCommentVNode("", true),
+            createBaseVNode("div", _hoisted_33$4, [
               createVNode(_component_BsCard, {
                 header: "Device",
                 title: "WIFI"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_32$4, toDisplayString(unref(status).rssi) + " dBm - " + toDisplayString(unref(status).wifi_ssid), 1)
-                ]),
-                _: 1
-              })
-            ]),
-            createBaseVNode("div", _hoisted_33$4, [
-              createVNode(_component_BsCard, {
-                header: "Device",
-                title: "IP Address"
-              }, {
-                default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_34$4, toDisplayString(unref(status).ip), 1)
+                  createBaseVNode("p", _hoisted_34$4, toDisplayString(unref(status).rssi) + " dBm - " + toDisplayString(unref(status).wifi_ssid), 1)
                 ]),
                 _: 1
               })
@@ -9528,10 +9541,10 @@ const _sfc_main$T = {
             createBaseVNode("div", _hoisted_35$4, [
               createVNode(_component_BsCard, {
                 header: "Device",
-                title: "Memory"
+                title: "IP Address"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_36$3, " Free: " + toDisplayString(unref(status).free_heap) + " kb, Total: " + toDisplayString(unref(status).total_heap) + " kb ", 1)
+                  createBaseVNode("p", _hoisted_36$3, toDisplayString(unref(status).ip), 1)
                 ]),
                 _: 1
               })
@@ -9539,10 +9552,10 @@ const _sfc_main$T = {
             createBaseVNode("div", _hoisted_37$1, [
               createVNode(_component_BsCard, {
                 header: "Device",
-                title: "Software version"
+                title: "Memory"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_38$2, " Firmware: " + toDisplayString(unref(status).app_ver) + " (" + toDisplayString(unref(status).app_build) + ") UI: " + toDisplayString(unref(global$1).uiVersion) + " (" + toDisplayString(unref(global$1).uiBuild) + ") ", 1)
+                  createBaseVNode("p", _hoisted_38$2, " Free: " + toDisplayString(unref(status).free_heap) + " kb, Total: " + toDisplayString(unref(status).total_heap) + " kb ", 1)
                 ]),
                 _: 1
               })
@@ -9550,10 +9563,10 @@ const _sfc_main$T = {
             createBaseVNode("div", _hoisted_39$1, [
               createVNode(_component_BsCard, {
                 header: "Device",
-                title: "Platform"
+                title: "Software version"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_40$1, toDisplayString(unref(status).platform), 1)
+                  createBaseVNode("p", _hoisted_40$1, " Firmware: " + toDisplayString(unref(status).app_ver) + " (" + toDisplayString(unref(status).app_build) + ") UI: " + toDisplayString(unref(global$1).uiVersion) + " (" + toDisplayString(unref(global$1).uiBuild) + ") ", 1)
                 ]),
                 _: 1
               })
@@ -9561,10 +9574,21 @@ const _sfc_main$T = {
             createBaseVNode("div", _hoisted_41$1, [
               createVNode(_component_BsCard, {
                 header: "Device",
+                title: "Platform"
+              }, {
+                default: withCtx(() => [
+                  createBaseVNode("p", _hoisted_42$1, toDisplayString(unref(status).platform), 1)
+                ]),
+                _: 1
+              })
+            ]),
+            createBaseVNode("div", _hoisted_43$1, [
+              createVNode(_component_BsCard, {
+                header: "Device",
                 title: "Uptime"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_42$1, toDisplayString(unref(status).uptime_days) + " days " + toDisplayString(unref(status).uptime_hours) + " hours " + toDisplayString(unref(status).uptime_minutes) + " minutes " + toDisplayString(unref(status).uptime_seconds) + " seconds ", 1)
+                  createBaseVNode("p", _hoisted_44, toDisplayString(unref(status).uptime_days) + " days " + toDisplayString(unref(status).uptime_hours) + " hours " + toDisplayString(unref(status).uptime_minutes) + " minutes " + toDisplayString(unref(status).uptime_seconds) + " seconds ", 1)
                 ]),
                 _: 1
               })
@@ -11262,13 +11286,10 @@ const _sfc_main$M = {
       global$1.disabled = true;
       beerOptions.value = [];
       beer.value = "";
-      fetch(
-        config.brewlogger_url + "/api/batch/taplist",
-        {
-          method: "GET",
-          signal: AbortSignal.timeout(global$1.fetchTimout)
-        }
-      ).then((res) => res.json()).then((json) => {
+      fetch(config.brewlogger_url + "/api/batch/taplist", {
+        method: "GET",
+        signal: AbortSignal.timeout(global$1.fetchTimout)
+      }).then((res) => res.json()).then((json) => {
         for (var i = 0; i < json.length; i++) {
           logInfo("TapsBeerView.fetchBrewlogger()", json[i]);
           var beer2 = {
