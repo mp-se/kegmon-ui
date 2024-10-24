@@ -47,7 +47,7 @@ import { global, config } from '@/modules/pinia'
 const save = () => {
   if (!validateCurrentForm()) return
 
-  config.brewlogger_url = config.brewlogger_url.replace(/\/$/, "")
+  config.brewlogger_url = config.brewlogger_url.replace(/\/$/, '')
   config.saveAll()
 }
 </script>

@@ -70,7 +70,10 @@
           </BsCard>
         </div>
 
-        <div class="col-md-4" v-if="status.brewspy != {} && config.brewspy_token1 != '' && config.brewspy_token2 != ''">
+        <div
+          class="col-md-4"
+          v-if="status.brewspy != {} && config.brewspy_token1 != '' && config.brewspy_token2 != ''"
+        >
           <BsCard header="Push" color="secondary" title="Brewspy">
             <p class="text-center">{{ pushBrewspy }}</p>
           </BsCard>
@@ -79,6 +82,12 @@
         <div class="col-md-4" v-if="status.barhelper != {} && config.barhelper_apikey != ''">
           <BsCard header="Push" color="secondary" title="Barhelper">
             <p class="text-center">{{ pushBarhelper }}</p>
+          </BsCard>
+        </div>
+
+        <div class="col-md-4" v-if="status.brewlogger != {} && config.brewlogger_url != ''">
+          <BsCard header="Push" color="secondary" title="BrewLogger">
+            <p class="text-center">{{ pushBrewLogger }}</p>
           </BsCard>
         </div>
 
@@ -166,6 +175,19 @@ const pushBrewspy = computed(() => {
       new Number(status.brewspy.push_age / 1000).toFixed(0) +
       's ago, ' +
       (status.brewspy.push_status ? 'Success' : 'Failed, error ' + status.brewspy.push_code)
+    )
+  }
+
+  return 'Not updated'
+})
+
+const pushBrewLogger = computed(() => {
+  if (status.brewlogger.push_used) {
+    return (
+      'Updated ' +
+      new Number(status.brewlogger.push_age / 1000).toFixed(0) +
+      's ago, ' +
+      (status.brewlogger.push_status ? 'Success' : 'Failed, error ' + status.brewlogger.push_code)
     )
   }
 

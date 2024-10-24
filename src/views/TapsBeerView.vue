@@ -284,14 +284,13 @@ const confirmBeerCallback = (result, value) => {
             config.beer_ebc1 = Math.ceil(e.ebc)
             config.beer_ibu1 = e.ibu
             config.beer_name1 = e.label
-            config.beer_id1 = e.id 
-
+            config.beer_id1 = e.id
           } else if (tapNo.value == 2) {
             config.beer_abv2 = e.abv
             config.beer_ebc2 = Math.ceil(e.ebc)
             config.beer_ibu2 = e.ibu
             config.beer_name2 = e.label
-            config.beer_id2 = e.id 
+            config.beer_id2 = e.id
           } else {
             logError('TapsBeerView.confirmBeerCallback()', 'Invalid tapNo', tapNo.value)
           }
@@ -347,7 +346,7 @@ const fetchBrewfather = (tap) => {
           ibu: ibu,
           ebc: ebc,
           fg: fg,
-          id: '',
+          id: ''
         }
         beerOptions.value.push(beer)
       }
@@ -370,27 +369,23 @@ const fetchBrewlogger = (tap) => {
   beerOptions.value = []
   beer.value = ''
 
-  fetch(
-    config.brewlogger_url + '/api/batch/taplist',
-    {
-      method: 'GET',
-      signal: AbortSignal.timeout(global.fetchTimout)
-    }
-  )
+  fetch(config.brewlogger_url + '/api/batch/taplist', {
+    method: 'GET',
+    signal: AbortSignal.timeout(global.fetchTimout)
+  })
     .then((res) => res.json())
     .then((json) => {
-
       for (var i = 0; i < json.length; i++) {
         logInfo('TapsBeerView.fetchBrewlogger()', json[i])
 
         var beer = {
-          label: json[i].name + " (" + json[i].brewDate + ")",
+          label: json[i].name + ' (' + json[i].brewDate + ')',
           value: json[i].id,
           abv: json[i].abv,
           ibu: json[i].ibu,
           ebc: json[i].ebc,
           id: String(json[i].id),
-          fg: 1, // TODO: Missing FG in brewlogger
+          fg: 1 // TODO: Missing FG in brewlogger
         }
         beerOptions.value.push(beer)
       }

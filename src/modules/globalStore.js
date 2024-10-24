@@ -36,10 +36,9 @@ export const useGlobalStore = defineStore('global', {
       return 'Bearer ' + this.id
     },
     baseURL() {
-      if(this.url !== undefined)
-        return this.url
+      if (this.url !== undefined) return this.url
 
-      if (import.meta.env.VITE_APP_HOST === undefined) { 
+      if (import.meta.env.VITE_APP_HOST === undefined) {
         logInfo('configStore:baseURL()', 'Using base URL from env', window.location.href)
         this.url = window.location.href
       } else {
@@ -48,7 +47,8 @@ export const useGlobalStore = defineStore('global', {
       }
 
       return this.url
-    },    uiVersion() {
+    },
+    uiVersion() {
       return import.meta.env.VITE_APP_VERSION
     },
     uiBuild() {

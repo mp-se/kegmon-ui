@@ -59,6 +59,7 @@ export const useStatusStore = defineStore('status', {
       // Push status
       ha: {},
       brewspy: {},
+      brewlogger: {},
       barhelper: {}
     }
   },
@@ -126,6 +127,7 @@ export const useStatusStore = defineStore('status', {
           if (Object.prototype.hasOwnProperty.call(json, 'brewspy')) this.brewspy = json.brewspy
           if (Object.prototype.hasOwnProperty.call(json, 'barhelper'))
             this.barhelper = json.barhelper
+          if (Object.prototype.hasOwnProperty.call(json, 'brewlogger')) this.brewlogger = json.brewlogger
 
           logInfo('statusStore.load()', 'Fetching /api/status completed')
           callback(true)
