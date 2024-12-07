@@ -8,16 +8,6 @@
       <div class="row">
         <div class="col-md-6">
           <BsInputRadio
-            v-model="config.display_layout"
-            :options="displayLayoutOptions"
-            label="Display layout"
-            width=""
-            help="Selects the layout and data on the displays"
-            :disabled="global.disabled"
-          ></BsInputRadio>
-        </div>
-        <div class="col-md-3">
-          <BsInputRadio
             v-model="config.display_driver"
             :options="displayDriverOptions"
             label="Display driver"
@@ -25,7 +15,7 @@
             :disabled="global.disabled"
           ></BsInputRadio>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
           <BsInputRadio
             v-model="config.scale_sensor"
             :options="scaleSensorOptions"
@@ -34,7 +24,7 @@
             :disabled="global.disabled"
           ></BsInputRadio>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <BsInputRadio
             v-model="config.temp_sensor"
             :options="tempSensorOptions"
@@ -43,14 +33,35 @@
             :disabled="global.disabled"
           ></BsInputRadio>
         </div>
-        <div class="col-md-6">
+
+        <div class="col-md-6" v-if="config.temp_sensor == 3">
           <BsInputText
             v-model="config.brewpi_url"
             type="url"
             maxlength="120"
             label="BrewPI URL"
-            :disabled="global.disabled || config.temp_sensor != 3"
+            :disabled="global.disabled"
           />
+        </div>
+        <div class="col-md-6" v-if="config.temp_sensor == 4">
+          <BsInputText
+            v-model="config.chamberctrl_url"
+            type="url"
+            maxlength="120"
+            label="Chamber Controller URL"
+            :disabled="global.disabled"
+          />
+        </div>
+
+        <div class="col-md-12">
+          <BsInputRadio
+            v-model="config.display_layout"
+            :options="displayLayoutOptions"
+            label="Display layout"
+            width=""
+            help="Selects the layout and data on the displays"
+            :disabled="global.disabled"
+          ></BsInputRadio>
         </div>
 
         <!-- TODO: Add example on how display looks like -->
@@ -327,7 +338,8 @@ const tempSensorOptions = ref([
   { label: 'DHT22', value: 0 },
   { label: 'DS18B20', value: 1 },
   { label: 'BME280', value: 2 },
-  { label: 'BrewPI (Network)', value: 3 }
+  { label: 'BrewPI (Network)', value: 3 },
+  { label: 'Chamber Ctrl (Network)', value: 4 }
 ])
 
 const scaleSensorOptions = ref([

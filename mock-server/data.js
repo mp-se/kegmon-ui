@@ -17,6 +17,7 @@ export var configData = {
   display_layout: 0,
   temp_sensor: 0,
   brewpi_url: "http://192.168.0.23",
+  chamberctrl_url: "http://192.168.0.25",
   brewlogger_url: "http://192.168.0.24",
   scale_sensor: 0,
   display_driver: 0,
