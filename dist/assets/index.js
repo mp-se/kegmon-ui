@@ -6664,7 +6664,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..9ecfd7";
+      return "..ae7376";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -6917,6 +6917,7 @@ const useConfigStore = /* @__PURE__ */ defineStore("config", {
       display_layout: 0,
       temp_sensor: 0,
       brewpi_url: "",
+      chamberctrl_url: "",
       scale_sensor: 0,
       display_driver: 0,
       pin_display_data: 0,
@@ -7042,6 +7043,7 @@ const useConfigStore = /* @__PURE__ */ defineStore("config", {
         this.display_layout = json.display_layout;
         this.temp_sensor = json.temp_sensor;
         this.brewpi_url = json.brewpi_url;
+        this.chamberctrl_url = json.chamberctrl_url;
         this.scale_sensor = json.scale_sensor;
         this.display_driver = json.display_driver;
         this.pin_display_data = json.pin_display_data;
@@ -9329,7 +9331,7 @@ const _hoisted_32$4 = { class: "text-center" };
 const _hoisted_33$4 = { class: "col-md-4" };
 const _hoisted_34$4 = { class: "text-center" };
 const _hoisted_35$4 = { class: "col-md-4" };
-const _hoisted_36$3 = { class: "text-center" };
+const _hoisted_36$4 = { class: "text-center" };
 const _hoisted_37$1 = { class: "col-md-4" };
 const _hoisted_38$2 = { class: "text-center" };
 const _hoisted_39$1 = { class: "col-md-4" };
@@ -9544,7 +9546,7 @@ const _sfc_main$T = {
                 title: "IP Address"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_36$3, toDisplayString(unref(status).ip), 1)
+                  createBaseVNode("p", _hoisted_36$4, toDisplayString(unref(status).ip), 1)
                 ]),
                 _: 1
               })
@@ -10036,23 +10038,29 @@ const _hoisted_3$E = /* @__PURE__ */ createBaseVNode("p", { class: "h3" }, "Devi
 const _hoisted_4$s = /* @__PURE__ */ createBaseVNode("hr", null, null, -1);
 const _hoisted_5$n = { class: "row" };
 const _hoisted_6$m = { class: "col-md-6" };
-const _hoisted_7$m = { class: "col-md-3" };
-const _hoisted_8$n = { class: "col-md-3" };
-const _hoisted_9$l = { class: "col-md-6" };
-const _hoisted_10$k = { class: "col-md-6" };
-const _hoisted_11$i = /* @__PURE__ */ createBaseVNode("div", { class: "col-md-12" }, [
+const _hoisted_7$m = { class: "col-md-6" };
+const _hoisted_8$n = { class: "col-md-12" };
+const _hoisted_9$l = {
+  key: 0,
+  class: "col-md-6"
+};
+const _hoisted_10$k = {
+  key: 1,
+  class: "col-md-6"
+};
+const _hoisted_11$i = { class: "col-md-12" };
+const _hoisted_12$h = /* @__PURE__ */ createBaseVNode("div", { class: "col-md-12" }, [
   /* @__PURE__ */ createBaseVNode("hr")
 ], -1);
-const _hoisted_12$h = { class: "col-md-4" };
 const _hoisted_13$f = { class: "col-md-4" };
 const _hoisted_14$c = { class: "col-md-4" };
 const _hoisted_15$a = { class: "col-md-4" };
 const _hoisted_16$8 = { class: "col-md-4" };
 const _hoisted_17$7 = { class: "col-md-4" };
-const _hoisted_18$7 = /* @__PURE__ */ createBaseVNode("div", { class: "col-md-12" }, [
+const _hoisted_18$7 = { class: "col-md-4" };
+const _hoisted_19$5 = /* @__PURE__ */ createBaseVNode("div", { class: "col-md-12" }, [
   /* @__PURE__ */ createBaseVNode("hr")
 ], -1);
-const _hoisted_19$5 = { class: "col-md-3" };
 const _hoisted_20$5 = { class: "col-md-3" };
 const _hoisted_21$4 = { class: "col-md-3" };
 const _hoisted_22$4 = { class: "col-md-3" };
@@ -10060,17 +10068,18 @@ const _hoisted_23$4 = { class: "col-md-3" };
 const _hoisted_24$4 = { class: "col-md-3" };
 const _hoisted_25$4 = { class: "col-md-3" };
 const _hoisted_26$4 = { class: "col-md-3" };
-const _hoisted_27$3 = { class: "col-md-12" };
-const _hoisted_28$3 = { class: "row gy-2" };
-const _hoisted_29$3 = /* @__PURE__ */ createBaseVNode("div", { class: "col-md-12" }, [
+const _hoisted_27$3 = { class: "col-md-3" };
+const _hoisted_28$3 = { class: "col-md-12" };
+const _hoisted_29$3 = { class: "row gy-2" };
+const _hoisted_30$3 = /* @__PURE__ */ createBaseVNode("div", { class: "col-md-12" }, [
   /* @__PURE__ */ createBaseVNode("hr")
 ], -1);
-const _hoisted_30$3 = { class: "col-md-3" };
-const _hoisted_31$3 = ["disabled"];
-const _hoisted_32$3 = ["hidden"];
-const _hoisted_33$3 = { class: "col-md-3" };
-const _hoisted_34$3 = ["disabled"];
-const _hoisted_35$3 = ["hidden"];
+const _hoisted_31$3 = { class: "col-md-3" };
+const _hoisted_32$3 = ["disabled"];
+const _hoisted_33$3 = ["hidden"];
+const _hoisted_34$3 = { class: "col-md-3" };
+const _hoisted_35$3 = ["disabled"];
+const _hoisted_36$3 = ["hidden"];
 const _sfc_main$Q = {
   __name: "DeviceHardwareView",
   setup(__props) {
@@ -10085,7 +10094,8 @@ const _sfc_main$Q = {
       { label: "DHT22", value: 0 },
       { label: "DS18B20", value: 1 },
       { label: "BME280", value: 2 },
-      { label: "BrewPI (Network)", value: 3 }
+      { label: "BrewPI (Network)", value: 3 },
+      { label: "Chamber Ctrl (Network)", value: 4 }
     ]);
     const scaleSensorOptions = ref([
       { label: "HX711", value: 0 },
@@ -10160,8 +10170,58 @@ const _sfc_main$Q = {
           createBaseVNode("div", _hoisted_5$n, [
             createBaseVNode("div", _hoisted_6$m, [
               createVNode(_component_BsInputRadio, {
+                modelValue: unref(config).display_driver,
+                "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => unref(config).display_driver = $event),
+                options: displayDriverOptions.value,
+                label: "Display driver",
+                width: "",
+                disabled: unref(global$1).disabled
+              }, null, 8, ["modelValue", "options", "disabled"])
+            ]),
+            createBaseVNode("div", _hoisted_7$m, [
+              createVNode(_component_BsInputRadio, {
+                modelValue: unref(config).scale_sensor,
+                "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => unref(config).scale_sensor = $event),
+                options: scaleSensorOptions.value,
+                label: "Scale driver",
+                width: "",
+                disabled: unref(global$1).disabled
+              }, null, 8, ["modelValue", "options", "disabled"])
+            ]),
+            createBaseVNode("div", _hoisted_8$n, [
+              createVNode(_component_BsInputRadio, {
+                modelValue: unref(config).temp_sensor,
+                "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => unref(config).temp_sensor = $event),
+                options: tempSensorOptions.value,
+                label: "Temperature sensor",
+                width: "",
+                disabled: unref(global$1).disabled
+              }, null, 8, ["modelValue", "options", "disabled"])
+            ]),
+            unref(config).temp_sensor == 3 ? (openBlock(), createElementBlock("div", _hoisted_9$l, [
+              createVNode(_component_BsInputText, {
+                modelValue: unref(config).brewpi_url,
+                "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => unref(config).brewpi_url = $event),
+                type: "url",
+                maxlength: "120",
+                label: "BrewPI URL",
+                disabled: unref(global$1).disabled
+              }, null, 8, ["modelValue", "disabled"])
+            ])) : createCommentVNode("", true),
+            unref(config).temp_sensor == 4 ? (openBlock(), createElementBlock("div", _hoisted_10$k, [
+              createVNode(_component_BsInputText, {
+                modelValue: unref(config).chamberctrl_url,
+                "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => unref(config).chamberctrl_url = $event),
+                type: "url",
+                maxlength: "120",
+                label: "Chamber Controller URL",
+                disabled: unref(global$1).disabled
+              }, null, 8, ["modelValue", "disabled"])
+            ])) : createCommentVNode("", true),
+            createBaseVNode("div", _hoisted_11$i, [
+              createVNode(_component_BsInputRadio, {
                 modelValue: unref(config).display_layout,
-                "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => unref(config).display_layout = $event),
+                "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => unref(config).display_layout = $event),
                 options: displayLayoutOptions.value,
                 label: "Display layout",
                 width: "",
@@ -10169,51 +10229,11 @@ const _sfc_main$Q = {
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_7$m, [
-              createVNode(_component_BsInputRadio, {
-                modelValue: unref(config).display_driver,
-                "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => unref(config).display_driver = $event),
-                options: displayDriverOptions.value,
-                label: "Display driver",
-                width: "",
-                disabled: unref(global$1).disabled
-              }, null, 8, ["modelValue", "options", "disabled"])
-            ]),
-            createBaseVNode("div", _hoisted_8$n, [
-              createVNode(_component_BsInputRadio, {
-                modelValue: unref(config).scale_sensor,
-                "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => unref(config).scale_sensor = $event),
-                options: scaleSensorOptions.value,
-                label: "Scale driver",
-                width: "",
-                disabled: unref(global$1).disabled
-              }, null, 8, ["modelValue", "options", "disabled"])
-            ]),
-            createBaseVNode("div", _hoisted_9$l, [
-              createVNode(_component_BsInputRadio, {
-                modelValue: unref(config).temp_sensor,
-                "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => unref(config).temp_sensor = $event),
-                options: tempSensorOptions.value,
-                label: "Temperature sensor",
-                width: "",
-                disabled: unref(global$1).disabled
-              }, null, 8, ["modelValue", "options", "disabled"])
-            ]),
-            createBaseVNode("div", _hoisted_10$k, [
-              createVNode(_component_BsInputText, {
-                modelValue: unref(config).brewpi_url,
-                "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => unref(config).brewpi_url = $event),
-                type: "url",
-                maxlength: "120",
-                label: "BrewPI URL",
-                disabled: unref(global$1).disabled || unref(config).temp_sensor != 3
-              }, null, 8, ["modelValue", "disabled"])
-            ]),
-            _hoisted_11$i,
-            createBaseVNode("div", _hoisted_12$h, [
+            _hoisted_12$h,
+            createBaseVNode("div", _hoisted_13$f, [
               createVNode(_component_BsInputNumber, {
                 modelValue: unref(config).scale_deviation_increase,
-                "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => unref(config).scale_deviation_increase = $event),
+                "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => unref(config).scale_deviation_increase = $event),
                 label: "Scale deviation increase",
                 min: ".05",
                 max: "1.0",
@@ -10223,10 +10243,10 @@ const _sfc_main$Q = {
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "unit", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_13$f, [
+            createBaseVNode("div", _hoisted_14$c, [
               createVNode(_component_BsInputNumber, {
                 modelValue: unref(config).scale_deviation_decrease,
-                "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => unref(config).scale_deviation_decrease = $event),
+                "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => unref(config).scale_deviation_decrease = $event),
                 label: "Scale deviation decrease",
                 min: ".05",
                 max: "1.0",
@@ -10236,10 +10256,10 @@ const _sfc_main$Q = {
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "unit", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_14$c, [
+            createBaseVNode("div", _hoisted_15$a, [
               createVNode(_component_BsInputNumber, {
                 modelValue: unref(config).scale_deviation_kalman,
-                "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => unref(config).scale_deviation_kalman = $event),
+                "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => unref(config).scale_deviation_kalman = $event),
                 label: "Scale deviation kalman",
                 min: ".01",
                 max: "0.1",
@@ -10249,10 +10269,10 @@ const _sfc_main$Q = {
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "unit", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_15$a, [
+            createBaseVNode("div", _hoisted_16$8, [
               createVNode(_component_BsInputNumber, {
                 modelValue: unref(config).scale_stable_count,
-                "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => unref(config).scale_stable_count = $event),
+                "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => unref(config).scale_stable_count = $event),
                 label: "Scale stable count",
                 min: "6",
                 max: "30",
@@ -10261,10 +10281,10 @@ const _sfc_main$Q = {
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_16$8, [
+            createBaseVNode("div", _hoisted_17$7, [
               createVNode(_component_BsInputNumber, {
                 modelValue: unref(config).scale_read_count,
-                "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => unref(config).scale_read_count = $event),
+                "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => unref(config).scale_read_count = $event),
                 label: "Scale sample count",
                 min: "1",
                 max: "50",
@@ -10273,10 +10293,10 @@ const _sfc_main$Q = {
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_17$7, [
+            createBaseVNode("div", _hoisted_18$7, [
               createVNode(_component_BsInputNumber, {
                 modelValue: unref(config).scale_read_count_calibration,
-                "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => unref(config).scale_read_count_calibration = $event),
+                "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => unref(config).scale_read_count_calibration = $event),
                 label: "Scale sample count during calibration",
                 min: "1",
                 max: "100",
@@ -10285,100 +10305,100 @@ const _sfc_main$Q = {
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "disabled"])
             ]),
-            _hoisted_18$7,
-            createBaseVNode("div", _hoisted_19$5, [
+            _hoisted_19$5,
+            createBaseVNode("div", _hoisted_20$5, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_display_data,
-                "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => unref(config).pin_display_data = $event),
+                "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => unref(config).pin_display_data = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Display/I2C - Data",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_20$5, [
+            createBaseVNode("div", _hoisted_21$4, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_display_clock,
-                "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => unref(config).pin_display_clock = $event),
+                "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => unref(config).pin_display_clock = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Display/I2C - Clock",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_21$4, [
+            createBaseVNode("div", _hoisted_22$4, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_temp_data,
-                "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => unref(config).pin_temp_data = $event),
+                "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => unref(config).pin_temp_data = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Temperature - Data",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_22$4, [
+            createBaseVNode("div", _hoisted_23$4, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_temp_power,
-                "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => unref(config).pin_temp_power = $event),
+                "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => unref(config).pin_temp_power = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Temperature - Power",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_23$4, [
+            createBaseVNode("div", _hoisted_24$4, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_scale1_data,
-                "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => unref(config).pin_scale1_data = $event),
+                "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => unref(config).pin_scale1_data = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Scale 1 - Data",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_24$4, [
+            createBaseVNode("div", _hoisted_25$4, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_scale1_clock,
-                "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => unref(config).pin_scale1_clock = $event),
+                "onUpdate:modelValue": _cache[17] || (_cache[17] = ($event) => unref(config).pin_scale1_clock = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Scale 1 - Clock",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_25$4, [
+            createBaseVNode("div", _hoisted_26$4, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_scale2_data,
-                "onUpdate:modelValue": _cache[17] || (_cache[17] = ($event) => unref(config).pin_scale2_data = $event),
+                "onUpdate:modelValue": _cache[18] || (_cache[18] = ($event) => unref(config).pin_scale2_data = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Scale 2 - Data",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_26$4, [
+            createBaseVNode("div", _hoisted_27$3, [
               createVNode(_component_BsSelect, {
                 modelValue: unref(config).pin_scale2_clock,
-                "onUpdate:modelValue": _cache[18] || (_cache[18] = ($event) => unref(config).pin_scale2_clock = $event),
+                "onUpdate:modelValue": _cache[19] || (_cache[19] = ($event) => unref(config).pin_scale2_clock = $event),
                 options: unref(status).platform == "esp8266" ? pinEsp8266Options.value : unref(status).platform == "esp32s3" ? pinEsp32s3Options.value : pinEsp32s2Options.value,
                 label: "Scale 2 - Clock",
                 width: "4",
                 disabled: unref(global$1).disabled || !enablePin.value
               }, null, 8, ["modelValue", "options", "disabled"])
             ]),
-            createBaseVNode("div", _hoisted_27$3, [
+            createBaseVNode("div", _hoisted_28$3, [
               createVNode(_component_BsInputSwitch, {
                 modelValue: enablePin.value,
-                "onUpdate:modelValue": _cache[19] || (_cache[19] = ($event) => enablePin.value = $event),
+                "onUpdate:modelValue": _cache[20] || (_cache[20] = ($event) => enablePin.value = $event),
                 label: "Enable pin configuration",
                 width: "",
                 disabled: unref(global$1).disabled
               }, null, 8, ["modelValue", "disabled"])
             ])
           ]),
-          createBaseVNode("div", _hoisted_28$3, [
-            _hoisted_29$3,
-            createBaseVNode("div", _hoisted_30$3, [
+          createBaseVNode("div", _hoisted_29$3, [
+            _hoisted_30$3,
+            createBaseVNode("div", _hoisted_31$3, [
               createBaseVNode("button", {
                 type: "submit",
                 class: "btn btn-primary w-2",
@@ -10389,13 +10409,13 @@ const _sfc_main$Q = {
                   role: "status",
                   "aria-hidden": "true",
                   hidden: !unref(global$1).disabled
-                }, null, 8, _hoisted_32$3),
+                }, null, 8, _hoisted_33$3),
                 createTextVNode("  Save ")
-              ], 8, _hoisted_31$3)
+              ], 8, _hoisted_32$3)
             ]),
-            createBaseVNode("div", _hoisted_33$3, [
+            createBaseVNode("div", _hoisted_34$3, [
               createBaseVNode("button", {
-                onClick: _cache[20] || (_cache[20] = ($event) => unref(restart)()),
+                onClick: _cache[21] || (_cache[21] = ($event) => unref(restart)()),
                 type: "button",
                 class: "btn btn-secondary",
                 disabled: unref(global$1).disabled
@@ -10405,9 +10425,9 @@ const _sfc_main$Q = {
                   role: "status",
                   "aria-hidden": "true",
                   hidden: !unref(global$1).disabled
-                }, null, 8, _hoisted_35$3),
+                }, null, 8, _hoisted_36$3),
                 createTextVNode("  Restart device ")
-              ], 8, _hoisted_34$3)
+              ], 8, _hoisted_35$3)
             ])
           ])
         ], 32)
