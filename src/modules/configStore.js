@@ -18,6 +18,7 @@ export const useConfigStore = defineStore('config', {
       display_layout: 0,
       temp_sensor: 0,
       brewpi_url: '',
+      chamberctrl_url: '',
       scale_sensor: 0,
       display_driver: 0,
       pin_display_data: 0,
@@ -150,6 +151,7 @@ export const useConfigStore = defineStore('config', {
           this.display_layout = json.display_layout
           this.temp_sensor = json.temp_sensor
           this.brewpi_url = json.brewpi_url
+          this.chamberctrl_url = json.chamberctrl_url
           this.scale_sensor = json.scale_sensor
           this.display_driver = json.display_driver
           this.pin_display_data = json.pin_display_data
