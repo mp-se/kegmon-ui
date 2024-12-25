@@ -6664,7 +6664,7 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return "1.0.0";
     },
     uiBuild() {
-      return "..ae7376";
+      return "..bb32a1";
     },
     disabled32() {
       if (this.disabled) return true;
@@ -9579,7 +9579,7 @@ const _sfc_main$T = {
                 title: "Platform"
               }, {
                 default: withCtx(() => [
-                  createBaseVNode("p", _hoisted_42$1, toDisplayString(unref(status).platform), 1)
+                  createBaseVNode("p", _hoisted_42$1, toDisplayString(unref(status).platform) + " (ID: " + toDisplayString(unref(status).id) + ") ", 1)
                 ]),
                 _: 1
               })
