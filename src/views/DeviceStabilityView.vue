@@ -83,7 +83,7 @@
       <div class="col-md-12">
         <hr />
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-12">
         <button
           @click="clearStability()"
           type="button"

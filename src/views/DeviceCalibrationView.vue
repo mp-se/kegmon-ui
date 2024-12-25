@@ -41,7 +41,7 @@
         <p>Remove any object from the scale and press the tare button to reset it to zero.</p>
       </div>
       <div class="row gy-2" v-if="state == 2">
-        <div class="col-md-2">
+        <div class="col-md-12">
           <button
             @click="step2()"
             type="button"
@@ -49,9 +49,8 @@
             :disabled="global.disabled"
           >
             Tare scale
-          </button>
-        </div>
-        <div class="col-md-2">
+          </button>&nbsp;
+
           <button
             @click="back()"
             type="button"
@@ -91,7 +90,7 @@
       </div>
 
       <div class="row gy-2" v-if="state == 3">
-        <div class="col-md-2">
+        <div class="col-md-12">
           <button
             @click="step3()"
             type="button"
@@ -99,9 +98,8 @@
             :disabled="global.disabled"
           >
             Calculate factor
-          </button>
-        </div>
-        <div class="col-md-2">
+          </button>&nbsp;
+
           <button
             @click="back()"
             type="button"
@@ -129,7 +127,7 @@
         </p>
       </div>
       <div class="row gy-2">
-        <div class="col-md-2">
+        <div class="col-md-12">
           <button
             @click="back()"
             type="button"
@@ -137,9 +135,8 @@
             :disabled="global.disabled"
           >
             Back
-          </button>
-        </div>
-        <div class="col-md-2">
+          </button>&nbsp;
+
           <button
             @click="begin()"
             type="button"

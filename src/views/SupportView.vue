@@ -49,7 +49,7 @@
     <hr />
 
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-12">
         <button @click="viewLogs" type="button" class="btn btn-primary" :disabled="global.disabled">
           <span
             class="spinner-border spinner-border-sm"
@@ -57,10 +57,9 @@
             aria-hidden="true"
             :hidden="!global.disabled"
           ></span>
-          &nbsp;View device logs
-        </button>
-      </div>
-      <div class="col-md-3">
+          &nbsp;View device logs</button
+        >&nbsp;
+
         <button
           @click="removeLogs"
           type="button"
@@ -73,10 +72,9 @@
             aria-hidden="true"
             :hidden="!global.disabled"
           ></span>
-          &nbsp;Erase device logs
-        </button>
-      </div>
-      <div class="col-md-3">
+          &nbsp;Erase device logs</button
+        >&nbsp;
+
         <button
           @click="hardwareScan"
           type="button"
@@ -89,10 +87,9 @@
             aria-hidden="true"
             :hidden="!global.disabled"
           ></span>
-          &nbsp;Hardware scan
-        </button>
-      </div>
-      <div class="col-md-3">
+          &nbsp;Hardware scan</button
+        >&nbsp;
+
         <button
           @click="showHelp = !showHelp"
           type="button"
@@ -105,24 +102,24 @@
             aria-hidden="true"
             :hidden="!global.disabled"
           ></span>
-          &nbsp;Toggle error help
-        </button>
-      </div>
-      <div v-if="status.ispindel_config" class="col-md-3">
-        <button
-          @click="removeLegacy"
-          type="button"
-          class="btn btn-secondary"
-          :disabled="global.disabled"
-        >
-          <span
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-            :hidden="!global.disabled"
-          ></span>
-          &nbsp;Erase iSpindel config
-        </button>
+          &nbsp;Toggle error help</button
+        >&nbsp;
+        <template v-if="status.ispindel_config">
+          <button
+            @click="removeLegacy"
+            type="button"
+            class="btn btn-secondary"
+            :disabled="global.disabled"
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+              :hidden="!global.disabled"
+            ></span>
+            &nbsp;Erase iSpindel config
+          </button>
+        </template>
       </div>
     </div>
 
