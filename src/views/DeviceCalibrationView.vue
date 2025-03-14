@@ -48,8 +48,8 @@
             class="btn btn-secondary"
             :disabled="global.disabled"
           >
-            Tare scale
-          </button>&nbsp;
+            Tare scale</button
+          >&nbsp;
 
           <button
             @click="back()"
@@ -97,8 +97,8 @@
             class="btn btn-secondary"
             :disabled="global.disabled"
           >
-            Calculate factor
-          </button>&nbsp;
+            Calculate factor</button
+          >&nbsp;
 
           <button
             @click="back()"
@@ -134,8 +134,8 @@
             class="btn btn-secondary"
             :disabled="global.disabled"
           >
-            Back
-          </button>&nbsp;
+            Back</button
+          >&nbsp;
 
           <button
             @click="begin()"
