@@ -6,7 +6,7 @@
 
     <form @submit.prevent="save" class="needs-validation" novalidate>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputText
             v-model="config.beer_name1"
             maxlength="20"
@@ -14,7 +14,7 @@
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputText
             v-model="config.beer_name2"
             maxlength="20"
@@ -22,8 +22,24 @@
             :disabled="global.disabled"
           />
         </div>
+        <div class="col-md-3">
+          <BsInputText
+            v-model="config.beer_name3"
+            maxlength="20"
+            label="Beer 3 - Name"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-3">
+          <BsInputText
+            v-model="config.beer_name4"
+            maxlength="20"
+            label="Beer 4 - Name"
+            :disabled="global.disabled"
+          />
+        </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_fg1"
             label="Beer 1 - FG"
@@ -34,7 +50,7 @@
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_fg2"
             label="Beer 2 - FG"
@@ -45,8 +61,30 @@
             :disabled="global.disabled"
           />
         </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_fg3"
+            label="Beer 3 - FG"
+            min="0"
+            max="2"
+            step="0.0001"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_fg4"
+            label="Beer 4 - FG"
+            min="0"
+            max="2"
+            step="0.0001"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_ebc1"
             label="Beer 1 - EBC"
@@ -57,7 +95,7 @@
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_ebc2"
             label="Beer 2 - EBC"
@@ -68,8 +106,30 @@
             :disabled="global.disabled"
           />
         </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_ebc3"
+            label="Beer 3 - EBC"
+            min="0"
+            max="100"
+            step="1"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_ebc4"
+            label="Beer 4 - EBC"
+            min="0"
+            max="100"
+            step="1"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_ibu1"
             label="Beer 1 - IBU"
@@ -80,7 +140,7 @@
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_ibu2"
             label="Beer 2 - IBU"
@@ -91,8 +151,30 @@
             :disabled="global.disabled"
           />
         </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_ibu3"
+            label="Beer 3 - IBU"
+            min="0"
+            max="100"
+            step="1"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_ibu4"
+            label="Beer 4 - IBU"
+            min="0"
+            max="100"
+            step="1"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_abv1"
             label="Beer 1 - ABV"
@@ -104,10 +186,34 @@
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputNumber
             v-model="config.beer_abv2"
             label="Beer 2 - ABV"
+            min="0"
+            max="20"
+            step="0.1"
+            unit="%"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_abv3"
+            label="Beer 3 - ABV"
+            min="0"
+            max="20"
+            step="0.1"
+            unit="%"
+            width="5"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-3">
+          <BsInputNumber
+            v-model="config.beer_abv4"
+            label="Beer 4 - ABV"
             min="0"
             max="20"
             step="0.1"
@@ -122,12 +228,12 @@
         <div class="col-md-12">
           <p></p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
             <button
               @click="fetchBrewfather(1)"
               type="button"
-              class="btn btn-secondary w-2"
+              class="btn btn-secondary w-2 m-2"
               :disabled="global.disabled"
             >
               <span
@@ -143,7 +249,7 @@
             <button
               @click="fetchBrewlogger(1)"
               type="button"
-              class="btn btn-secondary w-2"
+              class="btn btn-secondary w-2 m-2"
               :disabled="global.disabled"
             >
               <span
@@ -159,7 +265,7 @@
             <button
               @click="fetchBrewspy(1)"
               type="button"
-              class="btn btn-secondary w-2"
+              class="btn btn-secondary w-2 m-2"
               :disabled="global.disabled"
             >
               <span
@@ -173,12 +279,12 @@
           </template>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
             <button
               @click="fetchBrewfather(2)"
               type="button"
-              class="btn btn-secondary w-2"
+              class="btn btn-secondary w-2 m-2"
               :disabled="global.disabled"
             >
               <span
@@ -194,7 +300,7 @@
             <button
               @click="fetchBrewlogger(2)"
               type="button"
-              class="btn btn-secondary w-2"
+              class="btn btn-secondary w-2 m-2"
               :disabled="global.disabled"
             >
               <span
@@ -210,7 +316,7 @@
             <button
               @click="fetchBrewspy(2)"
               type="button"
-              class="btn btn-secondary w-2"
+              class="btn btn-secondary w-2 m-2"
               :disabled="global.disabled"
             >
               <span
@@ -223,6 +329,109 @@
             </button>
           </template>
         </div>
+
+        <div class="col-md-3">
+          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
+            <button
+              @click="fetchBrewfather(3)"
+              type="button"
+              class="btn btn-secondary w-2 m-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewfather</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewlogger_url != ''">
+            <button
+              @click="fetchBrewlogger(3)"
+              type="button"
+              class="btn btn-secondary w-2 m-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from BrewLogger</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewspy_token3 != ''">
+            <button
+              @click="fetchBrewspy(3)"
+              type="button"
+              class="btn btn-secondary w-2 m-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewspy
+            </button>
+          </template>
+        </div>
+
+        <div class="col-md-3">
+          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
+            <button
+              @click="fetchBrewfather(4)"
+              type="button"
+              class="btn btn-secondary w-2 m-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewfather</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewlogger_url != ''">
+            <button
+              @click="fetchBrewlogger(4)"
+              type="button"
+              class="btn btn-secondary w-2 m-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from BrewLogger</button
+            >&nbsp;
+          </template>
+          <template v-if="config.brewspy_token4 != ''">
+            <button
+              @click="fetchBrewspy(4)"
+              type="button"
+              class="btn btn-secondary w-2 m-2"
+              :disabled="global.disabled"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                :hidden="!global.disabled"
+              ></span>
+              &nbsp;Fetch from Brewspy
+            </button>
+          </template>
+        </div>
+
       </div>
 
       <div class="row gy-2">
@@ -291,6 +500,18 @@ const confirmBeerCallback = (result, value) => {
             config.beer_ibu2 = e.ibu
             config.beer_name2 = e.label
             config.beer_id2 = e.id
+          } else if (tapNo.value == 3) {
+            config.beer_abv3 = e.abv
+            config.beer_ebc3 = Math.ceil(e.ebc)
+            config.beer_ibu3 = e.ibu
+            config.beer_name3 = e.label
+            config.beer_id3 = e.id
+          } else if (tapNo.value == 4) {
+            config.beer_abv4 = e.abv
+            config.beer_ebc4 = Math.ceil(e.ebc)
+            config.beer_ibu4 = e.ibu
+            config.beer_name4 = e.label
+            config.beer_id4 = e.id
           } else {
             logError('TapsBeerView.confirmBeerCallback()', 'Invalid tapNo', tapNo.value)
           }

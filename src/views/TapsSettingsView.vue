@@ -70,6 +70,77 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-md-12">
+          <hr />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <BsInputNumber
+            v-model="config.keg_weight3"
+            width="5"
+            min="0.0"
+            max="10.0"
+            step="0.01"
+            label="Tap 3 - Empty keg weight"
+            :unit="config.weight_unit"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-6">
+          <BsInputNumber
+            v-model="config.keg_weight4"
+            width="5"
+            min="0.0"
+            max="10.0"
+            step="0.01"
+            label="Tap 4 - Empty keg weight"
+            :unit="config.weight_unit"
+            :disabled="global.disabled"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <BsSelect
+            v-model="config.glass_volume3"
+            width="8"
+            :options="glassOptions"
+            label="Tap 3 - Glass size"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-6">
+          <BsSelect
+            v-model="config.glass_volume4"
+            width="8"
+            :options="glassOptions"
+            label="Tap 4 - Glass size"
+            :disabled="global.disabled"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <BsSelect
+            v-model="config.keg_volume3"
+            width="8"
+            :options="kegOptions"
+            label="Tap 3 - Keg volume"
+            :disabled="global.disabled"
+          />
+        </div>
+        <div class="col-md-6">
+          <BsSelect
+            v-model="config.keg_volume4"
+            width="8"
+            :options="kegOptions"
+            label="Tap 4 - Keg volume"
+            :disabled="global.disabled"
+          />
+        </div>
+      </div>
+
       <div class="row gy-2">
         <div class="col-md-12">
           <hr />

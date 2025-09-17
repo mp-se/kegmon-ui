@@ -154,7 +154,22 @@ app.get('/api/stability', (req, res) => {
     stability_popdev2: 0,
     stability_ubiasdev2: 0,
     stability_count2: 0,    
-  }
+    stability_sum3: 0,
+    stability_min3: 0,
+    stability_max3: 0,
+    stability_ave3: 0,
+    stability_var3: 0,
+    stability_popdev3: 0,
+    stability_ubiasdev3: 0,
+    stability_count3: 0,
+    stability_sum4: 0,
+    stability_min4: 0,
+    stability_max4: 0,
+    stability_ave4: 0,
+    stability_var4: 0,
+    stability_popdev4: 0,
+    stability_ubiasdev4: 0,
+    stability_count4: 0,    }
 
   res.type('application/json')
   res.send(statsData)

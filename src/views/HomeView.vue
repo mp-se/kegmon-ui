@@ -4,7 +4,7 @@
 
     <div v-if="status" class="container overflow-hidden text-center">
       <div class="row gy-4">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsCard header="Measurement" color="info" :title="config.beer_name1">
             <p class="text-center">
               <BsProgress :progress="tapProgress1"></BsProgress>
@@ -19,7 +19,7 @@
           </BsCard>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsCard header="Measurement" color="info" :title="config.beer_name2">
             <p class="text-center">
               <BsProgress :progress="tapProgress2"></BsProgress>
@@ -33,11 +33,41 @@
             </p>
           </BsCard>
         </div>
+
+        <div class="col-md-3">
+          <BsCard header="Measurement" color="info" :title="config.beer_name3">
+            <p class="text-center">
+              <BsProgress :progress="tapProgress3"></BsProgress>
+            </p>
+            <p class="text-center">
+              Volume: {{ status.beer_volume3 }} {{ config.getVolumeUnit }} Weight:
+              {{ status.beer_weight3 }} {{ config.getWeightUnit }}
+            </p>
+            <p class="text-center">
+              ABV: {{ config.beer_abv3 }}% EBC: {{ config.beer_ebc3 }} IBU: {{ config.beer_ibu3 }}
+            </p>
+          </BsCard>
+        </div>
+
+        <div class="col-md-3">
+          <BsCard header="Measurement" color="info" :title="config.beer_name4">
+            <p class="text-center">
+              <BsProgress :progress="tapProgress4"></BsProgress>
+            </p>
+            <p class="text-center">
+              Volume: {{ status.beer_volume4 }} {{ config.getVolumeUnit }} Weight:
+              {{ status.beer_weight4 }} {{ config.getWeightUnit }}
+            </p>
+            <p class="text-center">
+              ABV: {{ config.beer_abv4 }}% EBC: {{ config.beer_ebc4 }} IBU: {{ config.beer_ibu4 }}
+            </p>
+          </BsCard>
+        </div>
         <p></p>
       </div>
 
       <div class="row gy-4">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsCard header="Measurement" color="info" :title="config.beer_name1">
             <p class="text-center">Glasses left: {{ status.glass1 }}</p>
             <p class="text-center" v-if="status.last_pour_volume1 != 'NaN'">
@@ -46,7 +76,7 @@
           </BsCard>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsCard header="Measurement" color="info" :title="config.beer_name2">
             <p class="text-center">Glasses left: {{ status.glass2 }}</p>
             <p class="text-center" v-if="status.last_pour_volume2 != 'NaN'">
@@ -54,6 +84,25 @@
             </p>
           </BsCard>
         </div>
+
+        <div class="col-md-3">
+          <BsCard header="Measurement" color="info" :title="config.beer_name3">
+            <p class="text-center">Glasses left: {{ status.glass3 }}</p>
+            <p class="text-center" v-if="status.last_pour_volume3 != 'NaN'">
+              Last pour: {{ status.last_pour_volume3 }} {{ config.getVolumeUnit }}
+            </p>
+          </BsCard>
+        </div>
+
+        <div class="col-md-3">
+          <BsCard header="Measurement" color="info" :title="config.beer_name4">
+            <p class="text-center">Glasses left: {{ status.glass4 }}</p>
+            <p class="text-center" v-if="status.last_pour_volume4 != 'NaN'">
+              Last pour: {{ status.last_pour_volume4 }} {{ config.getVolumeUnit }}
+            </p>
+          </BsCard>
+        </div>
+
         <p></p>
       </div>
 
@@ -230,6 +279,14 @@ const tapProgress1 = computed(() => {
 
 const tapProgress2 = computed(() => {
   return Math.round((status.beer_volume2 / status.keg_volume2) * 100)
+})
+
+const tapProgress3 = computed(() => {
+  return Math.round((status.beer_volume3 / status.keg_volume3) * 100)
+})
+
+const tapProgress4 = computed(() => {
+  return Math.round((status.beer_volume4 / status.keg_volume4) * 100)
 })
 
 function refresh() {

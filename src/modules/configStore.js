@@ -15,20 +15,9 @@ export const useConfigStore = defineStore('config', {
       dark_mode: false,
       // Hardware
       ota_url: '',
-      display_layout: 0,
       temp_sensor: 0,
       brewpi_url: '',
       chamberctrl_url: '',
-      scale_sensor: 0,
-      display_driver: 0,
-      pin_display_data: 0,
-      pin_display_clock: 0,
-      pin_scale1_data: 0,
-      pin_scale1_clock: 0,
-      pin_scale2_data: 0,
-      pin_scale2_clock: 0,
-      pin_temp_data: 0,
-      pin_temp_power: 0,
       scale_deviation_increase: 0,
       scale_deviation_decrease: 0,
       scale_deviation_kalman: 0,
@@ -48,9 +37,13 @@ export const useConfigStore = defineStore('config', {
       brewfather_userkey: '',
       brewspy_token1: '',
       brewspy_token2: '',
+      brewspy_token3: '',
+      brewspy_token4: '',
       barhelper_apikey: '',
       barhelper_monitor1: '',
       barhelper_monitor2: '',
+      barhelper_monitor3: '',
+      barhelper_monitor4: '',
       brewlogger_url: '',
       // Push - Http Post 1
       http_post_target: '',
@@ -99,7 +92,33 @@ export const useConfigStore = defineStore('config', {
       beer_abv2: 0,
       beer_fg2: 0,
       beer_ebc2: 0,
-      beer_ibu2: 0
+      beer_ibu2: 0,
+      // Keg 3
+      scale_temp_formula3: '',
+      scale_factor3: 0,
+      scale_offset3: 0,
+      keg_weight3: 0,
+      keg_volume3: 0,
+      glass_volume3: 0,
+      beer_name3: '',
+      beer_id3: '',
+      beer_abv3: 0,
+      beer_fg3: 0,
+      beer_ebc3: 0,
+      beer_ibu3: 0,
+      // Keg 4
+      scale_temp_formula4: '',
+      scale_factor4: 0,
+      scale_offset4: 0,
+      keg_weight4: 0,
+      keg_volume4: 0,
+      glass_volume4: 0,
+      beer_name4: '',
+      beer_id4: '',
+      beer_abv4: 0,
+      beer_fg4: 0,
+      beer_ebc4: 0,
+      beer_ibu4: 0
     }
   },
   getters: {
@@ -148,20 +167,9 @@ export const useConfigStore = defineStore('config', {
           this.dark_mode = json.dark_mode
           // Hardware
           this.ota_url = json.ota_url
-          this.display_layout = json.display_layout
           this.temp_sensor = json.temp_sensor
           this.brewpi_url = json.brewpi_url
           this.chamberctrl_url = json.chamberctrl_url
-          this.scale_sensor = json.scale_sensor
-          this.display_driver = json.display_driver
-          this.pin_display_data = json.pin_display_data
-          this.pin_display_clock = json.pin_display_clock
-          this.pin_scale1_data = json.pin_scale1_data
-          this.pin_scale1_clock = json.pin_scale1_clock
-          this.pin_scale2_data = json.pin_scale2_data
-          this.pin_scale2_clock = json.pin_scale2_clock
-          this.pin_temp_data = json.pin_temp_data
-          this.pin_temp_power = json.pin_temp_power
           this.scale_deviation_increase = json.scale_deviation_increase
           this.scale_deviation_decrease = json.scale_deviation_decrease
           this.scale_deviation_kalman = json.scale_deviation_kalman
@@ -181,9 +189,13 @@ export const useConfigStore = defineStore('config', {
           this.brewfather_userkey = json.brewfather_userkey
           this.brewspy_token1 = json.brewspy_token1
           this.brewspy_token2 = json.brewspy_token2
+          this.brewspy_token3 = json.brewspy_token3
+          this.brewspy_token4 = json.brewspy_token4
           this.barhelper_apikey = json.barhelper_apikey
           this.barhelper_monitor1 = json.barhelper_monitor1
           this.barhelper_monitor2 = json.barhelper_monitor2
+          this.barhelper_monitor3 = json.barhelper_monitor3
+          this.barhelper_monitor4 = json.barhelper_monitor4
           this.brewlogger_url = json.brewlogger_url
           // Push - Http Post 1
           this.http_post_target = json.http_post_target
@@ -231,6 +243,30 @@ export const useConfigStore = defineStore('config', {
           this.beer_fg2 = json.beer_fg2
           this.beer_ebc2 = json.beer_ebc2
           this.beer_ibu2 = json.beer_ibu2
+          // Keg 3
+          this.scale_temp_formula3 = json.scale_temp_formula3
+          this.scale_factor3 = json.scale_factor3
+          this.scale_offset3 = json.scale_offset3
+          this.keg_weight3 = json.keg_weight3
+          this.keg_volume3 = json.keg_volume3
+          this.glass_volume3 = json.glass_volume3
+          this.beer_name3 = json.beer_name3
+          this.beer_abv3 = json.beer_abv3
+          this.beer_fg3 = json.beer_fg3
+          this.beer_ebc3 = json.beer_ebc3
+          this.beer_ibu3 = json.beer_ibu3
+          // Keg 4
+          this.scale_temp_formula4 = json.scale_temp_formula4
+          this.scale_factor4 = json.scale_factor4
+          this.scale_offset4 = json.scale_offset4
+          this.keg_weight4 = json.keg_weight4
+          this.keg_volume4 = json.keg_volume4
+          this.glass_volume4 = json.glass_volume4
+          this.beer_name4 = json.beer_name4
+          this.beer_abv4 = json.beer_abv4
+          this.beer_fg4 = json.beer_fg4
+          this.beer_ebc4 = json.beer_ebc4
+          this.beer_ibu4 = json.beer_ibu4
           callback(true)
         })
         .catch((err) => {

@@ -16,8 +16,6 @@ export const useStatusStore = defineStore('status', {
       volume_unit: '',
       temp_format: '',
       temperature: 0,
-      humidity: 0,
-      pressure: 0,
       total_heap: 0,
       free_heap: 0,
       ip: '',
@@ -56,6 +54,32 @@ export const useStatusStore = defineStore('status', {
       last_pour_weight2: 0,
       last_pour_volume2: 0,
 
+      // Keg 3
+      glass3: 0,
+      keg_volume3: 0,
+      scale_factor3: 0,
+      scale_weight3: 0,
+      scale_raw3: 0,
+      scale_offset3: 0,
+      beer_weight3: 0,
+      beer_volume3: 0,
+      scale_stable_weight3: 0,
+      last_pour_weight3: 0,
+      last_pour_volume3: 0,
+
+      // Keg 4
+      glass4: 0,
+      keg_volume4: 0,
+      scale_factor4: 0,
+      scale_weight4: 0,
+      scale_raw4: 0,
+      scale_offset4: 0,
+      beer_weight4: 0,
+      beer_volume4: 0,
+      scale_stable_weight4: 0,
+      last_pour_weight4: 0,
+      last_pour_volume4: 0,
+
       // Push status
       ha: {},
       brewspy: {},
@@ -83,8 +107,6 @@ export const useStatusStore = defineStore('status', {
           this.volume_unit = json.volume_unit
           this.temp_format = json.temp_format
           this.temperature = (Math.round(json.temperature * 100) / 100).toFixed(2) // C or F
-          this.humidity = json.humidity
-          this.pressure = json.pressure
           this.rssi = json.rssi
           this.ip = json.ip
           this.total_heap = Math.round(json.total_heap / 1024).toFixed(0)
@@ -121,6 +143,32 @@ export const useStatusStore = defineStore('status', {
           this.scale_stable_weight2 = new Number(json.scale_stable_weight2).toFixed(2)
           this.last_pour_weight2 = new Number(json.last_pour_weight2).toFixed(2)
           this.last_pour_volume2 = new Number(json.last_pour_volume2).toFixed(2)
+
+          // Keg 3
+          this.glass3 = new Number(json.glass3).toFixed(0)
+          this.keg_volume3 = new Number(json.keg_volume3).toFixed(2)
+          this.scale_factor3 = json.scale_factor3
+          this.scale_weight3 = new Number(json.scale_weight3).toFixed(3)
+          this.scale_raw3 = json.scale_raw3
+          this.scale_offset3 = json.scale_offset3
+          this.beer_weight3 = new Number(json.beer_weight3).toFixed(2)
+          this.beer_volume3 = new Number(json.beer_volume3).toFixed(2)
+          this.scale_stable_weight3 = new Number(json.scale_stable_weight3).toFixed(2)
+          this.last_pour_weight3 = new Number(json.last_pour_weight3).toFixed(2)
+          this.last_pour_volume3 = new Number(json.last_pour_volume3).toFixed(2)
+
+          // Keg 4
+          this.glass4 = new Number(json.glass4).toFixed(0)
+          this.keg_volume4 = new Number(json.keg_volume4).toFixed(2)
+          this.scale_factor4 = json.scale_factor4
+          this.scale_weight4 = new Number(json.scale_weight4).toFixed(3)
+          this.scale_raw4 = json.scale_raw4
+          this.scale_offset4 = json.scale_offset4
+          this.beer_weight4 = new Number(json.beer_weight4).toFixed(2)
+          this.beer_volume4 = new Number(json.beer_volume4).toFixed(2)
+          this.scale_stable_weight4 = new Number(json.scale_stable_weight4).toFixed(2)
+          this.last_pour_weight4 = new Number(json.last_pour_weight4).toFixed(2)
+          this.last_pour_volume4 = new Number(json.last_pour_volume4).toFixed(2)
 
           // Push status
           if (Object.prototype.hasOwnProperty.call(json, 'ha')) this.ha = json.ha

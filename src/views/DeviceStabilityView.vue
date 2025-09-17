@@ -5,76 +5,142 @@
     <hr />
 
     <div class="row" v-if="loaded">
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_sum1" label="Scale 1 - Sum"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_sum2" label="Scale 2 - Sum"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_sum3" label="Scale 3 - Sum"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_sum4" label="Scale 4 - Sum"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_min1" label="Scale 1 - Min"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_min2" label="Scale 2 - Min"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_min3" label="Scale 3 - Min"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_min4" label="Scale 4 - Min"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_max1" label="Scale 1 - Max"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_max2" label="Scale 2 - Max"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_max3" label="Scale 3 - Max"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_max4" label="Scale 4 - Max"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_ave1" label="Scale 1 - Ave"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_ave2" label="Scale 2 - Ave"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_ave3" label="Scale 3 - Ave"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_ave4" label="Scale 4 - Ave"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_var1" label="Scale 1 - Var"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly v-model="stability.stability_var2" label="Scale 2 - Var"></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_var3" label="Scale 3 - Var"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly v-model="stability.stability_var4" label="Scale 4 - Var"></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
         <BsInputReadonly
           v-model="stability.stability_popdev1"
           label="Scale 1 - Pop dev."
         ></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly
           v-model="stability.stability_popdev2"
           label="Scale 2 - Pop dev."
         ></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <BsInputReadonly
+          v-model="stability.stability_popdev3"
+          label="Scale 3 - Pop dev."
+        ></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly
+          v-model="stability.stability_popdev4"
+          label="Scale 4 - Pop dev."
+        ></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
         <BsInputReadonly
           v-model="stability.stability_ubiasdev1"
           label="Scale 1 - Ubias dev."
         ></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly
           v-model="stability.stability_ubiasdev2"
           label="Scale 2 - Ubias dev."
         ></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
+        <BsInputReadonly
+          v-model="stability.stability_ubiasdev3"
+          label="Scale 3 - Ubias dev."
+        ></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly
+          v-model="stability.stability_ubiasdev4"
+          label="Scale 4 - Ubias dev."
+        ></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
         <BsInputReadonly
           v-model="stability.stability_count1"
           label="Scale 1 - Count"
         ></BsInputReadonly>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <BsInputReadonly
           v-model="stability.stability_count2"
           label="Scale 2 - Count"
         ></BsInputReadonly>
       </div>
+      <div class="col-md-3">
+        <BsInputReadonly
+          v-model="stability.stability_count3"
+          label="Scale 3 - Count"
+        ></BsInputReadonly>
+      </div>
+      <div class="col-md-3">
+        <BsInputReadonly
+          v-model="stability.stability_count4"
+          label="Scale 4 - Count"
+        ></BsInputReadonly>
+      </div>
     </div>
 
     <div class="row" v-else>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <p>Unable to load stability data</p>
       </div>
     </div>
