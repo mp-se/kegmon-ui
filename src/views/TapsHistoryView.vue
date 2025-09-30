@@ -84,7 +84,8 @@ const historyKeg2 = ref([])
 const historyPour1 = ref([])
 const historyPour2 = ref([])
 
-var chart = null
+// eslint-disable-next-line no-unused-vars
+let chart = null
 
 const chartData = ref({
   datasets: [
