@@ -196,10 +196,6 @@ import { ref, computed, onBeforeMount, onBeforeUnmount } from 'vue'
 import { status, global, config } from '@/modules/pinia'
 import { logDebug, logError } from '@mp-se/espframework-ui-components'
 
-// TODO: Add humidity and pressure
-// TODO: Show # glasses left for taps
-// TODO: Show last pour per tap
-
 const polling = ref(null)
 
 const pushHomeAssistant = computed(() => {
@@ -289,8 +285,8 @@ const tapProgress4 = computed(() => {
   return Math.round((status.beer_volume4 / status.keg_volume4) * 100)
 })
 
-function refresh() {
-  status.load(() => {})
+async function refresh() {
+  await status.load()
 }
 
 onBeforeMount(() => {

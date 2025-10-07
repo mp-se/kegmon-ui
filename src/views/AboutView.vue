@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <p></p>
-    <p class="h3">About - KegMon</p>
+    <p class="h3">About - Kegmon</p>
     <hr />
 
     <p class="fw-normal">

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { global } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
+import { sharedHttpClient as http, logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
 
 export const useStatusStore = defineStore('status', {
   state: () => {
@@ -89,14 +88,11 @@ export const useStatusStore = defineStore('status', {
   },
   getters: {},
   actions: {
-    load(callback) {
+    async load() {
       logInfo('statusStore.load()', 'Fetching /api/status')
-      fetch(global.baseURL + 'api/status', {
-        signal: AbortSignal.timeout(global.fetchTimout)
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          logDebug('statusStore.load()', json)
+      try {
+        const json = await http.getJson('api/status')
+        logDebug('statusStore.load()', json)
           this.id = json.id
           this.mdns = json.mdns
           this.wifi_ssid = json.wifi_ssid
@@ -178,13 +174,12 @@ export const useStatusStore = defineStore('status', {
           if (Object.prototype.hasOwnProperty.call(json, 'brewlogger'))
             this.brewlogger = json.brewlogger
 
-          logInfo('statusStore.load()', 'Fetching /api/status completed')
-          callback(true)
-        })
-        .catch((err) => {
-          logError('statusStore.load()', err)
-          callback(false)
-        })
+        logInfo('statusStore.load()', 'Fetching /api/status completed')
+        return true
+      } catch (err) {
+        logError('statusStore.load()', err)
+        return false
+      }
     }
   }
 })
