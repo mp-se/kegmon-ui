@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { logInfo } from '@mp-se/espframework-ui-components'
+import { sharedHttpClient as http } from '@mp-se/espframework-ui-components'
+// import { logInfo, logDebug, logError } from '@mp-se/espframework-ui-components'
 
 export const useGlobalStore = defineStore('global', {
   state: () => {
@@ -10,13 +11,21 @@ export const useGlobalStore = defineStore('global', {
       disabled: false,
       configChanged: false,
 
+      ui: {
+        enableVoltageFragment: false,
+        enableManualWifiEntry: false,
+        enableScanForStrongestAp: false,
+      },
+
+      feature: {
+        ble: false,
+        kegs: 4,
+      },
+
       messageError: '',
       messageWarning: '',
       messageSuccess: '',
       messageInfo: '',
-
-      fetchTimout: 8000,
-      url: undefined
     }
   },
   getters: {
@@ -36,17 +45,12 @@ export const useGlobalStore = defineStore('global', {
       return 'Bearer ' + this.id
     },
     baseURL() {
-      if (this.url !== undefined) return this.url
-
-      if (import.meta.env.VITE_APP_HOST === undefined) {
-        logInfo('configStore:baseURL()', 'Using base URL from env', window.location.href)
-        this.url = window.location.href
-      } else {
-        logInfo('configStore:baseURL()', 'Using base URL from env', import.meta.env.VITE_APP_HOST)
-        this.url = import.meta.env.VITE_APP_HOST
-      }
-
-      return this.url
+      // use the shared http client's baseURL
+      return http.baseURL
+    },
+    fetchTimout() {
+      // proxy timeout from shared http client (ms)
+      return http.timeout
     },
     uiVersion() {
       return import.meta.env.VITE_APP_VERSION
@@ -54,13 +58,6 @@ export const useGlobalStore = defineStore('global', {
     uiBuild() {
       return import.meta.env.VITE_APP_BUILD
     },
-    disabled32() {
-      if (this.disabled) return true
-
-      if (this.platform !== 'esp8266') return false
-
-      return true
-    }
   },
   actions: {
     clearMessages() {
@@ -68,6 +65,29 @@ export const useGlobalStore = defineStore('global', {
       this.messageWarning = ''
       this.messageSuccess = ''
       this.messageInfo = ''
+    },
+    async load() {
+      // try {
+      //   logInfo('globalStore.load()', 'Fetching /api/feature')
+      //   const json = await http.getJson('api/feature')
+      //   logDebug('globalStore.load()', json)
+
+      //   this.board = json.board.toUpperCase()
+      //   this.app_ver = json.app_ver
+      //   this.app_build = json.app_build
+      //   this.platform = json.platform.toUpperCase()
+      //   this.hardware = json.hardware.toUpperCase()
+      //   this.firmware_file = json.firmware_file.toLowerCase()
+
+      //   this.feature.ble = json.ble
+
+      //   logInfo('globalStore.load()', 'Fetching /api/feature completed')
+      //   return true
+      // } catch (err) {
+      //   logError('globalStore.load()', err)
+      //   return false
+      // }
+      return true
     }
   }
 })

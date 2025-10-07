@@ -14,7 +14,6 @@
   <div v-if="!global.initialized" class="container text-center">
     <BsMessage
       message="Initalizing KegMon Web interface"
-      class="h2"
       :dismissable="false"
       alert="info"
     ></BsMessage>
@@ -38,7 +37,6 @@
     <BsMessage
       v-if="!status.connected"
       message="No response from device? No need to refresh the page, just ensure the device is on."
-      class="h2"
       :dismissable="false"
       alert="danger"
     ></BsMessage>
