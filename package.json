@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "espframework-ui-components": "github:mp-se/espframework-ui-components#main",
     "chart.js": "^4.4.6",
     "chartjs-adapter-date-fns": "^3.0.0",
     "date-fns": "^4.1.0",
