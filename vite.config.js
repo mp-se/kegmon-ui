@@ -24,7 +24,11 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // Ensure the espframework package is resolved to its ESM build so it is bundled
+      '@mp-se/espframework-ui-components': fileURLToPath(
+        new URL('./node_modules/espframework-ui-components/dist/index.esm.js', import.meta.url)
+      ),
     }
   },
   define: {

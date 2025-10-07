@@ -471,7 +471,7 @@
 import { ref } from 'vue'
 import { validateCurrentForm } from '@/modules/utils'
 import { global, config } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@/modules/logger'
+import { logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
 
 const beerOptions = ref([])
 const beer = ref('')

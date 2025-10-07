@@ -194,7 +194,7 @@
 <script setup>
 import { ref, computed, onBeforeMount, onBeforeUnmount } from 'vue'
 import { status, global, config } from '@/modules/pinia'
-import { logDebug, logError } from '@/modules/logger'
+import { logDebug, logError } from '@mp-se/espframework-ui-components'
 
 // TODO: Add humidity and pressure
 // TODO: Show # glasses left for taps

@@ -1,5 +1,5 @@
 import { config, global } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@/modules/logger'
+import { logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
 
 export function validateCurrentForm() {
   let valid = true

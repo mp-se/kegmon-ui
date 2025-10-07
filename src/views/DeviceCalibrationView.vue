@@ -166,7 +166,7 @@
 import { onBeforeMount, ref } from 'vue'
 import { weightKgToLbs } from '@/modules/utils'
 import { global, config } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@/modules/logger'
+import { logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
 
 const state = ref(1)
 const scale = ref(1)

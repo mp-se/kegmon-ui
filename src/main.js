@@ -9,29 +9,43 @@ app.use(piniaInstance)
 import router from './modules/router.js'
 app.use(router)
 
-import BsMessage from './components/BsMessage.vue'
-import BsCard from './components/BsCard.vue'
-import BsFileUpload from './components/BsFileUpload.vue'
-import BsProgress from './components/BsProgress.vue'
-import BsInputBase from './components/BsInputBase.vue'
-import BsInputText from './components/BsInputText.vue'
-import BsInputReadonly from './components/BsInputReadonly.vue'
-import BsSelect from './components/BsSelect.vue'
-import BsInputTextArea from './components/BsInputTextArea.vue'
-import BsInputNumber from './components/BsInputNumber.vue'
-import BsInputSwitch from './components/BsInputSwitch.vue'
-import BsInputRadio from './components/BsInputRadio.vue'
-import BsDropdown from './components/BsDropdown.vue'
+import {
+	BsMessage,
+	BsCard,
+	BsFileUpload,
+	BsProgress,
+	BsInputBase,
+	BsInputText,
+	BsInputReadonly,
+	BsSelect,
+	BsInputTextArea,
+	BsInputNumber,
+	BsInputSwitch,
+	BsInputRadio,
+	BsDropdown,
+	BsModal,
+	BsModalConfirm,
+	BsInputTextAreaFormat,
+	BsMenuBar,
+	BsFooter,
+	IconHome,
+	IconTools,
+	IconGraphUpArrow,
+	IconCloudUpArrow,
+	IconUpArrow,
+	IconCpu,
+	IconWifi,
+	IconEye,
+	IconEyeSlash,
+	IconCheckCircle,
+	IconXCircle,
+	IconExclamationTriangle,
+	IconInfoCircle
+} from '@mp-se/espframework-ui-components'
 
-import BsModal from './components/BsModal.vue'
-import BsModalConfirm from './components/BsModalConfirm.vue'
-import BsModalSelect from './components/BsModalSelect.vue'
-
+// Register Bootstrap components
 app.component('BsMessage', BsMessage)
-app.component('BsDropdown', BsDropdown)
 app.component('BsCard', BsCard)
-app.component('BsModal', BsModal)
-app.component('BsModalConfirm', BsModalConfirm)
 app.component('BsFileUpload', BsFileUpload)
 app.component('BsProgress', BsProgress)
 app.component('BsInputBase', BsInputBase)
@@ -40,21 +54,38 @@ app.component('BsInputReadonly', BsInputReadonly)
 app.component('BsSelect', BsSelect)
 app.component('BsInputTextArea', BsInputTextArea)
 app.component('BsInputNumber', BsInputNumber)
-app.component('BsInputRadio', BsInputRadio)
 app.component('BsInputSwitch', BsInputSwitch)
-app.component('BsModalSelect', BsModalSelect)
+app.component('BsInputRadio', BsInputRadio)
+app.component('BsDropdown', BsDropdown)
+app.component('BsModal', BsModal)
+app.component('BsModalConfirm', BsModalConfirm)
+app.component('BsInputTextAreaFormat', BsInputTextAreaFormat)
+app.component('BsMenuBar', BsMenuBar)
+app.component('BsFooter', BsFooter)
 
-import IconHome from './components/IconHome.vue'
-import IconTools from './components/IconTools.vue'
-import IconJustify from './components/IconJustify.vue'
-import IconCloudUpArrow from './components/IconCloudUpArrow.vue'
-import IconCpu from './components/IconCpu.vue'
-
+// Register Icon components
 app.component('IconHome', IconHome)
 app.component('IconTools', IconTools)
-app.component('IconJustify', IconJustify)
+app.component('IconGraphUpArrow', IconGraphUpArrow)
 app.component('IconCloudUpArrow', IconCloudUpArrow)
+app.component('IconUpArrow', IconUpArrow)
 app.component('IconCpu', IconCpu)
+app.component('IconWifi', IconWifi)
+app.component('IconEye', IconEye)
+app.component('IconEyeSlash', IconEyeSlash)
+app.component('IconCheckCircle', IconCheckCircle)
+app.component('IconXCircle', IconXCircle)
+app.component('IconExclamationTriangle', IconExclamationTriangle)
+app.component('IconInfoCircle', IconInfoCircle)
+
+// Local fragments (keep these local)
+import AdvancedFilesFragment from '@/fragments/AdvancedFilesFragment.vue'
+import EnableCorsFragment from '@/fragments/EnableCorsFragment.vue'
+import ListFilesFragment from '@/fragments/ListFilesFragment.vue'
+
+app.component('AdvancedFilesFragment', AdvancedFilesFragment)
+app.component('EnableCorsFragment', EnableCorsFragment)
+app.component('ListFilesFragment', ListFilesFragment)
 
 import 'bootstrap/dist/css/bootstrap.css'
 

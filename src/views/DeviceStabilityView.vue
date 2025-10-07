@@ -166,7 +166,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
 import { global } from '@/modules/pinia'
-import { logError, logInfo } from '@/modules/logger'
+import { logError, logInfo } from '@mp-se/espframework-ui-components'
 
 const stability = ref({})
 const loaded = ref(false)

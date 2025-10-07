@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { global } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@/modules/logger'
+import { logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
 
 export const useStatusStore = defineStore('status', {
   state: () => {
@@ -184,41 +184,6 @@ export const useStatusStore = defineStore('status', {
         .catch((err) => {
           logError('statusStore.load()', err)
           callback(false)
-        })
-    },
-    auth(callback) {
-      logInfo('statusStore.auth()', 'Fetching /api/auth')
-      var base = btoa('gravitymon:password')
-
-      fetch(global.baseURL + 'api/auth', {
-        method: 'GET',
-        headers: { Authorization: 'Basic ' + base },
-        signal: AbortSignal.timeout(global.fetchTimout)
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          logInfo('statusStore.auth()', 'Fetching /api/auth completed')
-          callback(true, json)
-        })
-        .catch((err) => {
-          logError('statusStore.auth()', err)
-          callback(false)
-        })
-    },
-    ping() {
-      // logInfo("statusStore.ping()", "Fetching /api/ping")
-      fetch(global.baseURL + 'api/ping', {
-        method: 'GET',
-        signal: AbortSignal.timeout(global.fetchTimout)
-      })
-        .then((res) => res.json())
-        .then(() => {
-          // logInfo("statusStore.ping()", "Fetching /api/auth completed")
-          this.connected = true
-        })
-        .catch((err) => {
-          logError('statusStore.ping()', err)
-          this.connected = false
         })
     }
   }

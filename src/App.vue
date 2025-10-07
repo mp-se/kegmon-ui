@@ -20,7 +20,16 @@
     ></BsMessage>
   </div>
 
-  <BsMenuBar v-if="global.initialized" :disabled="global.disabled" brand="KegMon" />
+  <BsMenuBar
+    v-if="global.initialized"
+    :disabled="global.disabled"
+    brand="Kegmon"
+    :menu-items="items"
+    :dark-mode="config.dark_mode"
+    :mdns="config.mdns"
+    :config-changed="global.configChanged"
+    @update:dark-mode="handleDarkModeUpdate"
+  />
 
   <div class="container">
     <div>
@@ -75,11 +84,10 @@
 </template>
 
 <script setup>
-import BsMenuBar from '@/components/BsMenuBar.vue'
-import BsFooter from '@/components/BsFooter.vue'
 import { onMounted, watch, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 import { global, status, config, saveConfigState } from '@/modules/pinia'
 import { storeToRefs } from 'pinia'
+import { sharedHttpClient as http, logError } from '@mp-se/espframework-ui-components'
 
 const polling = ref(null)
 
@@ -98,7 +106,10 @@ watch(disabled, () => {
 })
 
 function ping() {
-  status.ping()
+  ;(async () => {
+    const ok = await http.ping()
+    status.connected = ok
+  })()
 }
 
 onBeforeMount(() => {
@@ -109,40 +120,56 @@ onBeforeUnmount(() => {
   clearInterval(polling.value)
 })
 
-onMounted(() => {
+onMounted(async () => {
   if (!global.initialized) {
-    showSpinner()
-    status.auth((success, data) => {
-      if (success) {
-        global.id = data.token
-
-        status.load((success) => {
-          global.platform = status.platform
-
-          if (success) {
-            config.load((success) => {
-              if (success) {
-                saveConfigState()
-                global.initialized = true
-                hideSpinner()
-              } else {
-                global.messageError =
-                  'Failed to load configuration data from device, please try to reload page!'
-                hideSpinner()
-              }
-            })
-          } else {
-            global.messageError = 'Failed to load status from device, please try to reload page!'
-            hideSpinner()
-          }
-        })
-      } else {
-        global.messageError = 'Failed to authenticate with device, please try to reload page!'
-        hideSpinner()
-      }
-    })
+    await initializeApp()
   }
 })
+
+async function initializeApp() {
+  try {
+    showSpinner()
+
+    // Step 1: Authenticate with device (http client owns token)
+    const base = btoa('gravitymon:password')
+    const authOk = await http.auth(base)
+    if (!authOk) {
+      global.messageError = 'Failed to authenticate with device, please try to reload page!'
+      return
+    }
+
+    // Step 2: Load feature flags
+    const globalSuccess = await global.load()
+    if (!globalSuccess) {
+      global.messageError = 'Failed to load feature flags from device, please try to reload page!'
+      return
+    }
+
+    // Step 3: Load device status
+    const statusSuccess = await status.load()
+    if (!statusSuccess) {
+      global.messageError = 'Failed to load status from device, please try to reload page!'
+      return
+    }
+
+    // Step 4: Load configuration
+    const configSuccess = await config.load()
+    if (!configSuccess) {
+      global.messageError =
+        'Failed to load configuration data from device, please try to reload page!'
+      return
+    }
+
+    // Success! Initialize the app
+    saveConfigState()
+    global.initialized = true
+  } catch (error) {
+    logError('App.initializeApp()', error)
+    global.messageError = `Initialization failed: ${error.message}`
+  } finally {
+    hideSpinner()
+  }
+}
 
 function showSpinner() {
   document.querySelector('#spinner').showModal()

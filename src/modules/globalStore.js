@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { logInfo } from '@/modules/logger'
+import { logInfo } from '@mp-se/espframework-ui-components'
 
 export const useGlobalStore = defineStore('global', {
   state: () => {

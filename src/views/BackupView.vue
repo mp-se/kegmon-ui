@@ -75,7 +75,7 @@
 <script setup>
 import { ref } from 'vue'
 import { global, config, getConfigChanges } from '@/modules/pinia'
-import { logDebug } from '@/modules/logger'
+import { logDebug } from '@mp-se/espframework-ui-components'
 
 const progress = ref(0)
 
