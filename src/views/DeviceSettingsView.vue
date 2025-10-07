@@ -126,7 +126,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { validateCurrentForm, restart } from '@/modules/utils'
+import { validateCurrentForm } from '@mp-se/espframework-ui-components'
 import { global, config } from '@/modules/pinia'
 import * as badge from '@/modules/badge'
 import { logError, logInfo } from '@mp-se/espframework-ui-components'
@@ -183,5 +183,10 @@ const saveSettings = () => {
   if (!validateCurrentForm()) return
 
   config.saveAll()
+}
+
+function restart() {
+  // use config store restart wrapper
+  config.restart()
 }
 </script>

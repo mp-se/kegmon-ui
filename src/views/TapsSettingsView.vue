@@ -61,7 +61,7 @@
         </div>
         <div class="col-md-6">
           <BsSelect
-            v-model="config.keg_volume1"
+            v-model="config.keg_volume2"
             width="8"
             :options="kegOptions"
             label="Tap 2 - Keg volume"
@@ -167,7 +167,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { validateCurrentForm } from '@/modules/utils'
+import { validateCurrentForm } from '@mp-se/espframework-ui-components'
 import { global, config } from '@/modules/pinia'
 
 const glassOptions = ref([

@@ -154,7 +154,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { validateCurrentForm, restart } from '@/modules/utils'
+import { validateCurrentForm } from '@mp-se/espframework-ui-components'
 import { global, config } from '@/modules/pinia'
 
 const tempSensorOptions = ref([
@@ -168,5 +168,9 @@ const save = () => {
 
   global.clearMessages()
   config.saveAll()
+}
+
+function restart() {
+  config.restart()
 }
 </script>

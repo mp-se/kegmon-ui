@@ -136,11 +136,11 @@
 </template>
 
 <script setup>
-import { validateCurrentForm, restart } from '@/modules/utils'
+import { validateCurrentForm } from '@mp-se/espframework-ui-components'
 import { global, config } from '@/modules/pinia'
 import * as badge from '@/modules/badge'
 import { onMounted, ref } from 'vue'
-import { logDebug } from '@mp-se/espframework-ui-components'
+import { logDebug, logError, logInfo, sharedHttpClient as http } from '@mp-se/espframework-ui-components'
 
 const scanning = ref(false)
 const networks = ref([])
@@ -187,5 +187,31 @@ const save = () => {
   config.saveAll()
   global.messageInfo =
     'If WIFI settings are changed, restart the device and enter the new URL of the device!'
+}
+
+function restart() {
+  global.clearMessages()
+  global.disabled = true
+  ;(async () => {
+    try {
+      const json = await http.restart()
+      logDebug('DeviceWifiView.restart()', json)
+      if (json && json.status == true) {
+        global.messageSuccess =
+          json.message + ' Redirecting to http://' + config.mdns + '.local in 8 seconds.'
+        logInfo('DeviceWifiView.restart()', 'Scheduling refresh of UI')
+        setTimeout(() => {
+          location.href = 'http://' + config.mdns + '.local'
+        }, 8000)
+      } else {
+        global.messageError = (json && json.message) || 'Failed to restart'
+        global.disabled = false
+      }
+    } catch (err) {
+      logError('DeviceWifiView.restart()', err)
+      global.messageError = 'Failed to do restart'
+      global.disabled = false
+    }
+  })()
 }
 </script>

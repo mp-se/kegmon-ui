@@ -74,7 +74,7 @@ import 'date-fns'
 import 'chartjs-adapter-date-fns'
 import { global, config } from '@/modules/pinia'
 import { logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
-import { volumeCLtoUKOZ, volumeCLtoUSOZ } from '@/modules/utils'
+import { volumeCLtoUSOZ, volumeCLtoUKOZ } from '@/modules/utils'
 
 const levels = ref([])
 
