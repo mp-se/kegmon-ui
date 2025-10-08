@@ -78,12 +78,13 @@
   </div>
 
   <router-view v-if="global.initialized" />
-  <BsFooter v-if="global.initialized" text="(c) 2021-2024 Magnus Persson" />
+  <BsFooter v-if="global.initialized" text="(c) 2021-2025 Magnus Persson" />
 </template>
 
 <script setup>
 import { onMounted, watch, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 import { global, status, config, saveConfigState } from '@/modules/pinia'
+import { items } from '@/modules/router'
 import { storeToRefs } from 'pinia'
 import { sharedHttpClient as http, logError } from '@mp-se/espframework-ui-components'
 
@@ -175,6 +176,28 @@ function showSpinner() {
 
 function hideSpinner() {
   document.querySelector('#spinner').close()
+}
+
+// Watch for changes to config.dark_mode and call handleDarkModeUpdate
+watch(
+  () => config.dark_mode,
+  (newValue) => {
+    handleDarkModeUpdate(newValue)
+  }
+)
+
+// Handle dark mode changes
+const handleDarkModeUpdate = (newValue) => {
+  // update the store value
+  config.dark_mode = newValue
+  // fallback: ensure the attribute is set on the document root so Bootstrap theme rules apply
+  try {
+    const root = document.documentElement
+    if (newValue) root.setAttribute('data-bs-theme', 'dark')
+    else root.setAttribute('data-bs-theme', 'light')
+  } catch (e) {
+    console.error('Failed to set data-bs-theme on documentElement', e)
+  }
 }
 </script>
 

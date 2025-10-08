@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia'
-import { sharedHttpClient as http, logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
+import {
+  sharedHttpClient as http,
+  logDebug,
+  logError,
+  logInfo
+} from '@mp-se/espframework-ui-components'
 
 export const useStatusStore = defineStore('status', {
   state: () => {
@@ -93,86 +98,85 @@ export const useStatusStore = defineStore('status', {
       try {
         const json = await http.getJson('api/status')
         logDebug('statusStore.load()', json)
-          this.id = json.id
-          this.mdns = json.mdns
-          this.wifi_ssid = json.wifi_ssid
-          this.platform = json.platform
-          this.app_ver = json.app_ver
-          this.app_build = json.app_build
-          this.weight_unit = json.weight_unit
-          this.volume_unit = json.volume_unit
-          this.temp_format = json.temp_format
-          this.temperature = (Math.round(json.temperature * 100) / 100).toFixed(2) // C or F
-          this.rssi = json.rssi
-          this.ip = json.ip
-          this.total_heap = Math.round(json.total_heap / 1024).toFixed(0)
-          this.free_heap = Math.round(json.free_heap / 1024).toFixed(0)
-          this.wifi_setup = json.wifi_setup
-          this.scale_busy = json.scale_busy
-          this.uptime_seconds = json.uptime_seconds
-          this.uptime_minutes = json.uptime_minutes
-          this.uptime_hours = json.uptime_hours
-          this.uptime_days = json.uptime_days
+        this.id = json.id
+        this.mdns = json.mdns
+        this.wifi_ssid = json.wifi_ssid
+        this.platform = json.platform
+        this.app_ver = json.app_ver
+        this.app_build = json.app_build
+        this.weight_unit = json.weight_unit
+        this.volume_unit = json.volume_unit
+        this.temp_format = json.temp_format
+        this.temperature = (Math.round(json.temperature * 100) / 100).toFixed(2) // C or F
+        this.rssi = json.rssi
+        this.ip = json.ip
+        this.total_heap = Math.round(json.total_heap / 1024).toFixed(0)
+        this.free_heap = Math.round(json.free_heap / 1024).toFixed(0)
+        this.wifi_setup = json.wifi_setup
+        this.scale_busy = json.scale_busy
+        this.uptime_seconds = json.uptime_seconds
+        this.uptime_minutes = json.uptime_minutes
+        this.uptime_hours = json.uptime_hours
+        this.uptime_days = json.uptime_days
 
-          // Keg 1
-          this.glass1 = new Number(json.glass1).toFixed(0)
-          this.keg_volume1 = new Number(json.keg_volume1).toFixed(2)
-          this.scale_factor1 = json.scale_factor1
-          this.scale_weight1 = new Number(json.scale_weight1).toFixed(3)
-          this.scale_raw1 = json.scale_raw1
-          this.scale_offset1 = json.scale_offset1
-          this.beer_weight1 = new Number(json.beer_weight1).toFixed(2)
-          this.beer_volume1 = new Number(json.beer_volume1).toFixed(2)
-          this.scale_stable_weight1 = new Number(json.scale_stable_weight1).toFixed(2)
-          this.last_pour_weight1 = new Number(json.last_pour_weight1).toFixed(2)
-          this.last_pour_volume1 = new Number(json.last_pour_volume1).toFixed(2)
+        // Keg 1
+        this.glass1 = new Number(json.glass1).toFixed(0)
+        this.keg_volume1 = new Number(json.keg_volume1).toFixed(2)
+        this.scale_factor1 = json.scale_factor1
+        this.scale_weight1 = new Number(json.scale_weight1).toFixed(3)
+        this.scale_raw1 = json.scale_raw1
+        this.scale_offset1 = json.scale_offset1
+        this.beer_weight1 = new Number(json.beer_weight1).toFixed(2)
+        this.beer_volume1 = new Number(json.beer_volume1).toFixed(2)
+        this.scale_stable_weight1 = new Number(json.scale_stable_weight1).toFixed(2)
+        this.last_pour_weight1 = new Number(json.last_pour_weight1).toFixed(2)
+        this.last_pour_volume1 = new Number(json.last_pour_volume1).toFixed(2)
 
-          // Keg 2
-          this.glass2 = new Number(json.glass2).toFixed(0)
-          this.keg_volume2 = new Number(json.keg_volume2).toFixed(2)
-          this.scale_factor2 = json.scale_factor2
-          this.scale_weight2 = new Number(json.scale_weight2).toFixed(3)
-          this.scale_raw2 = json.scale_raw2
-          this.scale_offset2 = json.scale_offset2
-          this.beer_weight2 = new Number(json.beer_weight2).toFixed(2)
-          this.beer_volume2 = new Number(json.beer_volume2).toFixed(2)
-          this.scale_stable_weight2 = new Number(json.scale_stable_weight2).toFixed(2)
-          this.last_pour_weight2 = new Number(json.last_pour_weight2).toFixed(2)
-          this.last_pour_volume2 = new Number(json.last_pour_volume2).toFixed(2)
+        // Keg 2
+        this.glass2 = new Number(json.glass2).toFixed(0)
+        this.keg_volume2 = new Number(json.keg_volume2).toFixed(2)
+        this.scale_factor2 = json.scale_factor2
+        this.scale_weight2 = new Number(json.scale_weight2).toFixed(3)
+        this.scale_raw2 = json.scale_raw2
+        this.scale_offset2 = json.scale_offset2
+        this.beer_weight2 = new Number(json.beer_weight2).toFixed(2)
+        this.beer_volume2 = new Number(json.beer_volume2).toFixed(2)
+        this.scale_stable_weight2 = new Number(json.scale_stable_weight2).toFixed(2)
+        this.last_pour_weight2 = new Number(json.last_pour_weight2).toFixed(2)
+        this.last_pour_volume2 = new Number(json.last_pour_volume2).toFixed(2)
 
-          // Keg 3
-          this.glass3 = new Number(json.glass3).toFixed(0)
-          this.keg_volume3 = new Number(json.keg_volume3).toFixed(2)
-          this.scale_factor3 = json.scale_factor3
-          this.scale_weight3 = new Number(json.scale_weight3).toFixed(3)
-          this.scale_raw3 = json.scale_raw3
-          this.scale_offset3 = json.scale_offset3
-          this.beer_weight3 = new Number(json.beer_weight3).toFixed(2)
-          this.beer_volume3 = new Number(json.beer_volume3).toFixed(2)
-          this.scale_stable_weight3 = new Number(json.scale_stable_weight3).toFixed(2)
-          this.last_pour_weight3 = new Number(json.last_pour_weight3).toFixed(2)
-          this.last_pour_volume3 = new Number(json.last_pour_volume3).toFixed(2)
+        // Keg 3
+        this.glass3 = new Number(json.glass3).toFixed(0)
+        this.keg_volume3 = new Number(json.keg_volume3).toFixed(2)
+        this.scale_factor3 = json.scale_factor3
+        this.scale_weight3 = new Number(json.scale_weight3).toFixed(3)
+        this.scale_raw3 = json.scale_raw3
+        this.scale_offset3 = json.scale_offset3
+        this.beer_weight3 = new Number(json.beer_weight3).toFixed(2)
+        this.beer_volume3 = new Number(json.beer_volume3).toFixed(2)
+        this.scale_stable_weight3 = new Number(json.scale_stable_weight3).toFixed(2)
+        this.last_pour_weight3 = new Number(json.last_pour_weight3).toFixed(2)
+        this.last_pour_volume3 = new Number(json.last_pour_volume3).toFixed(2)
 
-          // Keg 4
-          this.glass4 = new Number(json.glass4).toFixed(0)
-          this.keg_volume4 = new Number(json.keg_volume4).toFixed(2)
-          this.scale_factor4 = json.scale_factor4
-          this.scale_weight4 = new Number(json.scale_weight4).toFixed(3)
-          this.scale_raw4 = json.scale_raw4
-          this.scale_offset4 = json.scale_offset4
-          this.beer_weight4 = new Number(json.beer_weight4).toFixed(2)
-          this.beer_volume4 = new Number(json.beer_volume4).toFixed(2)
-          this.scale_stable_weight4 = new Number(json.scale_stable_weight4).toFixed(2)
-          this.last_pour_weight4 = new Number(json.last_pour_weight4).toFixed(2)
-          this.last_pour_volume4 = new Number(json.last_pour_volume4).toFixed(2)
+        // Keg 4
+        this.glass4 = new Number(json.glass4).toFixed(0)
+        this.keg_volume4 = new Number(json.keg_volume4).toFixed(2)
+        this.scale_factor4 = json.scale_factor4
+        this.scale_weight4 = new Number(json.scale_weight4).toFixed(3)
+        this.scale_raw4 = json.scale_raw4
+        this.scale_offset4 = json.scale_offset4
+        this.beer_weight4 = new Number(json.beer_weight4).toFixed(2)
+        this.beer_volume4 = new Number(json.beer_volume4).toFixed(2)
+        this.scale_stable_weight4 = new Number(json.scale_stable_weight4).toFixed(2)
+        this.last_pour_weight4 = new Number(json.last_pour_weight4).toFixed(2)
+        this.last_pour_volume4 = new Number(json.last_pour_volume4).toFixed(2)
 
-          // Push status
-          if (Object.prototype.hasOwnProperty.call(json, 'ha')) this.ha = json.ha
-          if (Object.prototype.hasOwnProperty.call(json, 'brewspy')) this.brewspy = json.brewspy
-          if (Object.prototype.hasOwnProperty.call(json, 'barhelper'))
-            this.barhelper = json.barhelper
-          if (Object.prototype.hasOwnProperty.call(json, 'brewlogger'))
-            this.brewlogger = json.brewlogger
+        // Push status
+        if (Object.prototype.hasOwnProperty.call(json, 'ha')) this.ha = json.ha
+        if (Object.prototype.hasOwnProperty.call(json, 'brewspy')) this.brewspy = json.brewspy
+        if (Object.prototype.hasOwnProperty.call(json, 'barhelper')) this.barhelper = json.barhelper
+        if (Object.prototype.hasOwnProperty.call(json, 'brewlogger'))
+          this.brewlogger = json.brewlogger
 
         logInfo('statusStore.load()', 'Fetching /api/status completed')
         return true

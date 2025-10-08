@@ -10,37 +10,37 @@ import router from './modules/router.js'
 app.use(router)
 
 import {
-	BsMessage,
-	BsCard,
-	BsFileUpload,
-	BsProgress,
-	BsInputBase,
-	BsInputText,
-	BsInputReadonly,
-	BsSelect,
-	BsInputTextArea,
-	BsInputNumber,
-	BsInputSwitch,
-	BsInputRadio,
-	BsDropdown,
-	BsModal,
-	BsModalConfirm,
-	BsInputTextAreaFormat,
-	BsMenuBar,
-	BsFooter,
-	IconHome,
-	IconTools,
-	IconGraphUpArrow,
-	IconCloudUpArrow,
-	IconUpArrow,
-	IconCpu,
-	IconWifi,
-	IconEye,
-	IconEyeSlash,
-	IconCheckCircle,
-	IconXCircle,
-	IconExclamationTriangle,
-	IconInfoCircle
+  BsMessage,
+  BsCard,
+  BsFileUpload,
+  BsProgress,
+  BsInputBase,
+  BsInputText,
+  BsInputReadonly,
+  BsSelect,
+  BsInputTextArea,
+  BsInputNumber,
+  BsInputSwitch,
+  BsInputRadio,
+  BsDropdown,
+  BsModal,
+  BsModalConfirm,
+  BsInputTextAreaFormat,
+  BsMenuBar,
+  BsFooter,
+  IconHome,
+  IconTools,
+  IconGraphUpArrow,
+  IconCloudUpArrow,
+  IconUpArrow,
+  IconCpu,
+  IconWifi,
+  IconEye,
+  IconEyeSlash,
+  IconCheckCircle,
+  IconXCircle,
+  IconExclamationTriangle,
+  IconInfoCircle
 } from '@mp-se/espframework-ui-components'
 
 // Register Bootstrap components
@@ -82,10 +82,12 @@ app.component('IconInfoCircle', IconInfoCircle)
 import AdvancedFilesFragment from '@/fragments/AdvancedFilesFragment.vue'
 import EnableCorsFragment from '@/fragments/EnableCorsFragment.vue'
 import ListFilesFragment from '@/fragments/ListFilesFragment.vue'
+import VoltageFragment from '@/fragments/VoltageFragment.vue'
 
 app.component('AdvancedFilesFragment', AdvancedFilesFragment)
 app.component('EnableCorsFragment', EnableCorsFragment)
 app.component('ListFilesFragment', ListFilesFragment)
+app.component('VoltageFragment', VoltageFragment)
 
 import 'bootstrap/dist/css/bootstrap.css'
 

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { sharedHttpClient as http } from '@mp-se/espframework-ui-components'
-// import { logInfo, logDebug, logError } from '@mp-se/espframework-ui-components'
+import { logInfo, logDebug, logError } from '@mp-se/espframework-ui-components'
 
 export const useGlobalStore = defineStore('global', {
   state: () => {
@@ -11,21 +11,23 @@ export const useGlobalStore = defineStore('global', {
       disabled: false,
       configChanged: false,
 
+      // TODO: Platform: , Version: () , Hardware: , Filename:
+
       ui: {
         enableVoltageFragment: false,
         enableManualWifiEntry: false,
-        enableScanForStrongestAp: false,
+        enableScanForStrongestAp: false
       },
 
       feature: {
         ble: false,
-        kegs: 4,
+        no_kegs: 4
       },
 
       messageError: '',
       messageWarning: '',
       messageSuccess: '',
-      messageInfo: '',
+      messageInfo: ''
     }
   },
   getters: {
@@ -41,13 +43,6 @@ export const useGlobalStore = defineStore('global', {
     isInfo() {
       return this.messageInfo != '' ? true : false
     },
-    token() {
-      return 'Bearer ' + this.id
-    },
-    baseURL() {
-      // use the shared http client's baseURL
-      return http.baseURL
-    },
     fetchTimout() {
       // proxy timeout from shared http client (ms)
       return http.timeout
@@ -57,7 +52,7 @@ export const useGlobalStore = defineStore('global', {
     },
     uiBuild() {
       return import.meta.env.VITE_APP_BUILD
-    },
+    }
   },
   actions: {
     clearMessages() {
@@ -67,27 +62,26 @@ export const useGlobalStore = defineStore('global', {
       this.messageInfo = ''
     },
     async load() {
-      // try {
-      //   logInfo('globalStore.load()', 'Fetching /api/feature')
-      //   const json = await http.getJson('api/feature')
-      //   logDebug('globalStore.load()', json)
+      try {
+        logInfo('globalStore.load()', 'Fetching /api/feature')
+        const json = await http.getJson('api/feature')
+        logDebug('globalStore.load()', json)
 
-      //   this.board = json.board.toUpperCase()
-      //   this.app_ver = json.app_ver
-      //   this.app_build = json.app_build
-      //   this.platform = json.platform.toUpperCase()
-      //   this.hardware = json.hardware.toUpperCase()
-      //   this.firmware_file = json.firmware_file.toLowerCase()
+        this.board = json.board.toUpperCase()
+        this.app_ver = json.app_ver
+        this.app_build = json.app_build
+        this.platform = json.platform.toUpperCase()
+        this.firmware_file = json.firmware_file.toLowerCase()
 
-      //   this.feature.ble = json.ble
+        this.feature.ble = json.ble
+        this.feature.no_kegs = json.no_kegs
 
-      //   logInfo('globalStore.load()', 'Fetching /api/feature completed')
-      //   return true
-      // } catch (err) {
-      //   logError('globalStore.load()', err)
-      //   return false
-      // }
-      return true
+        logInfo('globalStore.load()', 'Fetching /api/feature completed')
+        return true
+      } catch (err) {
+        logError('globalStore.load()', err)
+        return false
+      }
     }
   }
 })

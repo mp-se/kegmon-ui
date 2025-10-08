@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia'
 import { global, saveConfigState, getConfigChanges } from '@/modules/pinia'
-import { logDebug, logError, logInfo, sharedHttpClient as http } from '@mp-se/espframework-ui-components'
+import {
+  logDebug,
+  logError,
+  logInfo,
+  sharedHttpClient as http
+} from '@mp-se/espframework-ui-components'
 
 export const useConfigStore = defineStore('config', {
   state: () => {
@@ -310,7 +315,10 @@ export const useConfigStore = defineStore('config', {
         const res = await http.restart(this.mdns, { redirectDelayMs: 8000 })
         if (res.success && res.json && res.json.status === true) {
           global.messageSuccess =
-            (res.json.message || '') + ' Redirecting to http://' + this.mdns + '.local in 8 seconds.'
+            (res.json.message || '') +
+            ' Redirecting to http://' +
+            this.mdns +
+            '.local in 8 seconds.'
           logInfo('configStore.restart()', 'Restart requested, redirect scheduled')
         } else if (res.success && res.json) {
           global.messageError = res.json.message || 'Failed to restart device'
@@ -440,7 +448,7 @@ export const useConfigStore = defineStore('config', {
         if (!d.push_enabled) {
           global.messageWarning = 'No endpoint is defined for this target. Cannot run test.'
         } else if (!d.success) {
-                  global.messageError = 'Test failed with error code ' + http.getErrorString(d.last_error)
+          global.messageError = 'Test failed with error code ' + http.getErrorString(d.last_error)
         } else {
           global.messageSuccess = 'Test was successful'
         }

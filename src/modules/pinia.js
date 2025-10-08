@@ -7,7 +7,7 @@ import { logInfo } from '@mp-se/espframework-ui-components'
 
 const piniaInstance = createPinia()
 
-export default { piniaInstance }
+export default piniaInstance
 
 const config = useConfigStore(piniaInstance)
 const global = useGlobalStore(piniaInstance)

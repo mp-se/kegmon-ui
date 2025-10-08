@@ -166,7 +166,12 @@
 import { onBeforeMount, ref } from 'vue'
 import { weightKgToLbs } from '@/modules/utils'
 import { global, config } from '@/modules/pinia'
-import { logDebug, logError, logInfo } from '@mp-se/espframework-ui-components'
+import {
+  sharedHttpClient as http,
+  logDebug,
+  logError,
+  logInfo
+} from '@mp-se/espframework-ui-components'
 
 const state = ref(1)
 const scale = ref(1)
@@ -181,7 +186,9 @@ const scaleStatus = ref({
 
 const scaleOptions = ref([
   { label: 'Scale 1', value: 1 },
-  { label: 'Scale 2', value: 2 }
+  { label: 'Scale 2', value: 2 },
+  { label: 'Scale 3', value: 3 },
+  { label: 'Scale 4', value: 4 }
 ])
 
 function getClass() {
@@ -227,49 +234,38 @@ function saveScaleValues(json) {
     config.weight_unit
 }
 
-/*
- * Reset scale
- */
 async function step2() {
   global.disabled = true
   global.clearMessages()
 
   try {
-    await sendTare((success, json) => {
-      logDebug('DeviceCalibrationView.step2()', 'Tare', json)
-      if (!success) {
-        throw new Error('Failed to tare scale ' + scale.value)
-      }
-    })
+    logInfo('DeviceCalibrationView.step2()', 'Sending tare request')
+    await http.postJson('api/scale/tare', { scale_index: scale.value })
 
-    var timer = setInterval(async () => {
+    // Poll until scale_busy is false
+    while (true) {
       logDebug('DeviceCalibrationView.step2()', 'Checking scale status')
+      const json = await http.getJson('api/scale')
 
-      await getScaleStatus((success, json) => {
-        logDebug('DeviceCalibrationView.step2()', 'Status', json)
-        if (!success) {
-          throw new Error('Failed to fetch scale status ' + scale.value)
-        }
+      saveScaleValues(json)
 
-        saveScaleValues(json)
+      if (!json.scale_busy) {
+        global.messageSuccess = 'Scale tare completed'
+        state.value = 3
+        global.disabled = false
+        break
+      }
 
-        if (!json.scale_busy) {
-          global.messageSuccess = 'Scale tare completed'
-          clearInterval(timer)
-          state.value = 3
-          global.disabled = false
-        }
-      })
-    }, 2000)
+      // wait 2s before next poll
+      await new Promise((r) => setTimeout(r, 2000))
+    }
   } catch (e) {
-    global.messageError = e
+    logError('DeviceCalibrationView.step2()', e)
+    global.messageError = e.message || e
     global.disabled = false
   }
 }
 
-/*
- * Perform calibration
- */
 async function step3() {
   global.clearMessages()
 
@@ -281,34 +277,29 @@ async function step3() {
   global.disabled = true
 
   try {
-    await sendFactor((success, json) => {
-      logDebug('DeviceCalibrationView.step3()', 'Factor', json)
-      if (!success) {
-        throw new Error('Failed to tare scale ' + scale.value)
-      }
-    })
+    logInfo('DeviceCalibrationView.step3()', 'Sending factor request')
+    await http.postJson('api/scale/factor', { scale_index: scale.value, weight: weight.value })
 
-    var timer = setInterval(async () => {
+    // Poll until scale_busy is false
+    while (true) {
       logDebug('DeviceCalibrationView.step3()', 'Checking scale status')
+      const json = await http.getJson('api/scale')
 
-      await getScaleStatus((success, json) => {
-        logDebug('DeviceCalibrationView.step3()', 'Status', json)
-        if (!success) {
-          throw new Error('Failed to fetch scale status ' + scale.value)
-        }
+      saveScaleValues(json)
 
-        saveScaleValues(json)
+      if (!json.scale_busy) {
+        global.messageSuccess = 'Scale factor calculation completed'
+        state.value = 4
+        global.disabled = false
+        break
+      }
 
-        if (!json.scale_busy) {
-          global.messageSuccess = 'Scale factor calculation completed'
-          clearInterval(timer)
-          state.value = 4
-          global.disabled = false
-        }
-      })
-    }, 2000)
+      // wait 2s before next poll
+      await new Promise((r) => setTimeout(r, 2000))
+    }
   } catch (e) {
-    global.messageError = e
+    logError('DeviceCalibrationView.step3()', e)
+    global.messageError = e.message || e
     global.disabled = false
   }
 }
@@ -316,61 +307,4 @@ async function step3() {
 onBeforeMount(() => {
   state.value = 1
 })
-
-async function sendTare(callback) {
-  logInfo('DeviceCalibrationView.sendTare()', 'Sending /api/scale/tare')
-
-  const res = await fetch(global.baseURL + 'api/scale/tare', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: global.token },
-    body: JSON.stringify({ scale_index: scale.value }),
-    signal: AbortSignal.timeout(global.fetchTimout)
-  })
-
-  if (!res.ok) {
-    logError('DeviceCalibrationView.sendTare()', 'Failed with', res.ok)
-    callback(false, {})
-    return
-  }
-
-  const json = await res.json()
-  callback(true, json)
-}
-
-async function sendFactor(callback) {
-  logInfo('DeviceCalibrationView.sendFactor()', 'Sending /api/scale/factor')
-  const res = await fetch(global.baseURL + 'api/scale/factor', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: global.token },
-    body: JSON.stringify({ scale_index: scale.value, weight: weight.value }),
-    signal: AbortSignal.timeout(global.fetchTimout)
-  })
-
-  if (!res.ok) {
-    logError('DeviceCalibrationView.sendFactor()', 'Failed with', res.ok)
-    callback(false, {})
-    return
-  }
-
-  const json = await res.json()
-  callback(true, json)
-}
-
-async function getScaleStatus(callback) {
-  logInfo('DeviceCalibrationView.getScaleStatus()', 'Fetching /api/scale')
-  const res = await fetch(global.baseURL + 'api/scale', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json', Authorization: global.token },
-    signal: AbortSignal.timeout(global.fetchTimout)
-  })
-
-  if (!res.ok) {
-    logError('DeviceCalibrationView.getScaleStatus()', 'Failed with', res.ok)
-    callback(false, {})
-    return
-  }
-
-  const json = await res.json()
-  callback(true, json)
-}
 </script>

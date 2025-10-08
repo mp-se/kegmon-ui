@@ -18,7 +18,7 @@ export var configData = {
   brewpi_url: "http://192.168.0.23",
   chamberctrl_url: "http://192.168.0.25",
   brewlogger_url: "http://192.168.0.24",
-  scale_deviation_increase: 1,
+  scale_deviation_increase: 1.2,
   scale_deviation_decrease: 0.1,
   scale_deviation_kalman: 0.05,
   scale_read_count: 5,
@@ -218,6 +218,18 @@ export var statusData = {
       push_response: "",
       push_used: false
   },
+}
+
+export var featureData = {
+  board: 'esp32_pro',
+  platform: 'esp32c3',
+  app_ver: '2.0.0',
+  app_build: 'gitrev',
+  firmware_file: 'firmware.bin',
+
+  // Feature flags
+  ble: true,
+  no_kegs: 4
 }
 
 // EOF

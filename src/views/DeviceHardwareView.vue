@@ -40,7 +40,7 @@
           <hr />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <BsInputNumber
             v-model="config.scale_deviation_increase"
             label="Scale deviation increase"
@@ -48,11 +48,11 @@
             max="1.0"
             step=".05"
             :unit="config.weight_unit"
-            help="Default 0.5 kg"
+            help="Default 0.5 kg (0.05 - 1.00)"
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <BsInputNumber
             v-model="config.scale_deviation_decrease"
             label="Scale deviation decrease"
@@ -60,11 +60,11 @@
             max="1.0"
             step=".05"
             :unit="config.weight_unit"
-            help="Default 0.1 kg"
+            help="Default 0.1 kg (0.05 - 1.00)"
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <BsInputNumber
             v-model="config.scale_deviation_kalman"
             label="Scale deviation kalman"
@@ -72,42 +72,42 @@
             max="0.1"
             step=".01"
             :unit="config.weight_unit"
-            help="Default 0.04 kg"
+            help="Default 0.04 kg (0.01 - 0.10)"
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <BsInputNumber
             v-model="config.scale_stable_count"
             label="Scale stable count"
             min="6"
             max="30"
             step="1"
-            help="Number of stable readings required for a new level to be set"
+            help="Number of stable readings required for a new level to be set (6 - 30)"
             :disabled="global.disabled"
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <BsInputNumber
             v-model="config.scale_read_count"
             label="Scale sample count"
             min="1"
             max="50"
             step="1"
-            help="Number of samples from the scale driver"
+            help="Number of samples from the scale driver (1 - 50)"
             :disabled="global.disabled"
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <BsInputNumber
             v-model="config.scale_read_count_calibration"
             label="Scale sample count during calibration"
             min="1"
             max="100"
             step="1"
-            help="Number of samples from the scale driver when doing a calibration"
+            help="Number of samples from the scale driver when doing a calibration (1 - 100)"
             :disabled="global.disabled"
           />
         </div>

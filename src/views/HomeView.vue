@@ -269,20 +269,29 @@ const pushBarhelper = computed(() => {
   return 'Not updated'
 })
 
+function clampProgress(n) {
+  if (typeof n !== 'number' || !isFinite(n) || isNaN(n)) return 0
+  return Math.min(100, Math.max(0, Math.round(n)))
+}
+
 const tapProgress1 = computed(() => {
-  return Math.round((status.beer_volume1 / status.keg_volume1) * 100)
+  if (!status.keg_volume1 || status.keg_volume1 <= 0) return 0
+  return clampProgress((status.beer_volume1 / status.keg_volume1) * 100)
 })
 
 const tapProgress2 = computed(() => {
-  return Math.round((status.beer_volume2 / status.keg_volume2) * 100)
+  if (!status.keg_volume2 || status.keg_volume2 <= 0) return 0
+  return clampProgress((status.beer_volume2 / status.keg_volume2) * 100)
 })
 
 const tapProgress3 = computed(() => {
-  return Math.round((status.beer_volume3 / status.keg_volume3) * 100)
+  if (!status.keg_volume3 || status.keg_volume3 <= 0) return 0
+  return clampProgress((status.beer_volume3 / status.keg_volume3) * 100)
 })
 
 const tapProgress4 = computed(() => {
-  return Math.round((status.beer_volume4 / status.keg_volume4) * 100)
+  if (!status.keg_volume4 || status.keg_volume4 <= 0) return 0
+  return clampProgress((status.beer_volume4 / status.keg_volume4) * 100)
 })
 
 async function refresh() {
