@@ -86,7 +86,7 @@ import { onMounted, watch, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 import { global, status, config, saveConfigState } from '@/modules/pinia'
 import { items } from '@/modules/router'
 import { storeToRefs } from 'pinia'
-import { sharedHttpClient as http, logError } from '@mp-se/espframework-ui-components'
+import { sharedHttpClient as http, logError, version, logInfo } from '@mp-se/espframework-ui-components'
 
 const polling = ref(null)
 
@@ -120,6 +120,8 @@ onBeforeUnmount(() => {
 })
 
 onMounted(async () => {
+  logInfo('App.onMounted()', `Using espframework version ${version}`)
+
   if (!global.initialized) {
     await initializeApp()
   }
@@ -130,7 +132,7 @@ async function initializeApp() {
     showSpinner()
 
     // Step 1: Authenticate with device (http client owns token)
-    const base = btoa('gravitymon:password')
+    const base = btoa('kegmon:password')
     const authOk = await http.auth(base)
     if (!authOk) {
       global.messageError = 'Failed to authenticate with device, please try to reload page!'
@@ -161,6 +163,7 @@ async function initializeApp() {
 
     // Success! Initialize the app
     saveConfigState()
+    handleDarkModeUpdate(config.dark_mode)
     global.initialized = true
   } catch (error) {
     logError('App.initializeApp()', error)
