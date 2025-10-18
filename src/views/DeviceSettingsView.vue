@@ -185,8 +185,8 @@ const saveSettings = () => {
   config.saveAll()
 }
 
-function restart() {
+async function restart() {
   // use config store restart wrapper
-  config.restart()
+  await config.restart()
 }
 </script>

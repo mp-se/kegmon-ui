@@ -263,15 +263,15 @@ function removeLegacy() {
   })
 }
 
-function hardwareScan() {
+async function hardwareScan() {
   global.clearMessages()
   global.disabled = true
   logData.value = ''
 
-  config.runHardwareScan((success, data) => {
-    if (success) {
-      logData.value = data
-    }
-  })
+  const result = await config.runHardwareScan()
+  if (result.success) {
+    logData.value = result.data
+  }
+  global.disabled = false
 }
 </script>

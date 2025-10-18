@@ -170,7 +170,7 @@ const save = () => {
   config.saveAll()
 }
 
-function restart() {
-  config.restart()
+async function restart() {
+  await config.restart()
 }
 </script>
