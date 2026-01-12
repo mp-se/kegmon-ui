@@ -17,13 +17,32 @@ export { global, status, config }
 
 const configCompare = ref(null)
 
+const deepClone = (obj) => {
+  if (obj === null || typeof obj !== 'object') return obj
+  if (obj instanceof Array) {
+    return obj.map((item) => deepClone(item))
+  }
+  if (obj instanceof Object) {
+    const cloned = {}
+    for (const key in obj) {
+      cloned[key] = deepClone(obj[key])
+    }
+    return cloned
+  }
+  return obj
+}
+
+const deepEqual = (a, b) => {
+  return JSON.stringify(a) === JSON.stringify(b)
+}
+
 const saveConfigState = () => {
   logInfo('pinia.saveConfigState()', 'Saving state')
 
   configCompare.value = {}
   for (var key in config) {
     if (typeof config[key] !== 'function' && key !== '$id') {
-      configCompare.value[key] = config[key]
+      configCompare.value[key] = deepClone(config[key])
     }
   }
 
@@ -40,7 +59,7 @@ const getConfigChanges = () => {
   }
 
   for (var key in configCompare.value) {
-    if (configCompare.value[key] != config[key]) {
+    if (!deepEqual(configCompare.value[key], config[key])) {
       changes[key] = config[key]
     }
   }

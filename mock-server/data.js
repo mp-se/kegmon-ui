@@ -8,22 +8,14 @@ export var configData = {
   // Device configuration
   id: "7376ef",
   mdns: "tap2",
-  temp_format: "C",
+  temp_unit: "C",
   weight_unit: "kg",
   volume_unit: "cl",
   dark_mode: false, 
+  display_layout: 0,
   // Hardware
   ota_url: "",
-  temp_sensor: 0,
-  brewpi_url: "http://192.168.0.23",
-  chamberctrl_url: "http://192.168.0.25",
   brewlogger_url: "http://192.168.0.24",
-  scale_deviation_increase: 1.2,
-  scale_deviation_decrease: 0.1,
-  scale_deviation_kalman: 0.05,
-  scale_read_count: 5,
-  scale_read_count_calibration: 30,
-  scale_stable_count: 10,
   // Wifi
   wifi_portal_timeout: 120,
   wifi_connect_timeout: 20,
@@ -31,20 +23,14 @@ export var configData = {
   wifi_ssid2: "",
   wifi_pass: "password",
   wifi_pass2: "mypass",
-  // Push _ Generic
+  // Push - Generic
   push_timeout: 10,  
-  brewfather_apikey: "1", // "NipSwcZmguYM4bvuFReRtgAddesRbQkyYMFin7cIGybf4htng61oA5",
-  brewfather_userkey: "2", // "Urz3aoQ5KJhaH8883DIXWZlUoHpG42",
-  brewspy_token1: "2",
-  brewspy_token2: "3",
-  brewspy_token3: "4",
-  brewspy_token4: "1",
+  brewfather_apikey: "1",
+  brewfather_userkey: "2",
+  brewspy_tokens: ["2", "3", "4", "1"],
   barhelper_apikey: 'sdfsdfds',
-  barhelper_monitor1: 'Monitor 1',
-  barhelper_monitor2: 'Monitor 2',
-  barhelper_monitor3: 'Monitor 3',
-  barhelper_monitor4: 'Monitor 4',
-// Push _ Http Post 1
+  barhelper_monitors: ["Monitor 1", "Monitor 2", "Monitor 3", "Monitor 4"],
+  // Push - Http Post 1
   http_post_target: "http://192.168.1.10:9090/api/v1/ZYfjlUNeiuyu9N/telemetry",
   http_post_header1: "Auth: Basic T7IF9DD9fF3RDddE=",
   http_post_header2: "Auth: Advanced T7IF9DD9fF3RDddE=",
@@ -66,170 +52,335 @@ export var configData = {
   mqtt_port: 1883,
   mqtt_user: "kegmon",
   mqtt_pass: "testpass",
-  // Keg 1
-  scale_temp_formula1: "",
-  scale_factor1: -21648.68945,
-  scale_offset1: 26689,
-  keg_weight1: 5,
-  keg_volume1: 19,
-  glass_volume1: 0.4,
-  beer_name1: "West Coast IPA",
-  beer_id1: "2",
-  beer_abv1: 7,
-  beer_fg1: 1.01,
-  beer_ebc1: 5,
-  beer_ibu1: 26,
-  // Keg 2
-  scale_temp_formula2: "",
-  scale_factor2: -23080.98438,
-  scale_offset2: -108721,
-  keg_weight2: 5,
-  keg_volume2: 19,
-  glass_volume2: 0.4,
-  beer_name2: "Helles Festbier",
-  beer_id2: "3",
-  beer_abv2: 5.5,
-  beer_fg2: 1.01,
-  beer_ebc2: 5,
-  beer_ibu2: 28,
-  // Keg 3
-  scale_temp_formula3: "",
-  scale_factor3: -21648.68945,
-  scale_offset3: 26689,
-  keg_weight3: 5,
-  keg_volume3: 19,
-  glass_volume3: 0.4,
-  beer_name3: "IPA",
-  beer_id3: "2",
-  beer_abv3: 7,
-  beer_fg3: 1.01,
-  beer_ebc3: 5,
-  beer_ibu3: 26,
-  // Keg 4
-  scale_temp_formula4: "",
-  scale_factor4: -21648.68945,
-  scale_offset4: 26689,
-  keg_weight4: 5,
-  keg_volume4: 19,
-  glass_volume4: 0.4,
-  beer_name4: "APA",
-  beer_id4: "2",
-  beer_abv4: 7,
-  beer_fg4: 1.01,
-  beer_ebc4: 5,
-  beer_ibu4: 26
+  // Arrays
+  scales: [
+    {
+      scale_factor: -21648.68945,
+      scale_offset: 26689,
+      keg_weight: 5.2,
+      keg_volume: 19,
+      glass_volume: 0.4,
+      temp_sensor_id: ""
+    },
+    {
+      scale_factor: -23080.98438,
+      scale_offset: -108721,
+      keg_weight: 5.1,
+      keg_volume: 19,
+      glass_volume: 0.4,
+      temp_sensor_id: ""
+    },
+    {
+      scale_factor: -21648.68945,
+      scale_offset: 26689,
+      keg_weight: 5.05,
+      keg_volume: 19,
+      glass_volume: 0.4,
+      temp_sensor_id: ""
+    },
+    {
+      scale_factor: -21648.68945,
+      scale_offset: 26689,
+      keg_weight: 5.2,
+      keg_volume: 19,
+      glass_volume: 0.4,
+      temp_sensor_id: ""
+    }
+  ],
+  beers: [
+    {
+      beer_name: "West Coast IPA",
+      beer_id: "2",
+      beer_abv: 7,
+      beer_fg: 1.01,
+      beer_ebc: 5,
+      beer_ibu: 26
+    },
+    {
+      beer_name: "Helles Festbier",
+      beer_id: "3",
+      beer_abv: 5.5,
+      beer_fg: 1.01,
+      beer_ebc: 5,
+      beer_ibu: 28
+    },
+    {
+      beer_name: "IPA",
+      beer_id: "2",
+      beer_abv: 7,
+      beer_fg: 1.01,
+      beer_ebc: 5,
+      beer_ibu: 26
+    },
+    {
+      beer_name: "APA",
+      beer_id: "2",
+      beer_abv: 7,
+      beer_fg: 1.01,
+      beer_ebc: 5,
+      beer_ibu: 26
+    }
+  ]
 }
 
 export var statusData = {
   // Device
-  mdns: "tap",
-  id: "7376ef",
+  mdns: "Kegmone9d5a0",
+  id: "e9d5a0",
   wifi_ssid: "@home",
-  platform: "esp32s2",
-  app_ver: "1.0.0",
-  app_build: "beta2",
   weight_unit: "kg",
   volume_unit: "cl",
-  temp_format: "C",
-
-  // Data
-  temp: 22.4,
-  rssi: -76,
-  total_heap: 1000,
-  free_heap: 500,
-  ip: "192.0.0.1",
+  temp_unit: "C",
+  rssi: -47,
+  total_heap: 338292,
+  free_heap: 202912,
+  ip: "192.168.1.155",
   wifi_setup: false,
-  uptime_seconds: 1,
-  uptime_minutes: 2,
-  uptime_hours: 3,
-  uptime_days: 4,
-
-  // Scale 1
-  scale_factor1: -21648.68945,
-  scale_weight1: 16.39,
-  scale_raw1: 0,
-  scale_offset1: 26689,
-  beer_weight1: 11.37,
-  beer_volume1: 1126,
-  scale_stable_weight1: 16.27,
-  last_pour_weight1: 0.11,
-  last_pour_volume1: 11,
-  glass1: 27.9,
-  keg_volume1: 1900,
-
-  // Scale 2
-  scale_factor2: -23080.98438,
-  scale_weight2: 0.19,
-  scale_raw2: 0,
-  scale_offset2: -108721,
-  beer_weight2: -4.81,
-  beer_volume2: -476,
-  scale_stable_weight2: 0.24,
-  last_pour_weight2: 14.01,
-  last_pour_volume2: 1387,
-  glass2: 0,
-  keg_volume2: 1900,
-
-  // Scale 3
-  scale_factor3: -23080.98438,
-  scale_weight3: 0.19,
-  scale_raw3: 0,
-  scale_offset3: -108721,
-  beer_weight3: -4.81,
-  beer_volume3: -476,
-  scale_stable_weight3: 0.24,
-  last_pour_weight3: 14.01,
-  last_pour_volume3: 1387,
-  glass3: 0,
-  keg_volume3: 1900,
-
-    // Scale 4
-  scale_factor4: -23080.98438,
-  scale_weight4: 0.19,
-  scale_raw4: 0,
-  scale_offset4: -108721,
-  beer_weight4: -4.81,
-  beer_volume4: -476,
-  scale_stable_weight4: 0.24,
-  last_pour_weight4: 14.01,
-  last_pour_volume4: 1387,
-  glass4: 0,
-  keg_volume4: 1900,
-  
-  // Push testing
+  uptime_seconds: 28,
+  uptime_minutes: 29,
+  uptime_hours: 8,
+  uptime_days: 0,
+  scale_busy: false,
+  scales: [
+    {
+      index: 0,
+      connected: true,
+      state: "KegAbsent",
+      stable_weight: 4.56,
+      pour_volume: 44,
+      keg_volume: 1900
+    },
+    {
+      index: 1,
+      connected: true,
+      state: "KegAbsent",
+      stable_weight: 14.23,
+      pour_volume: 56,
+      keg_volume: 1900
+    },
+    {
+      index: 2,
+      connected: true,
+      state: "KegAbsent",
+      stable_weight: 10.2,
+      pour_volume: 20,
+      keg_volume: 1900
+    },
+    {
+      index: 3,
+      connected: true,
+      state: "KegAbsent",
+      stable_weight: 6.9,
+      pour_volume: 25,
+      keg_volume: 1900
+    }
+  ],
+  sensors: [
+    {
+      index: 0,
+      id: "28d9cd48f6d63ccd",
+      temperature: 22.55
+    }
+  ],
   ha: {
-     push_age: 288986,
-      push_status: false,
-      push_code: 0,
-      push_response: "",
-      push_used: false
-  },
-  barhelper: {
-      push_age: 288986,
-      push_status: false,
-      push_code: 0,
-      push_response: "",
-      push_used: false
+    push_age: 30568282,
+    push_status: false,
+    push_code: 0,
+    push_response: "",
+    push_used: false
   },
   brewspy: {
-      push_age: 288986,
-      push_status: false,
-      push_code: 0,
-      push_response: "",
-      push_used: false
+    push_age: 30568282,
+    push_status: false,
+    push_code: 0,
+    push_response: "",
+    push_used: false
   },
+  brewlogger: {
+    push_age: 30568282,
+    push_status: false,
+    push_code: 0,
+    push_response: "",
+    push_used: false
+  },
+  barhelper: {
+    push_age: 30568282,
+    push_status: false,
+    push_code: 0,
+    push_response: "",
+    push_used: false
+  }
+}
+
+export var statisticsData = {
+  level_statistics: [
+    {
+      index: 0,
+      connected: true,
+      state: "KegPresent",
+      confidence: 98,
+      total_pours: 45,
+      total_pour_volume: 2250,
+      avg_pour_volume: 50,
+      max_pour_volume: 125,
+      min_pour_volume: 15,
+      avg_pour_duration_sec: 35.5,
+      keg_replacements: 1,
+      current_keg_age_hours: 72,
+      last_keg_weight: 18.5,
+      state_transitions: 3,
+      stabilization_count: 156,
+      avg_stabilization_time_ms: 2840,
+      last_pour_time_ms: 1704979200000,
+      last_stable_time_ms: 1704979235000,
+      last_keg_removal_time_ms: 1704893400000
+    },
+    {
+      index: 1,
+      connected: true,
+      state: "KegAbsent",
+      confidence: 100,
+      total_pours: 0,
+      total_pour_volume: 0,
+      avg_pour_volume: 0,
+      max_pour_volume: 0,
+      min_pour_volume: 1000,
+      avg_pour_duration_sec: 0,
+      keg_replacements: 0,
+      current_keg_age_hours: 0,
+      last_keg_weight: 0,
+      state_transitions: 1,
+      stabilization_count: 0,
+      avg_stabilization_time_ms: 0,
+      last_pour_time_ms: 0,
+      last_stable_time_ms: 0,
+      last_keg_removal_time_ms: 0
+    },
+    {
+      index: 2,
+      connected: true,
+      state: "KegPresent",
+      confidence: 95,
+      total_pours: 28,
+      total_pour_volume: 1400,
+      avg_pour_volume: 50,
+      max_pour_volume: 110,
+      min_pour_volume: 20,
+      avg_pour_duration_sec: 38.2,
+      keg_replacements: 0,
+      current_keg_age_hours: 168,
+      last_keg_weight: 12.3,
+      state_transitions: 2,
+      stabilization_count: 98,
+      avg_stabilization_time_ms: 3200,
+      last_pour_time_ms: 1704975600000,
+      last_stable_time_ms: 1704975640000,
+      last_keg_removal_time_ms: 0
+    },
+    {
+      index: 3,
+      connected: false,
+      state: "KegAbsent",
+      confidence: 100,
+      total_pours: 0,
+      total_pour_volume: 0,
+      avg_pour_volume: 0,
+      max_pour_volume: 0,
+      min_pour_volume: 1000,
+      avg_pour_duration_sec: 0,
+      keg_replacements: 0,
+      current_keg_age_hours: 0,
+      last_keg_weight: 0,
+      state_transitions: 0,
+      stabilization_count: 0,
+      avg_stabilization_time_ms: 0,
+      last_pour_time_ms: 0,
+      last_stable_time_ms: 0,
+      last_keg_removal_time_ms: 0
+    }
+  ],
+  scale_statistics: [
+    {
+      index: 0,
+      total_readings: 15680,
+      valid_readings: 15450,
+      invalid_readings: 230,
+      reading_quality: 98.5,
+      reading_frequency: 4.25,
+      last_reading_time_ms: 1704979230000,
+      first_reading_time_ms: 1704800400000,
+      raw_min: 245680,
+      raw_max: 268920,
+      raw_average: 257300,
+      current_variance: 145.32,
+      stable_state_variance: 112.45,
+      stable_state_samples: 8450,
+      calibration_drift_per_hour: 0.082
+    },
+    {
+      index: 1,
+      total_readings: 0,
+      valid_readings: 0,
+      invalid_readings: 0,
+      reading_quality: 0.0,
+      reading_frequency: 0.0,
+      last_reading_time_ms: 0,
+      first_reading_time_ms: 0,
+      raw_min: 0,
+      raw_max: 0,
+      raw_average: 0,
+      current_variance: 0.0,
+      stable_state_variance: 0.0,
+      stable_state_samples: 0,
+      calibration_drift_per_hour: 0.0
+    },
+    {
+      index: 2,
+      total_readings: 9240,
+      valid_readings: 9180,
+      invalid_readings: 60,
+      reading_quality: 99.3,
+      reading_frequency: 4.18,
+      last_reading_time_ms: 1704975620000,
+      first_reading_time_ms: 1704800400000,
+      raw_min: 198450,
+      raw_max: 215680,
+      raw_average: 207100,
+      current_variance: 98.76,
+      stable_state_variance: 87.54,
+      stable_state_samples: 5230,
+      calibration_drift_per_hour: 0.056
+    },
+    {
+      index: 3,
+      total_readings: 0,
+      valid_readings: 0,
+      invalid_readings: 0,
+      reading_quality: 0.0,
+      reading_frequency: 0.0,
+      last_reading_time_ms: 0,
+      first_reading_time_ms: 0,
+      raw_min: 0,
+      raw_max: 0,
+      raw_average: 0,
+      current_variance: 0.0,
+      stable_state_variance: 0.0,
+      stable_state_samples: 0,
+      calibration_drift_per_hour: 0.0
+    }
+  ]
 }
 
 export var featureData = {
   board: 'esp32_pro',
-  platform: 'esp32c3',
+  platform: 'esp32s3',
   app_ver: '2.0.0',
   app_build: 'gitrev',
   firmware_file: 'firmware.bin',
 
   // Feature flags
   ble: true,
-  no_kegs: 4
+  no_kegs: 3
 }
 
 // EOF

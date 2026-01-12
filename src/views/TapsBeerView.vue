@@ -6,431 +6,131 @@
 
     <form @submit.prevent="save" class="needs-validation" novalidate>
       <div class="row">
-        <div class="col-md-3">
-          <BsInputText
-            v-model="config.beer_name1"
-            maxlength="20"
-            label="Beer 1 - Name"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputText
-            v-model="config.beer_name2"
-            maxlength="20"
-            label="Beer 2 - Name"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputText
-            v-model="config.beer_name3"
-            maxlength="20"
-            label="Beer 3 - Name"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputText
-            v-model="config.beer_name4"
-            maxlength="20"
-            label="Beer 4 - Name"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(beer, index) in config.beers" :key="`name-${index}`">
+          <div :class="getTapClass()">
+            <BsInputText
+              v-model="config.beers[index].beer_name"
+              maxlength="20"
+              :label="`Beer ${index + 1} - Name`"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
 
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_fg1"
-            label="Beer 1 - FG"
-            min="0"
-            max="2"
-            step="0.0001"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_fg2"
-            label="Beer 2 - FG"
-            min="0"
-            max="2"
-            step="0.0001"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_fg3"
-            label="Beer 3 - FG"
-            min="0"
-            max="2"
-            step="0.0001"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_fg4"
-            label="Beer 4 - FG"
-            min="0"
-            max="2"
-            step="0.0001"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(beer, index) in config.beers" :key="`fg-${index}`">
+          <div :class="getTapClass()">
+            <BsInputNumber
+              v-model="config.beers[index].beer_fg"
+              :label="`Beer ${index + 1} - FG`"
+              min="0"
+              max="2"
+              step="0.0001"
+              width="5"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
 
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ebc1"
-            label="Beer 1 - EBC"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ebc2"
-            label="Beer 2 - EBC"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ebc3"
-            label="Beer 3 - EBC"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ebc4"
-            label="Beer 4 - EBC"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(beer, index) in config.beers" :key="`ebc-${index}`">
+          <div :class="getTapClass()">
+            <BsInputNumber
+              v-model="config.beers[index].beer_ebc"
+              :label="`Beer ${index + 1} - EBC`"
+              min="0"
+              max="100"
+              step="1"
+              width="5"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
 
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ibu1"
-            label="Beer 1 - IBU"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ibu2"
-            label="Beer 2 - IBU"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ibu3"
-            label="Beer 3 - IBU"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_ibu4"
-            label="Beer 4 - IBU"
-            min="0"
-            max="100"
-            step="1"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(beer, index) in config.beers" :key="`ibu-${index}`">
+          <div :class="getTapClass()">
+            <BsInputNumber
+              v-model="config.beers[index].beer_ibu"
+              :label="`Beer ${index + 1} - IBU`"
+              min="0"
+              max="100"
+              step="1"
+              width="5"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
 
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_abv1"
-            label="Beer 1 - ABV"
-            min="0"
-            max="20"
-            step="0.1"
-            unit="%"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_abv2"
-            label="Beer 2 - ABV"
-            min="0"
-            max="20"
-            step="0.1"
-            unit="%"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_abv3"
-            label="Beer 3 - ABV"
-            min="0"
-            max="20"
-            step="0.1"
-            unit="%"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-3">
-          <BsInputNumber
-            v-model="config.beer_abv4"
-            label="Beer 4 - ABV"
-            min="0"
-            max="20"
-            step="0.1"
-            unit="%"
-            width="5"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(beer, index) in config.beers" :key="`abv-${index}`">
+          <div :class="getTapClass()">
+            <BsInputNumber
+              v-model="config.beers[index].beer_abv"
+              :label="`Beer ${index + 1} - ABV`"
+              min="0"
+              max="20"
+              step="0.1"
+              unit="%"
+              width="5"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
       </div>
 
       <div class="row">
         <div class="col-md-12">
           <p></p>
         </div>
-        <div class="col-md-3">
-          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
-            <button
-              @click="fetchBrewfather(1)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewfather</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewlogger_url != ''">
-            <button
-              @click="fetchBrewlogger(1)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from BrewLogger</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewspy_token1 != ''">
-            <button
-              @click="fetchBrewspy(1)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewspy
-            </button>
-          </template>
-        </div>
-
-        <div class="col-md-3">
-          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
-            <button
-              @click="fetchBrewfather(2)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewfather</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewlogger_url != ''">
-            <button
-              @click="fetchBrewlogger(2)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from BrewLogger</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewspy_token2 != ''">
-            <button
-              @click="fetchBrewspy(2)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewspy
-            </button>
-          </template>
-        </div>
-
-        <div class="col-md-3">
-          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
-            <button
-              @click="fetchBrewfather(3)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewfather</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewlogger_url != ''">
-            <button
-              @click="fetchBrewlogger(3)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from BrewLogger</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewspy_token3 != ''">
-            <button
-              @click="fetchBrewspy(3)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewspy
-            </button>
-          </template>
-        </div>
-
-        <div class="col-md-3">
-          <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
-            <button
-              @click="fetchBrewfather(4)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewfather</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewlogger_url != ''">
-            <button
-              @click="fetchBrewlogger(4)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from BrewLogger</button
-            >&nbsp;
-          </template>
-          <template v-if="config.brewspy_token4 != ''">
-            <button
-              @click="fetchBrewspy(4)"
-              type="button"
-              class="btn btn-secondary w-2 m-2"
-              :disabled="global.disabled"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                :hidden="!global.disabled"
-              ></span>
-              &nbsp;Fetch from Brewspy
-            </button>
-          </template>
-        </div>
+        <template v-for="(beer, index) in config.beers" :key="`buttons-${index}`">
+          <div :class="getTapClass()">
+            <template v-if="config.brewfather_apikey != '' && config.brewfather_userkey != ''">
+              <button
+                @click="fetchBrewfather(index + 1)"
+                type="button"
+                class="btn btn-secondary w-2 m-2"
+                :disabled="global.disabled"
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                  :hidden="!global.disabled"
+                ></span>
+                &nbsp;Fetch from Brewfather</button
+              >&nbsp;
+            </template>
+            <template v-if="config.brewlogger_url != ''">
+              <button
+                @click="fetchBrewlogger(index + 1)"
+                type="button"
+                class="btn btn-secondary w-2 m-2"
+                :disabled="global.disabled"
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                  :hidden="!global.disabled"
+                ></span>
+                &nbsp;Fetch from BrewLogger</button
+              >&nbsp;
+            </template>
+            <template v-if="config.brewspy_tokens[index] != ''">
+              <button
+                @click="fetchBrewspy(index + 1)"
+                type="button"
+                class="btn btn-secondary w-2 m-2"
+                :disabled="global.disabled"
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                  :hidden="!global.disabled"
+                ></span>
+                &nbsp;Fetch from Brewspy
+              </button>
+            </template>
+          </div>
+        </template>
       </div>
 
       <div class="row gy-2">
@@ -476,6 +176,14 @@ const beerOptions = ref([])
 const beer = ref('')
 const tapNo = ref(0)
 
+const getTapClass = () => {
+  const noKegs = global.feature.no_kegs
+  if (noKegs >= 4) return 'col-md-3'
+  if (noKegs === 3) return 'col-md-4'
+  if (noKegs === 2) return 'col-md-6'
+  return 'col-md-12'
+}
+
 const confirmBeerCallback = (result, value) => {
   logDebug('TapsBeerView.confirmSearchCallback()', result, value)
 
@@ -487,33 +195,12 @@ const confirmBeerCallback = (result, value) => {
         if (e.value == value) {
           logDebug('TapsBeerView.confirmBeerCallback()', e)
 
-          if (tapNo.value == 1) {
-            config.beer_abv1 = e.abv
-            config.beer_ebc1 = Math.ceil(e.ebc)
-            config.beer_ibu1 = e.ibu
-            config.beer_name1 = e.label
-            config.beer_id1 = e.id
-          } else if (tapNo.value == 2) {
-            config.beer_abv2 = e.abv
-            config.beer_ebc2 = Math.ceil(e.ebc)
-            config.beer_ibu2 = e.ibu
-            config.beer_name2 = e.label
-            config.beer_id2 = e.id
-          } else if (tapNo.value == 3) {
-            config.beer_abv3 = e.abv
-            config.beer_ebc3 = Math.ceil(e.ebc)
-            config.beer_ibu3 = e.ibu
-            config.beer_name3 = e.label
-            config.beer_id3 = e.id
-          } else if (tapNo.value == 4) {
-            config.beer_abv4 = e.abv
-            config.beer_ebc4 = Math.ceil(e.ebc)
-            config.beer_ibu4 = e.ibu
-            config.beer_name4 = e.label
-            config.beer_id4 = e.id
-          } else {
-            logError('TapsBeerView.confirmBeerCallback()', 'Invalid tapNo', tapNo.value)
-          }
+          const tapIndex = tapNo.value - 1
+          config.beers[tapIndex].beer_abv = e.abv
+          config.beers[tapIndex].beer_ebc = Math.ceil(e.ebc)
+          config.beers[tapIndex].beer_ibu = e.ibu
+          config.beers[tapIndex].beer_name = e.label
+          config.beers[tapIndex].beer_id = e.id
 
           global.disabled = false
           return
@@ -625,29 +312,21 @@ const fetchBrewspy = (tap) => {
   logInfo('TapsBeerView.fetchBrewspy()', tap)
 
   global.disabled = true
+  const tapIndex = tap - 1
   fetch(global.baseURL + 'api/brewspy/tap', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: global.token },
-    body: JSON.stringify({ token: tap == 1 ? config.brewspy_token1 : config.brewspy_token2 }),
+    body: JSON.stringify({ token: config.brewspy_tokens[tapIndex] }),
     signal: AbortSignal.timeout(global.fetchTimout)
   })
     .then((res) => res.json())
     .then((json) => {
       logDebug('configStore.sendBrewspyRequest()', json)
 
-      if (tap == 1) {
-        config.beer_abv1 = json.abv
-        config.beer_ebc1 = 0
-        config.beer_ibu1 = 0
-        config.beer_name1 = json.recipe
-      } else if (tap == 2) {
-        config.beer_abv2 = json.abv
-        config.beer_ebc2 = 0
-        config.beer_ibu2 = 0
-        config.beer_name2 = json.recipe
-      } else {
-        logError('TapsBeerView.fetchBrewspy()', 'Invalid tap', tap)
-      }
+      config.beers[tapIndex].beer_abv = json.abv
+      config.beers[tapIndex].beer_ebc = 0
+      config.beers[tapIndex].beer_ibu = 0
+      config.beers[tapIndex].beer_name = json.recipe
 
       global.disabled = false
     })

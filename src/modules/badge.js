@@ -22,7 +22,8 @@ export function deviceHardwareBadge() {
 }
 
 export function deviceCalibrationBadge() {
-  return status.scale_factor1 == 0 && status.scale_factor2 == 0 ? 1 : 0
+  if (!status.scales || status.scales.length === 0) return 0
+  return status.scales.some((scale) => scale?.scale_factor == 0) ? 1 : 0
 }
 
 export function deviceWifiBadge() {

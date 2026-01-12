@@ -6,7 +6,7 @@ import { global } from '@/modules/pinia'
 
 import HomeView from '@/views/HomeView.vue'
 import DeviceSettingsView from '@/views/DeviceSettingsView.vue'
-import DeviceStabilityView from '@/views/DeviceStabilityView.vue'
+import DeviceStatisticsView from '@/views/DeviceStatisticsView.vue'
 import DeviceHardwareView from '@/views/DeviceHardwareView.vue'
 import DeviceCalibrationView from '@/views/DeviceCalibrationView.vue'
 import DeviceWifiView from '@/views/DeviceWifiView.vue'
@@ -49,9 +49,9 @@ const routes = [
     component: DeviceCalibrationView
   },
   {
-    path: '/device/stability',
-    name: 'device-stability',
-    component: DeviceStabilityView
+    path: '/device/statistics',
+    name: 'device-statistics',
+    component: DeviceStatisticsView
   },
   {
     path: '/device/wifi',
@@ -174,19 +174,19 @@ const items = ref([
         badge: badge.deviceSettingBadge,
         path: '/device/settings'
       },
-      {
+      /*{
         label: 'Hardware',
         badge: badge.deviceHardwareBadge,
         path: '/device/hardware'
-      },
+      },*/
       {
         label: 'Calibration',
         badge: badge.deviceCalibrationBadge,
         path: '/device/calibration'
       },
       {
-        label: 'Stability',
-        path: '/device/stability'
+        label: 'Statistics',
+        path: '/device/statistics'
       },
       {
         label: 'Wifi',

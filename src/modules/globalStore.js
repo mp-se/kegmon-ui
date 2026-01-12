@@ -10,8 +10,8 @@ export const useGlobalStore = defineStore('global', {
       initialized: false,
       disabled: false,
       configChanged: false,
-
-      // TODO: Platform: , Version: () , Hardware: , Filename:
+      app_ver: '',
+      app_build: '',
 
       ui: {
         enableVoltageFragment: false,
@@ -21,6 +21,7 @@ export const useGlobalStore = defineStore('global', {
 
       feature: {
         ble: false,
+        tft: false,
         no_kegs: 4
       },
 
@@ -75,6 +76,7 @@ export const useGlobalStore = defineStore('global', {
 
         this.feature.ble = json.ble
         this.feature.no_kegs = json.no_kegs
+        this.feature.tft = json.tft
 
         logInfo('globalStore.load()', 'Fetching /api/feature completed')
         return true

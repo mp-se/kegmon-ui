@@ -27,16 +27,16 @@
           <hr />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputRadio
-            v-model="config.temp_format"
+            v-model="config.temp_unit"
             :options="tempOptions"
             label="Temperature Format"
             width=""
             :disabled="global.disabled"
           ></BsInputRadio>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <BsInputRadio
             v-model="config.weight_unit"
             :options="weightOptions"

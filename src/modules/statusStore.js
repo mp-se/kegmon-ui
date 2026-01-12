@@ -1,90 +1,39 @@
 import { defineStore } from 'pinia'
+import { useConfigStore } from './configStore'
 import {
   sharedHttpClient as http,
   logDebug,
   logError,
-  logInfo
+  logInfo,
+  tempToF
 } from '@mp-se/espframework-ui-components'
+import { weightKgToLbs, volumeCLtoUSOZ, volumeCLtoUKOZ } from '@/modules/utils.js'
+import { global } from './pinia'
 
 export const useStatusStore = defineStore('status', {
   state: () => {
     return {
+      connected: false,
+
       // Status
       id: '',
       mdns: '',
       wifi_ssid: '',
-      platform: '',
-      app_ver: '',
-      app_build: '',
       weight_unit: '',
       volume_unit: '',
-      temp_format: '',
-      temperature: 0,
+      temp_unit: '',
+      rssi: 0,
       total_heap: 0,
       free_heap: 0,
       ip: '',
-      rssi: 0,
       wifi_setup: false,
-      connected: true,
       scale_busy: false,
       uptime_seconds: 0,
       uptime_minutes: 0,
       uptime_hours: 0,
       uptime_days: 0,
-
-      // Keg 1
-      glass1: 0,
-      keg_volume1: 0,
-      scale_factor1: 0,
-      scale_weight1: 0,
-      scale_raw1: 0,
-      scale_offset1: 0,
-      beer_weight1: 0,
-      beer_volume1: 0,
-      scale_stable_weight1: 0,
-      last_pour_weight1: 0,
-      last_pour_volume1: 0,
-
-      // Keg 2
-      glass2: 0,
-      keg_volume2: 0,
-      scale_factor2: 0,
-      scale_weight2: 0,
-      scale_raw2: 0,
-      scale_offset2: 0,
-      beer_weight2: 0,
-      beer_volume2: 0,
-      scale_stable_weight2: 0,
-      last_pour_weight2: 0,
-      last_pour_volume2: 0,
-
-      // Keg 3
-      glass3: 0,
-      keg_volume3: 0,
-      scale_factor3: 0,
-      scale_weight3: 0,
-      scale_raw3: 0,
-      scale_offset3: 0,
-      beer_weight3: 0,
-      beer_volume3: 0,
-      scale_stable_weight3: 0,
-      last_pour_weight3: 0,
-      last_pour_volume3: 0,
-
-      // Keg 4
-      glass4: 0,
-      keg_volume4: 0,
-      scale_factor4: 0,
-      scale_weight4: 0,
-      scale_raw4: 0,
-      scale_offset4: 0,
-      beer_weight4: 0,
-      beer_volume4: 0,
-      scale_stable_weight4: 0,
-      last_pour_weight4: 0,
-      last_pour_volume4: 0,
-
-      // Push status
+      scales: [],
+      sensors: [],
       ha: {},
       brewspy: {},
       brewlogger: {},
@@ -98,78 +47,45 @@ export const useStatusStore = defineStore('status', {
       try {
         const json = await http.getJson('api/status')
         logDebug('statusStore.load()', json)
-        this.id = json.id
-        this.mdns = json.mdns
-        this.wifi_ssid = json.wifi_ssid
-        this.platform = json.platform
-        this.app_ver = json.app_ver
-        this.app_build = json.app_build
-        this.weight_unit = json.weight_unit
-        this.volume_unit = json.volume_unit
-        this.temp_format = json.temp_format
-        this.temperature = (Math.round(json.temperature * 100) / 100).toFixed(2) // C or F
-        this.rssi = json.rssi
-        this.ip = json.ip
-        this.total_heap = Math.round(json.total_heap / 1024).toFixed(0)
-        this.free_heap = Math.round(json.free_heap / 1024).toFixed(0)
-        this.wifi_setup = json.wifi_setup
-        this.scale_busy = json.scale_busy
-        this.uptime_seconds = json.uptime_seconds
-        this.uptime_minutes = json.uptime_minutes
-        this.uptime_hours = json.uptime_hours
-        this.uptime_days = json.uptime_days
+        const config = useConfigStore()
 
-        // Keg 1
-        this.glass1 = new Number(json.glass1).toFixed(0)
-        this.keg_volume1 = new Number(json.keg_volume1).toFixed(2)
-        this.scale_factor1 = json.scale_factor1
-        this.scale_weight1 = new Number(json.scale_weight1).toFixed(3)
-        this.scale_raw1 = json.scale_raw1
-        this.scale_offset1 = json.scale_offset1
-        this.beer_weight1 = new Number(json.beer_weight1).toFixed(2)
-        this.beer_volume1 = new Number(json.beer_volume1).toFixed(2)
-        this.scale_stable_weight1 = new Number(json.scale_stable_weight1).toFixed(2)
-        this.last_pour_weight1 = new Number(json.last_pour_weight1).toFixed(2)
-        this.last_pour_volume1 = new Number(json.last_pour_volume1).toFixed(2)
+        this.connected = true
 
-        // Keg 2
-        this.glass2 = new Number(json.glass2).toFixed(0)
-        this.keg_volume2 = new Number(json.keg_volume2).toFixed(2)
-        this.scale_factor2 = json.scale_factor2
-        this.scale_weight2 = new Number(json.scale_weight2).toFixed(3)
-        this.scale_raw2 = json.scale_raw2
-        this.scale_offset2 = json.scale_offset2
-        this.beer_weight2 = new Number(json.beer_weight2).toFixed(2)
-        this.beer_volume2 = new Number(json.beer_volume2).toFixed(2)
-        this.scale_stable_weight2 = new Number(json.scale_stable_weight2).toFixed(2)
-        this.last_pour_weight2 = new Number(json.last_pour_weight2).toFixed(2)
-        this.last_pour_volume2 = new Number(json.last_pour_volume2).toFixed(2)
+        // General properties
+        this.id = json.id || ''
+        this.mdns = json.mdns || ''
+        this.wifi_ssid = json.wifi_ssid || ''
+        this.weight_unit = json.weight_unit || ''
+        this.volume_unit = json.volume_unit || ''
+        this.temp_unit = json.temp_unit || 'C'
+        this.rssi = json.rssi || 0
+        this.total_heap = json.total_heap || 0
+        this.free_heap = json.free_heap || 0
+        this.ip = json.ip || ''
+        this.wifi_setup = json.wifi_setup || false
+        this.scale_busy = json.scale_busy || false
+        this.uptime_seconds = json.uptime_seconds || 0
+        this.uptime_minutes = json.uptime_minutes || 0
+        this.uptime_hours = json.uptime_hours || 0
+        this.uptime_days = json.uptime_days || 0
 
-        // Keg 3
-        this.glass3 = new Number(json.glass3).toFixed(0)
-        this.keg_volume3 = new Number(json.keg_volume3).toFixed(2)
-        this.scale_factor3 = json.scale_factor3
-        this.scale_weight3 = new Number(json.scale_weight3).toFixed(3)
-        this.scale_raw3 = json.scale_raw3
-        this.scale_offset3 = json.scale_offset3
-        this.beer_weight3 = new Number(json.beer_weight3).toFixed(2)
-        this.beer_volume3 = new Number(json.beer_volume3).toFixed(2)
-        this.scale_stable_weight3 = new Number(json.scale_stable_weight3).toFixed(2)
-        this.last_pour_weight3 = new Number(json.last_pour_weight3).toFixed(2)
-        this.last_pour_volume3 = new Number(json.last_pour_volume3).toFixed(2)
+        // Parse scales array and trim to configured number of kegs
+        const maxKegs = global.feature.no_kegs || 4
+        this.scales = (json.scales || []).slice(0, maxKegs).map((scale) => ({
+          ...scale,
+          stable_weight: this._convertWeight(scale.stable_weight, config),
+          pour_volume: this._convertVolume(scale.pour_volume, config),
+          keg_volume: this._convertVolume(scale.keg_volume, config)
+        }))
 
-        // Keg 4
-        this.glass4 = new Number(json.glass4).toFixed(0)
-        this.keg_volume4 = new Number(json.keg_volume4).toFixed(2)
-        this.scale_factor4 = json.scale_factor4
-        this.scale_weight4 = new Number(json.scale_weight4).toFixed(3)
-        this.scale_raw4 = json.scale_raw4
-        this.scale_offset4 = json.scale_offset4
-        this.beer_weight4 = new Number(json.beer_weight4).toFixed(2)
-        this.beer_volume4 = new Number(json.beer_volume4).toFixed(2)
-        this.scale_stable_weight4 = new Number(json.scale_stable_weight4).toFixed(2)
-        this.last_pour_weight4 = new Number(json.last_pour_weight4).toFixed(2)
-        this.last_pour_volume4 = new Number(json.last_pour_volume4).toFixed(2)
+        // Parse sensors array
+        this.sensors = json.sensors || []
+        if (this.sensors.length > 0 && this.sensors[0]) {
+          this.sensors[0].temperature = this._convertTemperature(
+            this.sensors[0].temperature,
+            config
+          )
+        }
 
         // Push status
         if (Object.prototype.hasOwnProperty.call(json, 'ha')) this.ha = json.ha
@@ -184,6 +100,26 @@ export const useStatusStore = defineStore('status', {
         logError('statusStore.load()', err)
         return false
       }
+    },
+    _convertWeight(weight, config) {
+      if (weight == null) return 0
+      const converted = config.weight_unit === 'lbs' ? weightKgToLbs(weight) : weight
+      return Number(converted).toFixed(2)
+    },
+    _convertVolume(volume, config) {
+      if (volume == null) return 0
+      let converted = volume
+      if (config.volume_unit === 'us-oz') {
+        converted = volumeCLtoUSOZ(volume)
+      } else if (config.volume_unit === 'uk-oz') {
+        converted = volumeCLtoUKOZ(volume)
+      }
+      return Number(converted).toFixed(2)
+    },
+    _convertTemperature(temp, config) {
+      if (temp == null) return 0
+      const converted = config.temp_unit === 'F' ? tempToF(temp) : temp
+      return Number(converted).toFixed(2)
     }
   }
 })

@@ -6,139 +6,44 @@
 
     <form @submit.prevent="save" class="needs-validation" novalidate>
       <div class="row">
-        <div class="col-md-6">
-          <BsInputNumber
-            v-model="config.keg_weight1"
-            width="5"
-            min="0.0"
-            max="10.0"
-            step="0.01"
-            label="Tap 1 - Empty keg weight"
-            :unit="config.weight_unit"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-6">
-          <BsInputNumber
-            v-model="config.keg_weight2"
-            width="5"
-            min="0.0"
-            max="10.0"
-            step="0.01"
-            label="Tap 2 - Empty keg weight"
-            :unit="config.weight_unit"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(scale, index) in config.scales" :key="index">
+          <div :class="getTapClass()">
+            <BsInputNumber
+              v-model="config.scales[index].keg_weight"
+              width="7"
+              min="0.0"
+              max="10.0"
+              step="0.01"
+              :label="`Tap ${index + 1} - Empty keg weight`"
+              :unit="config.weight_unit"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
 
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.glass_volume1"
-            width="8"
-            :options="glassOptions"
-            label="Tap 1 - Glass size"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.glass_volume2"
-            width="8"
-            :options="glassOptions"
-            label="Tap 2 - Glass size"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(scale, index) in config.scales" :key="`glass-${index}`">
+          <div :class="getTapClass()">
+            <BsSelect
+              v-model="config.scales[index].glass_volume"
+              width="12"
+              :options="glassOptions"
+              :label="`Tap ${index + 1} - Glass size`"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
 
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.keg_volume1"
-            width="8"
-            :options="kegOptions"
-            label="Tap 1 - Keg volume"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.keg_volume2"
-            width="8"
-            :options="kegOptions"
-            label="Tap 2 - Keg volume"
-            :disabled="global.disabled"
-          />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <hr />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6">
-          <BsInputNumber
-            v-model="config.keg_weight3"
-            width="5"
-            min="0.0"
-            max="10.0"
-            step="0.01"
-            label="Tap 3 - Empty keg weight"
-            :unit="config.weight_unit"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-6">
-          <BsInputNumber
-            v-model="config.keg_weight4"
-            width="5"
-            min="0.0"
-            max="10.0"
-            step="0.01"
-            label="Tap 4 - Empty keg weight"
-            :unit="config.weight_unit"
-            :disabled="global.disabled"
-          />
-        </div>
-
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.glass_volume3"
-            width="8"
-            :options="glassOptions"
-            label="Tap 3 - Glass size"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.glass_volume4"
-            width="8"
-            :options="glassOptions"
-            label="Tap 4 - Glass size"
-            :disabled="global.disabled"
-          />
-        </div>
-
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.keg_volume3"
-            width="8"
-            :options="kegOptions"
-            label="Tap 3 - Keg volume"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-6">
-          <BsSelect
-            v-model="config.keg_volume4"
-            width="8"
-            :options="kegOptions"
-            label="Tap 4 - Keg volume"
-            :disabled="global.disabled"
-          />
-        </div>
+        <template v-for="(scale, index) in config.scales" :key="`keg-${index}`">
+          <div :class="getTapClass()">
+            <BsSelect
+              v-model="config.scales[index].keg_volume"
+              width="12"
+              :options="kegOptions"
+              :label="`Tap ${index + 1} - Keg volume`"
+              :disabled="global.disabled"
+            />
+          </div>
+        </template>
       </div>
 
       <div class="row gy-2">
@@ -169,6 +74,14 @@
 import { ref } from 'vue'
 import { validateCurrentForm } from '@mp-se/espframework-ui-components'
 import { global, config } from '@/modules/pinia'
+
+const getTapClass = () => {
+  const noKegs = global.feature.no_kegs
+  if (noKegs >= 4) return 'col-md-3'
+  if (noKegs === 3) return 'col-md-4'
+  if (noKegs === 2) return 'col-md-6'
+  return 'col-md-12'
+}
 
 const glassOptions = ref([
   { label: '20 cl / 7.0 imperial ounces', value: 0.2 },

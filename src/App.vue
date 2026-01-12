@@ -78,7 +78,7 @@
   </div>
 
   <router-view v-if="global.initialized" />
-  <BsFooter v-if="global.initialized" text="(c) 2021-2025 Magnus Persson" />
+  <BsFooter v-if="global.initialized" text="(c) 2021-2026 Magnus Persson" />
 </template>
 
 <script setup>
@@ -86,7 +86,12 @@ import { onMounted, watch, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 import { global, status, config, saveConfigState } from '@/modules/pinia'
 import { items } from '@/modules/router'
 import { storeToRefs } from 'pinia'
-import { sharedHttpClient as http, logError, version, logInfo } from '@mp-se/espframework-ui-components'
+import {
+  sharedHttpClient as http,
+  logError,
+  version,
+  logInfo
+} from '@mp-se/espframework-ui-components'
 
 const polling = ref(null)
 

@@ -12,11 +12,12 @@
     "mock": "./node_modules/nodemon/bin/nodemon.js mock-server/index.js"
   },
   "dependencies": {
+    "baseline-browser-mapping": "^2.9.12",
     "bootstrap": "^5.3.8",
-    "espframework-ui-components": "github:mp-se/espframework-ui-components#1.6.0",
     "chart.js": "^4.4.6",
     "chartjs-adapter-date-fns": "^3.0.0",
     "date-fns": "^4.1.0",
+    "espframework-ui-components": "github:mp-se/espframework-ui-components#1.6.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"

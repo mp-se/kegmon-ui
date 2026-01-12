@@ -6,21 +6,12 @@
 
     <form @submit.prevent="save" class="needs-validation" novalidate>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" v-for="(token, index) in config.brewspy_tokens" :key="index">
           <BsInputText
-            v-model="config.brewspy_token1"
+            v-model="config.brewspy_tokens[index]"
             type="password"
             maxlength="120"
-            label="Token tap 1"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-12">
-          <BsInputText
-            v-model="config.brewspy_token2"
-            type="password"
-            maxlength="120"
-            label="Token tap 2"
+            :label="`Token tap ${index + 1}`"
             :disabled="global.disabled"
           />
         </div>

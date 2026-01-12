@@ -15,19 +15,11 @@
             :disabled="global.disabled"
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12" v-for="(monitor, index) in config.barhelper_monitors" :key="index">
           <BsInputText
-            v-model="config.barhelper_monitor1"
+            v-model="config.barhelper_monitors[index]"
             maxlength="30"
-            label="Monitor tap 1"
-            :disabled="global.disabled"
-          />
-        </div>
-        <div class="col-md-6">
-          <BsInputText
-            v-model="config.barhelper_monitor2"
-            maxlength="120"
-            label="Monitor tap 2"
+            :label="`Monitor tap ${index + 1}`"
             :disabled="global.disabled"
           />
         </div>

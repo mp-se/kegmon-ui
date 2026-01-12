@@ -13,21 +13,13 @@ export const useConfigStore = defineStore('config', {
       // Device
       id: '',
       mdns: '',
-      temp_format: '',
+      temp_unit: '',
       weight_unit: '',
       volume_unit: '',
       dark_mode: false,
+      display_layout: 0,
       // Hardware
       ota_url: '',
-      temp_sensor: 0,
-      brewpi_url: '',
-      chamberctrl_url: '',
-      scale_deviation_increase: 0,
-      scale_deviation_decrease: 0,
-      scale_deviation_kalman: 0,
-      scale_read_count: 0,
-      scale_read_count_calibration: 0,
-      scale_stable_count: 0,
       // Wifi
       wifi_portal_timeout: 0,
       wifi_connect_timeout: 0,
@@ -35,20 +27,15 @@ export const useConfigStore = defineStore('config', {
       wifi_ssid2: '',
       wifi_pass: '',
       wifi_pass2: '',
-      // Push - Generic
-      push_timeout: 10,
+      // Integrations
       brewfather_apikey: '',
       brewfather_userkey: '',
-      brewspy_token1: '',
-      brewspy_token2: '',
-      brewspy_token3: '',
-      brewspy_token4: '',
-      barhelper_apikey: '',
-      barhelper_monitor1: '',
-      barhelper_monitor2: '',
-      barhelper_monitor3: '',
-      barhelper_monitor4: '',
       brewlogger_url: '',
+      brewspy_tokens: ['', '', '', ''],
+      barhelper_apikey: '',
+      barhelper_monitors: ['', '', '', ''],
+      // Push - Generic
+      push_timeout: 10,
       // Push - Http Post 1
       http_post_target: '',
       http_post_header1: '',
@@ -68,61 +55,78 @@ export const useConfigStore = defineStore('config', {
       influxdb2_token: '',
       // Push - MQTT
       mqtt_target: '',
-      mqtt_port: '',
+      mqtt_port: 1883,
       mqtt_user: '',
       mqtt_pass: '',
-      // Keg 1
-      scale_temp_formula1: '',
-      scale_factor1: 0,
-      scale_offset1: 0,
-      keg_weight1: 0,
-      keg_volume1: 0,
-      glass_volume1: 0,
-      beer_name1: '',
-      beer_id1: '',
-      beer_abv1: 0,
-      beer_fg1: 0,
-      beer_ebc1: 0,
-      beer_ibu1: 0,
-      // Keg 2
-      scale_temp_formula2: '',
-      scale_factor2: 0,
-      scale_offset2: 0,
-      keg_weight2: 0,
-      keg_volume2: 0,
-      glass_volume2: 0,
-      beer_name2: '',
-      beer_id2: '',
-      beer_abv2: 0,
-      beer_fg2: 0,
-      beer_ebc2: 0,
-      beer_ibu2: 0,
-      // Keg 3
-      scale_temp_formula3: '',
-      scale_factor3: 0,
-      scale_offset3: 0,
-      keg_weight3: 0,
-      keg_volume3: 0,
-      glass_volume3: 0,
-      beer_name3: '',
-      beer_id3: '',
-      beer_abv3: 0,
-      beer_fg3: 0,
-      beer_ebc3: 0,
-      beer_ibu3: 0,
-      // Keg 4
-      scale_temp_formula4: '',
-      scale_factor4: 0,
-      scale_offset4: 0,
-      keg_weight4: 0,
-      keg_volume4: 0,
-      glass_volume4: 0,
-      beer_name4: '',
-      beer_id4: '',
-      beer_abv4: 0,
-      beer_fg4: 0,
-      beer_ebc4: 0,
-      beer_ibu4: 0
+      // Arrays
+      scales: [
+        {
+          scale_factor: 0,
+          scale_offset: 0,
+          keg_weight: 0,
+          keg_volume: 0,
+          glass_volume: 0,
+          temp_sensor_id: ''
+        },
+        {
+          scale_factor: 0,
+          scale_offset: 0,
+          keg_weight: 0,
+          keg_volume: 0,
+          glass_volume: 0,
+          temp_sensor_id: ''
+        },
+        {
+          scale_factor: 0,
+          scale_offset: 0,
+          keg_weight: 0,
+          keg_volume: 0,
+          glass_volume: 0,
+          temp_sensor_id: ''
+        },
+        {
+          scale_factor: 0,
+          scale_offset: 0,
+          keg_weight: 0,
+          keg_volume: 0,
+          glass_volume: 0,
+          temp_sensor_id: ''
+        }
+      ],
+      beers: [
+        {
+          beer_name: '',
+          beer_id: '',
+          beer_abv: 0,
+          beer_fg: 0,
+          beer_ebc: 0,
+          beer_ibu: 0
+        },
+        {
+          beer_name: '',
+          beer_id: '',
+          beer_abv: 0,
+          beer_fg: 0,
+          beer_ebc: 0,
+          beer_ibu: 0
+        },
+        {
+          beer_name: '',
+          beer_id: '',
+          beer_abv: 0,
+          beer_fg: 0,
+          beer_ebc: 0,
+          beer_ibu: 0
+        },
+        {
+          beer_name: '',
+          beer_id: '',
+          beer_abv: 0,
+          beer_fg: 0,
+          beer_ebc: 0,
+          beer_ibu: 0
+        }
+      ]
     }
   },
   getters: {
@@ -133,7 +137,7 @@ export const useConfigStore = defineStore('config', {
       return this.weight_unit == 'kg' ? 'kg' : 'lbs'
     },
     getTempUnit() {
-      return this.temp_format == 'C' ? '°C' : '°F'
+      return this.temp_unit == 'C' ? '°C' : '°F'
     }
   },
   actions: {
@@ -157,24 +161,20 @@ export const useConfigStore = defineStore('config', {
         const json = await http.getJson('api/config')
         logDebug('configStore.load()', json)
         global.disabled = false
+
+        const maxKegs = global.feature.no_kegs || 4
+
         this.id = json.id
-        // Device
         this.mdns = json.mdns
-        this.temp_format = json.temp_format
+        this.temp_unit = json.temp_unit
         this.weight_unit = json.weight_unit
         this.volume_unit = json.volume_unit
         this.dark_mode = json.dark_mode
+        this.display_layout = json.display_layout
+
         // Hardware
         this.ota_url = json.ota_url
-        this.temp_sensor = json.temp_sensor
-        this.brewpi_url = json.brewpi_url
-        this.chamberctrl_url = json.chamberctrl_url
-        this.scale_deviation_increase = json.scale_deviation_increase
-        this.scale_deviation_decrease = json.scale_deviation_decrease
-        this.scale_deviation_kalman = json.scale_deviation_kalman
-        this.scale_read_count = json.scale_read_count
-        this.scale_read_count_calibration = json.scale_read_count_calibration
-        this.scale_stable_count = json.scale_stable_count
+
         // Wifi
         this.wifi_portal_timeout = json.wifi_portal_timeout
         this.wifi_connect_timeout = json.wifi_connect_timeout
@@ -182,90 +182,52 @@ export const useConfigStore = defineStore('config', {
         this.wifi_ssid2 = json.wifi_ssid2
         this.wifi_pass = json.wifi_pass
         this.wifi_pass2 = json.wifi_pass2
-        // Push - Generic
-        this.push_timeout = json.push_timeout
+
+        // Integrations
         this.brewfather_apikey = json.brewfather_apikey
         this.brewfather_userkey = json.brewfather_userkey
-        this.brewspy_token1 = json.brewspy_token1
-        this.brewspy_token2 = json.brewspy_token2
-        this.brewspy_token3 = json.brewspy_token3
-        this.brewspy_token4 = json.brewspy_token4
-        this.barhelper_apikey = json.barhelper_apikey
-        this.barhelper_monitor1 = json.barhelper_monitor1
-        this.barhelper_monitor2 = json.barhelper_monitor2
-        this.barhelper_monitor3 = json.barhelper_monitor3
-        this.barhelper_monitor4 = json.barhelper_monitor4
         this.brewlogger_url = json.brewlogger_url
+        this.brewspy_tokens = (json.brewspy_tokens || this.brewspy_tokens).slice(0, maxKegs)
+        this.barhelper_apikey = json.barhelper_apikey
+        this.barhelper_monitors = (json.barhelper_monitors || this.barhelper_monitors).slice(
+          0,
+          maxKegs
+        )
+
+        // Push - Generic
+        this.push_timeout = json.push_timeout
+
         // Push - Http Post 1
         this.http_post_target = json.http_post_target
         this.http_post_header1 = json.http_post_header1
         this.http_post_header2 = json.http_post_header2
+
         // Push - Http Post 2
         this.http_post2_target = json.http_post2_target
         this.http_post2_header1 = json.http_post2_header1
         this.http_post2_header2 = json.http_post2_header2
+
         // Push - Http Get
         this.http_get_target = json.http_get_target
         this.http_get_header1 = json.http_get_header1
         this.http_get_header2 = json.http_get_header2
+
         // Push - Influx
         this.influxdb2_target = json.influxdb2_target
         this.influxdb2_org = json.influxdb2_org
         this.influxdb2_bucket = json.influxdb2_bucket
         this.influxdb2_token = json.influxdb2_token
+
         // Push - MQTT
         this.mqtt_target = json.mqtt_target
         this.mqtt_port = json.mqtt_port
         this.mqtt_user = json.mqtt_user
         this.mqtt_pass = json.mqtt_pass
-        // Keg 1
-        this.scale_temp_formula1 = json.scale_temp_formula1
-        this.scale_factor1 = json.scale_factor1
-        this.scale_offset1 = json.scale_offset1
-        this.keg_weight1 = json.keg_weight1
-        this.keg_volume1 = json.keg_volume1
-        this.glass_volume1 = json.glass_volume1
-        this.beer_name1 = json.beer_name1
-        this.beer_abv1 = json.beer_abv1
-        this.beer_fg1 = json.beer_fg1
-        this.beer_ebc1 = json.beer_ebc1
-        this.beer_ibu1 = json.beer_ibu1
-        // Keg 2
-        this.scale_temp_formula2 = json.scale_temp_formula2
-        this.scale_factor2 = json.scale_factor2
-        this.scale_offset2 = json.scale_offset2
-        this.keg_weight2 = json.keg_weight2
-        this.keg_volume2 = json.keg_volume2
-        this.glass_volume2 = json.glass_volume2
-        this.beer_name2 = json.beer_name2
-        this.beer_abv2 = json.beer_abv2
-        this.beer_fg2 = json.beer_fg2
-        this.beer_ebc2 = json.beer_ebc2
-        this.beer_ibu2 = json.beer_ibu2
-        // Keg 3
-        this.scale_temp_formula3 = json.scale_temp_formula3
-        this.scale_factor3 = json.scale_factor3
-        this.scale_offset3 = json.scale_offset3
-        this.keg_weight3 = json.keg_weight3
-        this.keg_volume3 = json.keg_volume3
-        this.glass_volume3 = json.glass_volume3
-        this.beer_name3 = json.beer_name3
-        this.beer_abv3 = json.beer_abv3
-        this.beer_fg3 = json.beer_fg3
-        this.beer_ebc3 = json.beer_ebc3
-        this.beer_ibu3 = json.beer_ibu3
-        // Keg 4
-        this.scale_temp_formula4 = json.scale_temp_formula4
-        this.scale_factor4 = json.scale_factor4
-        this.scale_offset4 = json.scale_offset4
-        this.keg_weight4 = json.keg_weight4
-        this.keg_volume4 = json.keg_volume4
-        this.glass_volume4 = json.glass_volume4
-        this.beer_name4 = json.beer_name4
-        this.beer_abv4 = json.beer_abv4
-        this.beer_fg4 = json.beer_fg4
-        this.beer_ebc4 = json.beer_ebc4
-        this.beer_ibu4 = json.beer_ibu4
+
+        // Arrays - trim to configured number of kegs
+        this.scales = (json.scales || this.scales).slice(0, maxKegs)
+        this.beers = (json.beers || this.beers).slice(0, maxKegs)
+
         return true
       } catch (err) {
         global.disabled = false

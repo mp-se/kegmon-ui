@@ -4,112 +4,28 @@
 
     <div v-if="status" class="container overflow-hidden text-center">
       <div class="row gy-4">
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name1">
-            <p class="text-center">
-              <BsProgress :progress="tapProgress1"></BsProgress>
-            </p>
-            <p class="text-center">
-              Volume: {{ status.beer_volume1 }} {{ config.getVolumeUnit }} Weight:
-              {{ status.beer_weight1 }} {{ config.getWeightUnit }}
-            </p>
-            <p class="text-center">
-              ABV: {{ config.beer_abv1 }}% EBC: {{ config.beer_ebc1 }} IBU: {{ config.beer_ibu1 }}
-            </p>
-          </BsCard>
-        </div>
-
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name2">
-            <p class="text-center">
-              <BsProgress :progress="tapProgress2"></BsProgress>
-            </p>
-            <p class="text-center">
-              Volume: {{ status.beer_volume2 }} {{ config.getVolumeUnit }} Weight:
-              {{ status.beer_weight2 }} {{ config.getWeightUnit }}
-            </p>
-            <p class="text-center">
-              ABV: {{ config.beer_abv2 }}% EBC: {{ config.beer_ebc2 }} IBU: {{ config.beer_ibu2 }}
-            </p>
-          </BsCard>
-        </div>
-
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name3">
-            <p class="text-center">
-              <BsProgress :progress="tapProgress3"></BsProgress>
-            </p>
-            <p class="text-center">
-              Volume: {{ status.beer_volume3 }} {{ config.getVolumeUnit }} Weight:
-              {{ status.beer_weight3 }} {{ config.getWeightUnit }}
-            </p>
-            <p class="text-center">
-              ABV: {{ config.beer_abv3 }}% EBC: {{ config.beer_ebc3 }} IBU: {{ config.beer_ibu3 }}
-            </p>
-          </BsCard>
-        </div>
-
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name4">
-            <p class="text-center">
-              <BsProgress :progress="tapProgress4"></BsProgress>
-            </p>
-            <p class="text-center">
-              Volume: {{ status.beer_volume4 }} {{ config.getVolumeUnit }} Weight:
-              {{ status.beer_weight4 }} {{ config.getWeightUnit }}
-            </p>
-            <p class="text-center">
-              ABV: {{ config.beer_abv4 }}% EBC: {{ config.beer_ebc4 }} IBU: {{ config.beer_ibu4 }}
-            </p>
-          </BsCard>
-        </div>
+        <template v-for="(scale, index) in status.scales" :key="`measurement-${index}`">
+          <div :class="getTapClass()" v-if="global.feature.no_kegs > index">
+            <BsCard header="Measurement" color="info" :title="config.beers[index].beer_name">
+              <p class="text-center">
+                <BsProgress :progress="tapProgressArray[index]"></BsProgress>
+              </p>
+              <p class="text-center">
+                Volume: {{ scale.pour_volume }} {{ config.getVolumeUnit }}<br />
+                Weight: {{ scale.stable_weight }} {{ config.getWeightUnit }}<br />
+                ABV: {{ config.beers[index].beer_abv }}% EBC:
+                {{ config.beers[index].beer_ebc }} IBU: {{ config.beers[index].beer_ibu }}
+              </p>
+            </BsCard>
+          </div>
+        </template>
         <p></p>
       </div>
 
       <div class="row gy-4">
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name1">
-            <p class="text-center">Glasses left: {{ status.glass1 }}</p>
-            <p class="text-center" v-if="status.last_pour_volume1 != 'NaN'">
-              Last pour: {{ status.last_pour_volume1 }} {{ config.getVolumeUnit }}
-            </p>
-          </BsCard>
-        </div>
-
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name2">
-            <p class="text-center">Glasses left: {{ status.glass2 }}</p>
-            <p class="text-center" v-if="status.last_pour_volume2 != 'NaN'">
-              Last pour: {{ status.last_pour_volume2 }} {{ config.getVolumeUnit }}
-            </p>
-          </BsCard>
-        </div>
-
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name3">
-            <p class="text-center">Glasses left: {{ status.glass3 }}</p>
-            <p class="text-center" v-if="status.last_pour_volume3 != 'NaN'">
-              Last pour: {{ status.last_pour_volume3 }} {{ config.getVolumeUnit }}
-            </p>
-          </BsCard>
-        </div>
-
-        <div class="col-md-3">
-          <BsCard header="Measurement" color="info" :title="config.beer_name4">
-            <p class="text-center">Glasses left: {{ status.glass4 }}</p>
-            <p class="text-center" v-if="status.last_pour_volume4 != 'NaN'">
-              Last pour: {{ status.last_pour_volume4 }} {{ config.getVolumeUnit }}
-            </p>
-          </BsCard>
-        </div>
-
-        <p></p>
-      </div>
-
-      <div class="row gy-4">
-        <div class="col-md-4" v-if="status.temperature !== 'NaN'">
+        <div class="col-md-4" v-if="status.sensors.length > 0 && status.sensors[0].temperature">
           <BsCard header="Measurement" color="info" title="Temperature">
-            <p class="text-center">{{ status.temperature }} {{ config.getTempUnit }}</p>
+            <p class="text-center">{{ status.sensors[0].temperature }} {{ config.getTempUnit }}</p>
           </BsCard>
         </div>
 
@@ -121,7 +37,7 @@
 
         <div
           class="col-md-4"
-          v-if="status.brewspy != {} && config.brewspy_token1 != '' && config.brewspy_token2 != ''"
+          v-if="status.brewspy != {} && config.brewspy_tokens.some((token) => token != '')"
         >
           <BsCard header="Push" color="secondary" title="Brewspy">
             <p class="text-center">{{ pushBrewspy }}</p>
@@ -165,7 +81,7 @@
         <div class="col-md-4">
           <BsCard header="Device" title="Software version">
             <p class="text-center">
-              Firmware: {{ status.app_ver }} ({{ status.app_build }}) UI: {{ global.uiVersion }} ({{
+              Firmware: {{ global.app_ver }} ({{ global.app_build }}) UI: {{ global.uiVersion }} ({{
                 global.uiBuild
               }})
             </p>
@@ -174,7 +90,15 @@
 
         <div class="col-md-4">
           <BsCard header="Device" title="Platform">
-            <p class="text-center">{{ status.platform }} (ID: {{ status.id }})</p>
+            <p class="text-center">
+              <span class="badge text-bg-secondary">{{ global.platform }}</span>
+            </p>
+          </BsCard>
+        </div>
+
+        <div class="col-md-4">
+          <BsCard header="Device" title="Device ID">
+            <p class="text-center">{{ status.id }}</p>
           </BsCard>
         </div>
 
@@ -197,6 +121,14 @@ import { status, global, config } from '@/modules/pinia'
 import { logDebug, logError } from '@mp-se/espframework-ui-components'
 
 const polling = ref(null)
+
+const getTapClass = () => {
+  const noKegs = global.feature.no_kegs
+  if (noKegs >= 4) return 'col-md-3'
+  if (noKegs === 3) return 'col-md-4'
+  if (noKegs === 2) return 'col-md-6'
+  return 'col-md-12'
+}
 
 const pushHomeAssistant = computed(() => {
   if (status.ha.push_used) {
@@ -274,24 +206,12 @@ function clampProgress(n) {
   return Math.min(100, Math.max(0, Math.round(n)))
 }
 
-const tapProgress1 = computed(() => {
-  if (!status.keg_volume1 || status.keg_volume1 <= 0) return 0
-  return clampProgress((status.beer_volume1 / status.keg_volume1) * 100)
-})
-
-const tapProgress2 = computed(() => {
-  if (!status.keg_volume2 || status.keg_volume2 <= 0) return 0
-  return clampProgress((status.beer_volume2 / status.keg_volume2) * 100)
-})
-
-const tapProgress3 = computed(() => {
-  if (!status.keg_volume3 || status.keg_volume3 <= 0) return 0
-  return clampProgress((status.beer_volume3 / status.keg_volume3) * 100)
-})
-
-const tapProgress4 = computed(() => {
-  if (!status.keg_volume4 || status.keg_volume4 <= 0) return 0
-  return clampProgress((status.beer_volume4 / status.keg_volume4) * 100)
+const tapProgressArray = computed(() => {
+  return config.beers.map((_, index) => {
+    const scale = status.scales[index]
+    if (!scale || !scale.keg_volume || scale.keg_volume <= 0) return 0
+    return clampProgress((scale.pour_volume / scale.keg_volume) * 100)
+  })
 })
 
 async function refresh() {

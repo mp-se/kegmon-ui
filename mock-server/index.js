@@ -5,7 +5,7 @@
  */
 import { createRequire } from "module";
 import { registerEspFwk } from './espfwk.js'
-// import { configData, statusData } from './data.js'
+import { statisticsData } from './data.js'
 
 const require = createRequire(import.meta.url);
 const express = require('express')
@@ -258,6 +258,18 @@ app.get('/api/stability', (req, res) => {
 
   res.type('application/json')
   res.send(statsData)
+})
+
+app.get('/api/statistics', (req, res) => {
+  console.log('GET: /api/statistics')
+  res.type('application/json')
+  res.send(statisticsData)
+})
+
+app.get('/api/statistics/clear', (req, res) => {
+  console.log('GET: /api/statistics/clear')
+  res.type('application/json')
+  res.send({ success: true, message: 'Statistics cleared' })
 })
 
 app.listen(port, () => {
