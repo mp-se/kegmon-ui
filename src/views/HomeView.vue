@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <p></p>
 
-    <div v-if="status" class="container overflow-hidden text-center">
+    <div v-if="status" class="container-fluid overflow-hidden text-center">
       <div class="row gy-4">
         <template v-for="(scale, index) in status.scales" :key="`measurement-${index}`">
           <div :class="getTapClass()" v-if="global.feature.no_kegs > index">
@@ -15,6 +15,22 @@
                 Weight: {{ scale.stable_weight }} {{ config.getWeightUnit }}<br />
                 ABV: {{ config.beers[index].beer_abv }}% EBC:
                 {{ config.beers[index].beer_ebc }} IBU: {{ config.beers[index].beer_ibu }}
+              </p>
+            </BsCard>
+          </div>
+        </template>
+        <p></p>
+      </div>
+
+      <div class="row gy-4">
+        <template v-for="(scale, index) in status.scales" :key="`glasses-${index}`">
+          <div :class="getTapClass()" v-if="global.feature.no_kegs > index">
+            <BsCard header="Measurement" color="info" :title="config.beers[index].beer_name">
+              <p class="text-center">
+                Glasses left: {{ calculateGlassesLeft(scale) }}<br />
+                <template v-if="scale.last_pour_volume && !isNaN(scale.last_pour_volume)">
+                  Last pour: {{ scale.last_pour_volume }} {{ config.getVolumeUnit }}
+                </template>
               </p>
             </BsCard>
           </div>
@@ -204,6 +220,11 @@ const pushBarhelper = computed(() => {
 function clampProgress(n) {
   if (typeof n !== 'number' || !isFinite(n) || isNaN(n)) return 0
   return Math.min(100, Math.max(0, Math.round(n)))
+}
+
+const calculateGlassesLeft = (scale) => {
+  if (!scale || !scale.glass_volume || scale.glass_volume <= 0) return 0
+  return Math.floor(scale.pour_volume / scale.glass_volume)
 }
 
 const tapProgressArray = computed(() => {

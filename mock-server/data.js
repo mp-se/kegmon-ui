@@ -148,7 +148,9 @@ export var statusData = {
       state: "KegAbsent",
       stable_weight: 4.56,
       pour_volume: 44,
-      keg_volume: 1900
+      keg_volume: 1900,
+      glass_volume: 0.4,
+      last_pour_volume: 0.4
     },
     {
       index: 1,
@@ -156,7 +158,9 @@ export var statusData = {
       state: "KegAbsent",
       stable_weight: 14.23,
       pour_volume: 56,
-      keg_volume: 1900
+      keg_volume: 1900,
+      glass_volume: 0.4,
+      last_pour_volume: 0.5
     },
     {
       index: 2,
@@ -164,7 +168,9 @@ export var statusData = {
       state: "KegAbsent",
       stable_weight: 10.2,
       pour_volume: 20,
-      keg_volume: 1900
+      keg_volume: 1900,
+      glass_volume: 0.4,
+      last_pour_volume: 0.3
     },
     {
       index: 3,
@@ -172,7 +178,9 @@ export var statusData = {
       state: "KegAbsent",
       stable_weight: 6.9,
       pour_volume: 25,
-      keg_volume: 1900
+      keg_volume: 1900,
+      glass_volume: 0.4,
+      last_pour_volume: 0.45
     }
   ],
   sensors: [
@@ -209,7 +217,49 @@ export var statusData = {
     push_code: 0,
     push_response: "",
     push_used: false
-  }
+  },
+  recent_events: [
+    {
+      type: 0,
+      unit: 0,
+      timestamp_ms: 1000000,
+      name: "startup"
+    },
+    {
+      type: 1,
+      unit: 0,
+      timestamp_ms: 5234000,
+      name: "stable_detected",
+      data: {
+        stable_weight_kg: "18.5000",
+        stable_volume_l: "5.2000",
+        duration_ms: 4500
+      }
+    },
+    {
+      type: 2,
+      unit: 0,
+      timestamp_ms: 45678000,
+      name: "pour_started",
+      data: {
+        pre_weight_kg: "18.5000"
+      }
+    },
+    {
+      type: 3,
+      unit: 0,
+      timestamp_ms: 46234000,
+      name: "pour_completed",
+      data: {
+        pre_weight_kg: "18.5000",
+        post_weight_kg: "17.8000",
+        weight_kg: "0.7000",
+        volume_l: "0.2000",
+        duration_ms: 556,
+        avg_slope_kg_sec: "-0.001258"
+      }
+    }
+  ]
 }
 
 export var statisticsData = {
@@ -380,7 +430,7 @@ export var featureData = {
 
   // Feature flags
   ble: true,
-  no_kegs: 3
+  no_kegs: 4
 }
 
 // EOF

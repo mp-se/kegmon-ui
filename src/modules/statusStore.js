@@ -34,6 +34,7 @@ export const useStatusStore = defineStore('status', {
       uptime_days: 0,
       scales: [],
       sensors: [],
+      events: [],
       ha: {},
       brewspy: {},
       brewlogger: {},
@@ -93,6 +94,9 @@ export const useStatusStore = defineStore('status', {
         if (Object.prototype.hasOwnProperty.call(json, 'barhelper')) this.barhelper = json.barhelper
         if (Object.prototype.hasOwnProperty.call(json, 'brewlogger'))
           this.brewlogger = json.brewlogger
+
+        // Parse events array
+        this.events = json.recent_events || []
 
         logInfo('statusStore.load()', 'Fetching /api/status completed')
         return true
