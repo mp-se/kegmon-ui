@@ -41,7 +41,32 @@ export const useStatusStore = defineStore('status', {
       barhelper: {}
     }
   },
-  getters: {},
+  getters: {
+    // Weight unit helpers
+    isWeightKg() {
+      return this.weight_unit === 'kg'
+    },
+    isWeightLbs() {
+      return this.weight_unit === 'lbs'
+    },
+    // Temperature unit helpers
+    isTempC() {
+      return this.temp_unit === 'C'
+    },
+    isTempF() {
+      return this.temp_unit === 'F'
+    },
+    // Volume unit helpers
+    isVolumeCl() {
+      return this.volume_unit === 'cl'
+    },
+    isVolumeUsOz() {
+      return this.volume_unit === 'us-oz'
+    },
+    isVolumeUkOz() {
+      return this.volume_unit === 'uk-oz'
+    }
+  },
   actions: {
     async load() {
       logInfo('statusStore.load()', 'Fetching /api/status')
@@ -53,25 +78,25 @@ export const useStatusStore = defineStore('status', {
         this.connected = true
 
         // General properties
-        this.id = json.id || ''
-        this.mdns = json.mdns || ''
-        this.wifi_ssid = json.wifi_ssid || ''
-        this.weight_unit = json.weight_unit || ''
-        this.volume_unit = json.volume_unit || ''
-        this.temp_unit = json.temp_unit || 'C'
-        this.rssi = json.rssi || 0
-        this.total_heap = json.total_heap || 0
-        this.free_heap = json.free_heap || 0
+        this.id = json.id
+        this.mdns = json.mdns
+        this.wifi_ssid = json.wifi_ssid
+        this.weight_unit = json.weight_unit
+        this.volume_unit = json.volume_unit
+        this.temp_unit = json.temp_unit
+        this.rssi = json.rssi
+        this.total_heap = json.total_heap
+        this.free_heap = json.free_heap
         this.ip = json.ip || ''
-        this.wifi_setup = json.wifi_setup || false
-        this.scale_busy = json.scale_busy || false
-        this.uptime_seconds = json.uptime_seconds || 0
-        this.uptime_minutes = json.uptime_minutes || 0
-        this.uptime_hours = json.uptime_hours || 0
-        this.uptime_days = json.uptime_days || 0
+        this.wifi_setup = json.wifi_setup
+        this.scale_busy = json.scale_busy
+        this.uptime_seconds = json.uptime_seconds
+        this.uptime_minutes = json.uptime_minutes
+        this.uptime_hours = json.uptime_hours
+        this.uptime_days = json.uptime_days
 
         // Parse scales array and trim to configured number of kegs
-        const maxKegs = global.feature.no_kegs || 4
+        const maxKegs = global.feature.no_kegs
         this.scales = (json.scales || []).slice(0, maxKegs).map((scale) => ({
           ...scale,
           stable_weight: this._convertWeight(scale.stable_weight, config),
@@ -107,23 +132,58 @@ export const useStatusStore = defineStore('status', {
     },
     _convertWeight(weight, config) {
       if (weight == null) return 0
-      const converted = config.weight_unit === 'lbs' ? weightKgToLbs(weight) : weight
+      const converted = config.isWeightLbs ? weightKgToLbs(weight) : weight
       return Number(converted).toFixed(2)
     },
     _convertVolume(volume, config) {
       if (volume == null) return 0
       let converted = volume
-      if (config.volume_unit === 'us-oz') {
+      if (config.isVolumeUsOz) {
         converted = volumeCLtoUSOZ(volume)
-      } else if (config.volume_unit === 'uk-oz') {
+      } else if (config.isVolumeUkOz) {
         converted = volumeCLtoUKOZ(volume)
       }
       return Number(converted).toFixed(2)
     },
     _convertTemperature(temp, config) {
       if (temp == null) return 0
-      const converted = config.temp_unit === 'F' ? tempToF(temp) : temp
+      const converted = config.isTempF ? tempToF(temp) : temp
       return Number(converted).toFixed(2)
+    },
+    getLastEventsForScale(scaleIndex, limit = 3) {
+      const eventNameMap = {
+        startup: 'Startup',
+        stable_detected: 'Stable Detected',
+        pour_started: 'Pour Started',
+        pour_completed: 'Pour Completed',
+        keg_removed: 'Keg Removed',
+        keg_replaced: 'Keg Replaced',
+        invalid_weight: 'Invalid Weight'
+      }
+
+      const filteredEvents = (this.events || [])
+        .filter((event) => event.unit === scaleIndex)
+        .sort((a, b) => b.timestamp_ms - a.timestamp_ms)
+        .slice(0, limit)
+
+      return filteredEvents.map((event) => ({
+        name: eventNameMap[event.name] || event.name,
+        timestamp_ms: event.timestamp_ms,
+        data: event.data || {}
+      }))
+    },
+    getRelativeTime(timestamp_ms) {
+      const now = Date.now()
+      const diff = now - timestamp_ms
+      const seconds = Math.floor(diff / 1000)
+      const minutes = Math.floor(seconds / 60)
+      const hours = Math.floor(minutes / 60)
+      const days = Math.floor(hours / 24)
+
+      if (seconds < 60) return 'just now'
+      if (minutes < 60) return `${minutes} min ago`
+      if (hours < 24) return `${hours}h ago`
+      return `${days}d ago`
     }
   }
 })

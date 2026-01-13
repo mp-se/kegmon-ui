@@ -32,6 +32,15 @@
                   Last pour: {{ scale.last_pour_volume }} {{ config.getVolumeUnit }}
                 </template>
               </p>
+              <hr />
+              <p class="text-center small mb-0">
+                <template v-for="event in getLastEvents(index)" :key="event.timestamp_ms">
+                  <div class="mb-1">
+                    <strong>{{ event.name }}</strong>
+                    <span class="text-muted">({{ getRelativeTime(event.timestamp_ms) }})</span>
+                  </div>
+                </template>
+              </p>
             </BsCard>
           </div>
         </template>
@@ -225,6 +234,14 @@ function clampProgress(n) {
 const calculateGlassesLeft = (scale) => {
   if (!scale || !scale.glass_volume || scale.glass_volume <= 0) return 0
   return Math.floor(scale.pour_volume / scale.glass_volume)
+}
+
+const getLastEvents = (scaleIndex) => {
+  return status.getLastEventsForScale(scaleIndex, 2)
+}
+
+const getRelativeTime = (timestamp_ms) => {
+  return status.getRelativeTime(timestamp_ms)
 }
 
 const tapProgressArray = computed(() => {

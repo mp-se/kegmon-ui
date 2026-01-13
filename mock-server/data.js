@@ -219,36 +219,11 @@ export var statusData = {
     push_used: false
   },
   recent_events: [
-    {
-      type: 0,
-      unit: 0,
-      timestamp_ms: 1000000,
-      name: "startup"
-    },
-    {
-      type: 1,
-      unit: 0,
-      timestamp_ms: 5234000,
-      name: "stable_detected",
-      data: {
-        stable_weight_kg: "18.5000",
-        stable_volume_l: "5.2000",
-        duration_ms: 4500
-      }
-    },
-    {
-      type: 2,
-      unit: 0,
-      timestamp_ms: 45678000,
-      name: "pour_started",
-      data: {
-        pre_weight_kg: "18.5000"
-      }
-    },
+    // Scale 0 events
     {
       type: 3,
       unit: 0,
-      timestamp_ms: 46234000,
+      timestamp_ms: Date.now() - 60000,
       name: "pour_completed",
       data: {
         pre_weight_kg: "18.5000",
@@ -257,6 +232,67 @@ export var statusData = {
         volume_l: "0.2000",
         duration_ms: 556,
         avg_slope_kg_sec: "-0.001258"
+      }
+    },
+    {
+      type: 1,
+      unit: 0,
+      timestamp_ms: Date.now() - 300000,
+      name: "stable_detected",
+      data: {
+        stable_weight_kg: "18.5000",
+        stable_volume_l: "5.2000",
+        duration_ms: 4500
+      }
+    },
+    // Scale 1 events
+    {
+      type: 2,
+      unit: 1,
+      timestamp_ms: Date.now() - 180000,
+      name: "pour_started",
+      data: {
+        pre_weight_kg: "22.1000"
+      }
+    },
+    {
+      type: 1,
+      unit: 1,
+      timestamp_ms: Date.now() - 600000,
+      name: "stable_detected",
+      data: {
+        stable_weight_kg: "22.1000",
+        stable_volume_l: "5.5000",
+        duration_ms: 3200
+      }
+    },
+    // Scale 2 events
+    {
+      type: 3,
+      unit: 2,
+      timestamp_ms: Date.now() - 120000,
+      name: "pour_completed",
+      data: {
+        pre_weight_kg: "12.3000",
+        post_weight_kg: "12.0000",
+        weight_kg: "0.3000",
+        volume_l: "0.1500",
+        duration_ms: 425,
+        avg_slope_kg_sec: "-0.000706"
+      }
+    },
+    {
+      type: 3,
+      unit: 2,
+      timestamp_ms: Date.now() - 480000,
+      name: "pour_completed",
+      data: {
+        pre_weight_kg: "12.6000",
+        post_weight_kg: "12.3000",
+        weight_kg: "0.3000",
+        volume_l: "0.1500",
+        duration_ms: 440,
+        avg_slope_kg_sec: "-0.000682"
       }
     }
   ]
@@ -431,6 +467,45 @@ export var featureData = {
   // Feature flags
   ble: true,
   no_kegs: 4
+}
+
+export var scaleData = {
+  weight_unit: "kg",
+  volume_unit: "cl",
+  temp_unit: "C",
+  scale_busy: false,
+  scales: [
+    {
+      index: 0,
+      connected: true,
+      scale_factor: 2048.5,
+      scale_offset: -12345,
+      state: "stable",
+      stable_weight: 18.5,
+      scale_raw: 38567890
+    },
+    {
+      index: 1,
+      connected: true,
+      scale_factor: 2051.3,
+      scale_offset: -12100,
+      state: "stable",
+      stable_weight: 22.1,
+      scale_raw: 45234567
+    },
+    {
+      index: 2,
+      connected: false,
+      scale_factor: 2048.0,
+      scale_offset: 0
+    },
+    {
+      index: 3,
+      connected: false,
+      scale_factor: 2048.0,
+      scale_offset: 0
+    }
+  ]
 }
 
 // EOF

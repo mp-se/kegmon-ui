@@ -216,15 +216,13 @@ onMounted(() => {
 
         if (!isNaN(l.keg2)) historyKeg2.value.push({ x: d, y: l.keg2 })
 
-        // TODO: Convert to chosen unit
-
         if (!isNaN(l.pour1) && l.pour1 > 0) {
-          //logDebug("check", config.volume_unit == 'cl' ? l.pour1/100 : (config.volume_unit == "us-oz" ? volumeCLtoUSOZ(l.pour1/100) : volumeCLtoUKOZ(l.pour1/100) ) )
+          //logDebug("check", config.isVolumeCl ? l.pour1/100 : (config.isVolumeUsOz ? volumeCLtoUSOZ(l.pour1/100) : volumeCLtoUKOZ(l.pour1/100) ) )
           var vol =
             new Number(
-              config.volume_unit == 'cl'
+              config.isVolumeCl
                 ? l.pour1 * 100
-                : config.volume_unit == 'us-oz'
+                : config.isVolumeUsOz
                   ? volumeCLtoUSOZ(l.pour1 * 100)
                   : volumeCLtoUKOZ(l.pour1 * 100)
             ).toFixed(0) +
@@ -234,12 +232,12 @@ onMounted(() => {
         }
 
         if (!isNaN(l.pour2) && l.pour2 > 0) {
-          //logDebug("check", config.volume_unit == 'cl' ? l.pour2/100 : (config.volume_unit == "us-oz" ? volumeCLtoUSOZ(l.pour2/100) : volumeCLtoUKOZ(l.pour2/100) ) )
+          //logDebug("check", config.isVolumeCl ? l.pour2/100 : (config.isVolumeUsOz ? volumeCLtoUSOZ(l.pour2/100) : volumeCLtoUKOZ(l.pour2/100) ) )
           vol =
             new Number(
-              config.volume_unit == 'cl'
+              config.isVolumeCl
                 ? l.pour2 * 100
-                : config.volume_unit == 'us-oz'
+                : config.isVolumeUsOz
                   ? volumeCLtoUSOZ(l.pour2 * 100)
                   : volumeCLtoUKOZ(l.pour2 * 100)
             ).toFixed(0) +
@@ -248,11 +246,6 @@ onMounted(() => {
           historyPour2.value.push({ date: d, volume: vol })
         }
       })
-
-      // logDebug(historyKeg1.value)
-      // logDebug(historyKeg2.value)
-      // logDebug(historyPour1.value)
-      // logDebug(historyPour2.value)
 
       try {
         logDebug('TapsHistoryView.onMounted()', chartOptions.value)

@@ -2,6 +2,10 @@ export function weightKgToLbs(w) {
   return w * 2.2046226218
 }
 
+export function weightLbsToKg(w) {
+  return w / 2.2046226218
+}
+
 export function volumeCLtoUSOZ(cl) {
   // centiliter to US fluid ounces
   // 1 cl = 0.338140225 US fl oz

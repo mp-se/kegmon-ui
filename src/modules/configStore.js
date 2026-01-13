@@ -138,6 +138,30 @@ export const useConfigStore = defineStore('config', {
     },
     getTempUnit() {
       return this.temp_unit == 'C' ? '°C' : '°F'
+    },
+    // Weight unit helpers
+    isWeightKg() {
+      return this.weight_unit === 'kg'
+    },
+    isWeightLbs() {
+      return this.weight_unit === 'lbs'
+    },
+    // Temperature unit helpers
+    isTempC() {
+      return this.temp_unit === 'C'
+    },
+    isTempF() {
+      return this.temp_unit === 'F'
+    },
+    // Volume unit helpers
+    isVolumeCl() {
+      return this.volume_unit === 'cl'
+    },
+    isVolumeUsOz() {
+      return this.volume_unit === 'us-oz'
+    },
+    isVolumeUkOz() {
+      return this.volume_unit === 'uk-oz'
     }
   },
   actions: {
@@ -162,7 +186,7 @@ export const useConfigStore = defineStore('config', {
         logDebug('configStore.load()', json)
         global.disabled = false
 
-        const maxKegs = global.feature.no_kegs || 4
+        const maxKegs = global.feature.no_kegs
 
         this.id = json.id
         this.mdns = json.mdns

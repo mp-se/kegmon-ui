@@ -164,7 +164,7 @@
 
 <script setup>
 import { onBeforeMount, ref } from 'vue'
-import { weightKgToLbs } from '@/modules/utils'
+import { weightKgToLbs, weightLbsToKg } from '@/modules/utils'
 import { global, config } from '@/modules/pinia'
 import {
   sharedHttpClient as http,
@@ -212,26 +212,22 @@ function step1() {
 }
 
 function saveScaleValues(json) {
-  if (scale.value == 1) {
-    scaleStatus.value.offset = json.scale_offset1
-    scaleStatus.value.factor = json.scale_factor1
-    scaleStatus.value.raw = json.scale_raw1
-    scaleStatus.value.weight = json.scale_weight1
-  } else {
-    scaleStatus.value.offset = json.scale_offset2
-    scaleStatus.value.factor = json.scale_factor2
-    scaleStatus.value.raw = json.scale_raw2
-    scaleStatus.value.weight = json.scale_weight2
-  }
+  const scaleIndex = scale.value - 1
+  const scaleData = json.scales[scaleIndex]
 
-  scaleStatus.value.weightString =
-    new Number(
-      config.weight_unit == 'kg'
-        ? scaleStatus.value.weight
-        : weightKgToLbs(scaleStatus.value.weight)
-    ).toFixed(3) +
-    ' ' +
-    config.weight_unit
+  if (scaleData) {
+    scaleStatus.value.offset = scaleData.scale_offset
+    scaleStatus.value.factor = scaleData.scale_factor
+    scaleStatus.value.raw = scaleData.scale_raw
+    scaleStatus.value.weight = scaleData.stable_weight
+
+    scaleStatus.value.weightString =
+      new Number(
+        config.isWeightKg ? scaleStatus.value.weight : weightKgToLbs(scaleStatus.value.weight)
+      ).toFixed(3) +
+      ' ' +
+      config.weight_unit
+  }
 }
 
 async function step2() {
@@ -278,7 +274,8 @@ async function step3() {
 
   try {
     logInfo('DeviceCalibrationView.step3()', 'Sending factor request')
-    await http.postJson('api/scale/factor', { scale_index: scale.value, weight: weight.value })
+    const weightKg = config.isWeightLbs ? weightLbsToKg(weight.value) : weight.value
+    await http.postJson('api/scale/factor', { scale_index: scale.value, weight: weightKg })
 
     // Poll until scale_busy is false
     while (true) {

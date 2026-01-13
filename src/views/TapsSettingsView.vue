@@ -9,7 +9,8 @@
         <template v-for="(scale, index) in config.scales" :key="index">
           <div :class="getTapClass()">
             <BsInputNumber
-              v-model="config.scales[index].keg_weight"
+              :model-value="getKegWeight(index)"
+              @update:model-value="setKegWeight(index, $event)"
               width="7"
               min="0.0"
               max="10.0"
@@ -73,6 +74,7 @@
 <script setup>
 import { ref } from 'vue'
 import { validateCurrentForm } from '@mp-se/espframework-ui-components'
+import { weightKgToLbs, weightLbsToKg } from '@/modules/utils'
 import { global, config } from '@/modules/pinia'
 
 const getTapClass = () => {
@@ -81,6 +83,17 @@ const getTapClass = () => {
   if (noKegs === 3) return 'col-md-4'
   if (noKegs === 2) return 'col-md-6'
   return 'col-md-12'
+}
+
+// Helper to get displayed keg weight (convert from kg to user's selected unit)
+const getKegWeight = (scaleIndex) => {
+  const kegWeightKg = config.scales[scaleIndex].keg_weight
+  return config.isWeightLbs ? weightKgToLbs(kegWeightKg) : kegWeightKg
+}
+
+// Helper to set keg weight (convert from user's selected unit to kg)
+const setKegWeight = (scaleIndex, value) => {
+  config.scales[scaleIndex].keg_weight = config.isWeightLbs ? weightLbsToKg(value) : value
 }
 
 const glassOptions = ref([

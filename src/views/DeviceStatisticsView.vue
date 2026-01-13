@@ -6,6 +6,30 @@
 
     <div class="row" v-if="loaded">
       <div class="col-md-12">
+        <p class="h4">Recent Events</p>
+        <div class="table-responsive">
+          <table class="table table-sm table-striped">
+            <thead>
+              <tr>
+                <th style="width: 8%">Unit</th>
+                <th style="width: 15%">Event Name</th>
+                <th class="text-end" style="width: 12%">Timestamp</th>
+                <th style="width: 65%">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(event, idx) in status.events" :key="`event-${idx}`">
+                <td>{{ event.unit }}</td>
+                <td>{{ formatEventName(event.name) }}</td>
+                <td class="text-end">{{ formatEventTime(event.timestamp_ms) }}</td>
+                <td class="small">{{ formatEventData(event) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-md-12">
         <p class="h4">Level Statistics</p>
         <div class="table-responsive">
           <table class="table table-sm table-striped" style="table-layout: fixed">
@@ -111,8 +135,10 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
 import { global } from '@/modules/pinia'
+import { useStatusStore } from '@/modules/statusStore'
 import { logError, logInfo, sharedHttpClient as http } from '@mp-se/espframework-ui-components'
 
+const status = useStatusStore()
 const statistics = ref({
   level_statistics: [],
   scale_statistics: []
@@ -157,5 +183,71 @@ const clearStatistics = async () => {
     logError('DeviceStatisticsView.clearStatistics()', err)
     global.disabled = false
   }
+}
+
+const eventNameMap = {
+  startup: 'Startup',
+  stable_detected: 'Stable Detected',
+  pour_started: 'Pour Started',
+  pour_completed: 'Pour Completed',
+  keg_removed: 'Keg Removed',
+  keg_replaced: 'Keg Replaced',
+  invalid_weight: 'Invalid Weight'
+}
+
+const formatEventName = (name) => {
+  return eventNameMap[name] || name
+}
+
+const getRelativeTime = (timestamp_ms) => {
+  const now = Date.now()
+  const diff = now - timestamp_ms
+  const seconds = Math.floor(diff / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+
+  if (seconds < 60) return 'just now'
+  if (minutes < 60) return `${minutes}m ago`
+  if (hours < 24) return `${hours}h ago`
+  return `${days}d ago`
+}
+
+const formatEventTime = (timestamp_ms) => {
+  return getRelativeTime(timestamp_ms)
+}
+
+const formatEventData = (event) => {
+  if (!event.data || Object.keys(event.data).length === 0) return '-'
+  const data = event.data
+  const parts = []
+
+  // Volume data
+  if (data.volume_l) parts.push(`Volume: ${data.volume_l}L`)
+  if (data.stable_volume_l) parts.push(`Stable Vol: ${data.stable_volume_l}L`)
+  if (data.total_pour_volume) parts.push(`Total Vol: ${data.total_pour_volume}L`)
+
+  // Weight data
+  if (data.weight_kg) parts.push(`Weight: ${data.weight_kg}kg`)
+  if (data.stable_weight_kg) parts.push(`Stable Wt: ${data.stable_weight_kg}kg`)
+  if (data.pre_weight_kg && data.post_weight_kg) {
+    parts.push(`Weight: ${data.pre_weight_kg} → ${data.post_weight_kg}kg`)
+  } else {
+    if (data.pre_weight_kg) parts.push(`Pre: ${data.pre_weight_kg}kg`)
+    if (data.post_weight_kg) parts.push(`Post: ${data.post_weight_kg}kg`)
+  }
+  if (data.previous_weight_kg && data.current_weight_kg) {
+    parts.push(`${data.previous_weight_kg} → ${data.current_weight_kg}kg`)
+  }
+
+  // Duration data
+  if (data.duration_ms) parts.push(`Duration: ${(data.duration_ms / 1000).toFixed(1)}s`)
+
+  // Other data
+  if (data.avg_slope_kg_sec) parts.push(`Slope: ${data.avg_slope_kg_sec}kg/s`)
+  if (data.min_valid_weight_kg)
+    parts.push(`Valid: ${data.min_valid_weight_kg}-${data.max_valid_weight_kg}kg`)
+
+  return parts.length > 0 ? parts.join(' | ') : '-'
 }
 </script>

@@ -5,7 +5,7 @@
  */
 import { createRequire } from "module";
 import { registerEspFwk } from './espfwk.js'
-import { statisticsData } from './data.js'
+import { statisticsData, scaleData } from './data.js'
 
 const require = createRequire(import.meta.url);
 const express = require('express')
@@ -130,88 +130,22 @@ app.get('/levels', (req, res) => {
 })
 
 // --- Scale calibration endpoints ---
-// Simulate scale state for tare and factor operations
-const scaleBusy = { 1: false, 2: false, 3: false, 4: false }
-const scaleData = {
-  1: { scale_offset1: 0, scale_factor1: 1, scale_raw1: 0, scale_weight1: 0 },
-  2: { scale_offset2: 0, scale_factor2: 1, scale_raw2: 0, scale_weight2: 0 },
-  3: { scale_offset3: 0, scale_factor3: 1, scale_raw3: 0, scale_weight3: 0 },
-  4: { scale_offset4: 0, scale_factor4: 1, scale_raw4: 0, scale_weight4: 0 }
-}
-
 app.post('/api/scale/tare', (req, res) => {
-  console.log('POST: /api/scale/tare')
-  const idx = Number(req.body && req.body.scale_index) || 1
-
-  // mark busy and simulate tare operation
-  scaleBusy[idx] = true
-  // reset raw/offset/weight for the selected scale
-  const keyOffset = `scale_offset${idx}`
-  const keyRaw = `scale_raw${idx}`
-  const keyWeight = `scale_weight${idx}`
-  scaleData[idx][keyOffset] = 0
-  scaleData[idx][keyRaw] = 0
-  scaleData[idx][keyWeight] = 0
-
-  // complete after a short delay
-  setTimeout(() => {
-    scaleBusy[idx] = false
-    // slight offset noise
-    scaleData[idx][keyOffset] = 0
-  }, 3000)
-
+  console.log('POST: /api/scale/tare', req.body)
   res.type('application/json')
-  res.send({ success: true, message: 'Tare scheduled' })
+  res.send({ success: true, message: 'Tare operation initiated' })
 })
 
 app.post('/api/scale/factor', (req, res) => {
-  console.log('POST: /api/scale/factor')
-  const body = req.body || {}
-  const idx = Number(body.scale_index) || 1
-  const weight = Number(body.weight) || 0
-
-  // start factor calculation
-  scaleBusy[idx] = true
-
-  const keyFactor = `scale_factor${idx}`
-  const keyRaw = `scale_raw${idx}`
-  const keyWeight = `scale_weight${idx}`
-
-  // fake raw reading and compute a simple factor
-  const raw = Math.round((Math.random() * 1000) + 100)
-  scaleData[idx][keyRaw] = raw
-  // avoid divide by zero
-  scaleData[idx][keyFactor] = raw > 0 ? (weight / raw) : 1
-  scaleData[idx][keyWeight] = weight
-
-  setTimeout(() => {
-    scaleBusy[idx] = false
-    // finalize values (add slight variations)
-    scaleData[idx][keyRaw] = raw + Math.round(Math.random() * 5)
-    scaleData[idx][keyFactor] = raw > 0 ? (weight / scaleData[idx][keyRaw]) : 1
-    scaleData[idx][keyWeight] = weight
-  }, 3000)
-
+  console.log('POST: /api/scale/factor', req.body)
   res.type('application/json')
-  res.send({ success: true, message: 'Factor calculation scheduled' })
+  res.send({ success: true, message: 'Factor calculation initiated' })
 })
 
 app.get('/api/scale', (req, res) => {
   console.log('GET: /api/scale')
-  // report all scale fields (scale_busy true if any busy)
-  const anyBusy = Object.values(scaleBusy).some((v) => v === true)
-
-  const out = {
-    scale_busy: anyBusy,
-    // flatten per-scale keys expected by client
-    ...scaleData[1],
-    ...scaleData[2],
-    ...scaleData[3],
-    ...scaleData[4]
-  }
-
   res.type('application/json')
-  res.send(out)
+  res.send(scaleData)
 })
 
 app.get('/api/stability', (req, res) => {
