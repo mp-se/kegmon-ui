@@ -7089,10 +7089,10 @@ const useGlobalStore = /* @__PURE__ */ defineStore("global", {
       return this.url;
     },
     uiVersion() {
-      return "1.1.0";
+      return "2.0.0";
     },
     uiBuild() {
-      return "..5489f3";
+      return "..886983";
     },
     disabled32() {
       if (this.disabled) return true;
